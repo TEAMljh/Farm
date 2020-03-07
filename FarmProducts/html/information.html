@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>农产品资讯</title>
+  <link rel="stylesheet" type="text/css" href="../res/static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="../res/layui/css/layui.css">
+  <script type="text/javascript" src="../res/layui/layui.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+<body>
+
+  <div class="site-nav-bg">
+    <div class="site-nav w1200">
+      <p class="sn-back-home">
+        <i class="layui-icon layui-icon-home"></i>
+        <a href="commodity.html">首页</a>
+      </p>
+      <div class="sn-quick-menu">
+        <div class="login"><a href="login.html">登录</a></div>
+        <div class="sp-cart"><a href="shopcart.html">购物车</a><i class="layui-icon layui-icon-cart-simple"></i></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="header">
+    <div class="headerLayout w1200">
+      <div class="headerCon">
+        <h1 class="mallLogo">
+          <a href="#" title="农产品">
+            <img src="../res/static/img/农产品小标题.png">
+          </a>
+        </h1>
+        <div class="mallSearch">
+          <form action="" class="layui-form" novalidate>
+            <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">
+                <i class="layui-icon layui-icon-search"></i>
+            </button>
+            <input type="hidden" name="" value="">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content content-nav-base information-content">
+    <div class="main-nav">
+      <div class="inner-cont0">
+        <div class="inner-cont1 w1200">
+          <div class="inner-cont2">
+            <a href="commodity.html">所有商品</a>
+            <a href="buytoday.html">今日团购</a>
+            <a href="information.html" class="active">农产品资讯</a>
+            <a href="about.html">关于我们</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="info-list-box">
+      <div class="info-list w1200">
+        <div class="item-box layui-clear" id="list-cont">
+
+        </div>
+        <div id="demo0" style="text-align: center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 文章导入  模版引擎导入 -->
+<script type="text/html" id="demo">
+    {{# layui.each(d.listCont,function(index,item){
+    }}
+    <div class="item">
+      <div class="img">
+        <img src={{item.img}} alt="">
+      </div>
+      <div class="text">
+        <h4>{{item.text}}</h4>
+        <p class="data">{{item.data}}</p>
+        <p class="info-cont">{{item.infoCont}}</p>
+      </div>
+    </div>
+    {{# })}}
+  </script>
+<script>
+  layui.config({
+    base: '../res/static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+  }).use(['mm','laypage','jquery','layer','login_on'],function(){
+
+      var mm = layui.mm,laypage = layui.laypage,$ = layui.jquery,layer = layui.layer,login_on = layui.login_on;
+
+    $('html').hide();
+    $('html').fadeIn(500);
+
+    //显示用户
+    login_on.login_success();
+    //用户退出
+    $('.quit').on('click',function () {
+      login_on.login_quit();
+      layer.msg('已成功退出',{icon:1,time:1500},function () {
+        location.replace('../html/login.html');
+      });
+    })
+
+
+    // 文章导入 模版引擎导入
+     var html = demo.innerHTML;
+     var listCont = document.getElementById('list-cont');
+      mm.request({
+        url: '../html/json/information.json',
+        success : function(res){
+          console.log(res)
+          listCont.innerHTML = mm.renderHtml(html,res);
+
+          //分页
+          console.log(res.listCont.length);
+          laypage.render({
+            elem: 'demo0'
+            ,count:res.listCont.length//数据总条数
+            ,limit:3  //每页条数
+            , jump:function (obj,first) {
+              //obj是当前分页的所有选项值，first是否首次，用于是否首次加载判断。
+
+
+          }
+          });
+        },
+        error: function(res){
+          console.log(res);
+        }
+      })
+});
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>右键菜单</title>
+    <link rel="stylesheet" href="../../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../assets/module/admin.css?v=315"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<!-- 加载动画 -->
+<div class="page-loading">
+    <div class="ball-loader">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
+<!-- 正文开始 -->
+<div class="layui-fluid ">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12 layui-col-sm4 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">DIV内鼠标右键菜单</div>
+                <div class="layui-card-body text-center" id="btnCtxMenu" style="padding: 97px 15px;">
+                    请在此区域内点击鼠标右键
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-header">按钮点击显示无限级菜单</div>
+                <div class="layui-card-body text-center">
+                    <button id="btnCtxMenu2" class="layui-btn">请点击我</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm8 layui-col-md9">
+            <div class="layui-card">
+                <div class="layui-card-header">表格行鼠标右键菜单</div>
+                <div class="layui-card-body">
+                    <table id="ctxMenuTable" lay-filter="ctxMenuTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <blockquote class="layui-elem-quote" style="background: #fff;margin-top: 15px;">
+        全局鼠标右键菜单，请在页面任意位置点击鼠标右键。
+    </blockquote>
+</div>
+
+<!-- js部分 -->
+<script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../../assets/js/common.js?v=315"></script>
+<script>
+    layui.use(['layer', 'contextMenu', 'table', 'tableX', 'util'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var contextMenu = layui.contextMenu;
+        var table = layui.table;
+        var tableX = layui.tableX;
+        var util = layui.util;
+
+        // 重写右键菜单
+        contextMenu.bind('#btnCtxMenu', [{
+            name: '右键菜单一',
+            click: function () {
+                layer.msg('点击了右键菜单一', {icon: 1});
+            }
+        }, {
+            name: '右键菜单二',
+            click: function () {
+                layer.msg('点击了右键菜单二', {icon: 1});
+            }
+        }, {
+            icon: 'layui-icon layui-icon-more-vertical',
+            name: '右键菜单三',
+            subs: [{
+                name: '右键子菜单一',
+                click: function () {
+                    layer.msg('点击了右键子菜单一', {icon: 1});
+                }
+            }, {
+                name: '右键子菜单二',
+                click: function () {
+                    layer.msg('点击了右键子菜单二', {icon: 1});
+                }
+            }, {
+                name: '右键子菜单三',
+                subs: [{
+                    name: '右键三级菜单一',
+                    click: function () {
+                        layer.msg('点击了右键三级菜单一', {icon: 1});
+                    }
+                }, {
+                    name: '右键三级菜单二',
+                    click: function () {
+                        layer.msg('点击了右键三级菜单二', {icon: 1});
+                    }
+                }]
+            }]
+        }]);
+
+        // 重写右键菜单
+        contextMenu.bind('html', [{
+            icon: 'layui-icon layui-icon-refresh',
+            name: '刷新子页面',
+            click: function () {
+                location.reload();
+            }
+        }, {
+            name: '刷新主框架',
+            click: function () {
+                top.location.reload();
+            },
+            hr: true
+        }, {
+            icon: 'layui-icon layui-icon-snowflake',
+            name: '菜单项一',
+            click: function () {
+                layer.msg('点击了菜单一', {icon: 1});
+            }
+        }, {
+            icon: 'layui-icon layui-icon-location',
+            name: '菜单项二',
+            click: function () {
+                layer.msg('点击了菜单二', {icon: 1});
+            }
+        }, {
+            name: '菜单项三',
+            subs: [{
+                name: '子菜单一',
+                click: function () {
+                    layer.msg('点击了子菜单一', {icon: 1});
+                }
+            }, {
+                name: '子菜单二',
+                click: function () {
+                    layer.msg('点击了子菜单二', {icon: 1});
+                }
+            }, {
+                name: '子菜单三',
+                subs: [{
+                    name: '三级菜单一',
+                    click: function () {
+                        layer.msg('点击了三级菜单一', {icon: 1});
+                    }
+                }, {
+                    name: '三级菜单二',
+                    subs: [{
+                        name: '四级菜单一',
+                        click: function () {
+                            layer.msg('点击了四级菜单一', {icon: 1});
+                        }
+                    }, {
+                        name: '四级菜单二',
+                        click: function () {
+                            layer.msg('点击了四级菜单二', {icon: 1});
+                        }
+                    }]
+                }]
+            }]
+        }, {
+            name: '菜单四',
+            click: function () {
+                layer.msg('点击了菜单四', {icon: 1});
+            }
+        }]);
+
+        // 直接使用show方法
+        $('#btnCtxMenu2').click(function (e) {
+            var x = $(this).offset().left;
+            var y = $(this).offset().top + $(this).outerHeight();
+            contextMenu.show([{
+                name: '按钮菜单一',
+                click: function () {
+                    layer.msg('点击了按钮菜单一', {icon: 1});
+                }
+            }, {
+                name: '按钮菜单二',
+                click: function () {
+                    layer.msg('点击了按钮菜单二', {icon: 1});
+                }
+            }, {
+                icon: 'layui-icon layui-icon-more-vertical',
+                name: '按钮菜单三',
+                subs: [{
+                    name: '按钮子菜单一',
+                    click: function () {
+                        layer.msg('点击了按钮子菜单一', {icon: 1});
+                    }
+                }, {
+                    name: '按钮子菜单二',
+                    click: function () {
+                        layer.msg('点击了按钮子菜单二', {icon: 1});
+                    }
+                }, {
+                    name: '按钮子菜单三',
+                    subs: [{
+                        name: '按钮三级菜单一',
+                        click: function () {
+                            layer.msg('点击了按钮三级菜单一', {icon: 1});
+                        }
+                    }, {
+                        name: '按钮三级菜单二',
+                        click: function () {
+                            layer.msg('点击了按钮三级菜单二', {icon: 1});
+                        }
+                    }]
+                }]
+            }], x, y);
+            if (e !== void 0) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+
+        // 表格行右键
+        var insTb3 = table.render({
+            elem: '#ctxMenuTable',
+            url: '../../../json/user.json',
+            page: true,
+            cellMinWidth: 100,
+            cols: [[
+                {type: 'numbers', title: '#'},
+                {field: 'nickName', title: '用户名', sort: true},
+                {field: 'sex', title: '性别', sort: true},
+                {field: 'phone', title: '手机号', sort: true},
+                {
+                    field: 'createTime', templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间', sort: true
+                }
+            ]],
+            done: function () {
+                // 绑定鼠标右键
+                tableX.bindCtxMenu('ctxMenuTable', [{
+                    icon: 'layui-icon layui-icon-tips',
+                    name: '查看详情',
+                    click: function (d) {
+                        layer.msg('点击了详情，userId：' + d.userId);
+                    }
+                }, {
+                    icon: 'layui-icon layui-icon-edit',
+                    name: '修改用户',
+                    click: function (d) {
+                        layer.msg('点击了修改，userId：' + d.userId);
+                    }
+                }, {
+                    icon: 'layui-icon layui-icon-unlink',
+                    name: '冻结用户',
+                    click: function (d) {
+                        layer.msg('点击了冻结，userId：' + d.userId);
+                    }
+                }, {
+                    icon: 'layui-icon layui-icon-close text-danger',
+                    name: '<span class="text-danger">删除用户</span>',
+                    click: function (d) {
+                        layer.msg('点击了删除，userId：' + d.userId);
+                    }
+                }]);
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

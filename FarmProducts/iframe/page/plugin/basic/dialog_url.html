@@ -1,0 +1,22 @@
+<div style="padding: 25px 25px 15px 25px;" id="demoUrlDialog">
+    <div class="layui-text">
+        我是一个独立页面的弹窗，我可以不用iframe就能做到把弹窗页面独立，因为admin.open方法会自动用ajax来把我的内容异步加载到弹窗中，我还会从上个页面接收传递过来的数据，下面的这个关闭按钮也是我自己加的，而且不需要任何js就能关闭我，只需要给它增加ew-event="closePageDialog"属性即可。
+    </div>
+    <div class="text-center" style="padding-top: 15px;">
+        <button class="layui-btn" ew-event="closePageDialog">关闭我</button>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script>
+    layui.use(['layer', 'admin'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var admin = layui.admin;
+
+        var layerData = admin.getLayerData('#demoUrlDialog');
+
+        layer.msg('我收到了的数据：' + JSON.stringify(layerData), {icon: 2});
+
+    });
+</script>

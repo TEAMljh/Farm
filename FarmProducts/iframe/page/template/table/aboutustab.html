@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>数据表格</title>
+    <link rel="stylesheet" href="../../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../assets/module/admin.css?v=315" media="all"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<!-- 加载动画 -->
+<div class="page-loading">
+    <div class="ball-loader">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+
+            <div class="layui-form toolbar">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label w-auto">搜索：</label>
+                        <div class="layui-input-inline mr0">
+                            <input name="keyword" class="layui-input" type="text" placeholder="输入关键字"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button class="layui-btn icon-btn" lay-filter="formSubSearchTbBas" lay-submit>
+                            <i class="layui-icon">&#xe615;</i>搜索
+                        </button>
+						<button class="layui-btn icon-btn" lay-filter="formSubAddTbBas" lay-submit>
+						    <i class="layui-icon ">&#xe654;</i>添加
+						</button>
+                    </div>
+                </div>
+            </div>
+
+            <table class="layui-table" id="tableTbBas" lay-filter="tableTbBas"></table>
+        </div>
+    </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="tableBarTbBas">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- js部分 -->
+<script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../../assets/js/common.js?v=315"></script>
+<script>
+    layui.use(['layer', 'form', 'table', 'util', 'dropdown'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+        var util = layui.util;
+        var dropdown = layui.dropdown;
+
+        // 渲染表格
+        var insTb = table.render({
+            elem: '#tableTbBas',
+            url: '../../../json/user.json',
+            page: true,
+            cellMinWidth: 100,
+            cols: [[
+                {type: 'checkbox'},
+                {field: 'id', align: 'center',hide:true, sort: true, title: 'ID'},
+                {field: 'name', align: 'center', sort: true, title: '标题'},
+                {field: 'content', align: 'center', sort: true, title: '内容'},
+                {
+                    field: 'create_time', sort: true, align: 'center', templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                },
+                {
+                    field: 'update_time', sort: true, align: 'center', templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '更新时间'
+                },
+                {align: 'center', toolbar: '#tableBarTbBas', title: '操作', minWidth: 200}
+            ]]
+        });
+
+        //监听工具条
+        table.on('tool(tableTbBas)', function (obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值
+
+            if (layEvent === 'edit') { // 修改
+                window.location.href = '../form/aboutusform.html'
+            } else if (layEvent === 'del') { // 删除
+                layer.confirm('确认删除吗？')}
+            dropdown.hideAll();
+        });
+
+        // 导出excel
+//         $('#btnExportTbBas').click(function () {
+//             var checkRows = table.checkStatus('tableTbBas');
+//             if (checkRows.data.length == 0) {
+//                 layer.msg('请选择要导出的数据', {icon: 2});
+//             } else {
+//                 table.exportFile(insTb.config.id, checkRows.data, 'xls');
+//             }
+//         });
+// 
+        // 搜索按钮点击事件
+        form.on('submit(formSubSearchTbBas)', function (data) {
+            insTb.reload({where: data.field}, 'data');
+        });
+		
+		form.on('submit(formSubAddTbBas)', function (data) {
+		    window.location.href = '../form/aboutusform.html'
+		});
+		
+    });
+</script>
+</body>
+
+</html>
