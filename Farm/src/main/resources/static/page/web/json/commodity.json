@@ -1,0 +1,21 @@
+{
+  "status":0,
+  "menu":
+    {"milk":{
+        "content":[
+          {"img":"../res/static/img/paging_img1.jpg","title":"牛奶系列","pri":"￥200","nub":"1266付款"},
+          {"img":"../res/static/img/paging_img2.jpg","title":"牛奶系列","pri":"￥200","nub":"1266付款"},
+          {"img":"../res/static/img/paging_img3.jpg","title":"牛奶系列","pri":"￥200","nub":"1266付款"},
+          {"img":"../res/static/img/paging_img1.jpg","title":"牛奶系列","pri":"￥200","nub":"1266付款"},
+          {"img":"../res/static/img/paging_img2.jpg","title":"牛奶系列","pri":"￥200","nub":"1266付款"},
+          {"img":"../res/static/img/paging_img3.jpg","title":"牛奶系列","pri":"￥200","nub":"1266付款"},
+          {"img":"../res/static/img/paging_img1.jpg","title":"牛奶系列","pri":"￥200","nub":"1266付款"},
+          {"img":"../res/static/img/paging_img2.jpg","title":"牛奶系列","pri":"￥200","nub":"1266付款"},
+          {"img":"../res/static/img/paging_img3.jpg","title":"牛奶系列","pri":"￥200","nub":"1266付款"},
+          {"img":"../res/static/img/paging_img1.jpg","title":"牛奶系列","pri":"￥200","nub":"1266付款"},
+          {"img":"../res/static/img/paging_img2.jpg","title":"牛奶系列","pri":"￥200","nub":"1266付款"},
+          {"img":"../res/static/img/paging_img3.jpg","title":"牛奶系列","pri":"￥200","nub":"1266付款"}
+        ]
+      }
+    }
+}

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>主页</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/assets/layui/css/layui.css">
+  <script type="text/javascript" src="/assets/layui/layui.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+<body>
+
+  <div class="site-nav-bg">
+    <div class="site-nav w1200">
+      <p class="sn-back-home">
+        <i class="layui-icon layui-icon-home"></i>
+        <a href="commodity.html">首页</a>
+      </p>
+      <div class="sn-quick-menu">
+        <div class="login"><a href="login.html">登录</a></div>
+        <div class="sp-cart"><a href="shopcart.html">购物车</a><i class="layui-icon layui-icon-cart-simple"></i></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="header">
+    <div class="headerLayout w1200">
+      <div class="headerCon">
+        <h1 class="mallLogo">
+          <a href="#" title="农产品">
+            <img src="/assets/img/农产品小标题.png">
+          </a>
+        </h1>
+        <div class="mallSearch">
+          <form action="" class="layui-form" novalidate>
+            <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">
+                <i class="layui-icon layui-icon-search"></i>
+            </button>
+            <input type="hidden" name="" value="">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content content-nav-base commodity-content">
+    <div class="main-nav">
+      <div class="inner-cont0">
+        <div class="inner-cont1 w1200">
+          <div class="inner-cont2">
+            <a href="commodity.html"  class="active">所有商品</a>
+            <a href="buytoday.html">今日团购</a>
+            <a href="information.html">农产品资讯</a>
+            <a href="about.html">关于我们</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="commod-cont-wrap">
+      <div class="commod-cont w1200 layui-clear">
+        <div class="left-nav">
+          <div class="title">所有分类</div>
+          <div class="list-box">
+            <dl>
+             <dt>三个品类一组的msg</dt>
+             <dd><a href="javascript:;">水果类</a></dd>
+             <dd><a href="javascript:;">蔬菜类</a></dd>
+             <dd><a href="javascript:;">果实籽仁类</a></dd>
+            </dl>
+            <dl>
+             <dt>米面粮油</dt>
+             <dd><a href="javascript:;">五谷杂粮</a></dd>
+             <dd><a href="javascript:;">食用油</a></dd>
+             <dd><a href="javascript:;">调味品</a></dd>
+            </dl>
+            <dl>
+             <dt>农副产品</dt>
+             <dd><a href="javascript:;">酒茶冲饮</a></dd>
+             <dd><a href="javascript:;">肉蛋类</a></dd>
+             <dd><a href="javascript:;">零食特产</a></dd>
+            </dl>
+
+          </div>
+        </div>
+        <div class="right-cont-wrap">
+          <div class="right-cont">
+            <div class="sort layui-clear">
+              <a class="active" href="javascript:;" event = 'volume'>销量</a>
+              <a href="javascript:;" event = 'price'>价格</a>
+              <a href="javascript:;" event = 'newprod'>新品</a>
+              <!--<a href="javascript:;" event = 'collection'>收藏</a>-->
+            </div>
+            <div class="prod-number">
+              <span><br></span>
+            </div>
+            <div class="cont-list layui-clear" id="list-cont">
+
+            </div>
+            <!-- 模版引擎导入 -->
+            <script type="text/html" id="demo">
+              {{# layui.each(d.menu.milk.content,function(index,item){}}    
+                <div class="item">
+                  <div class="img">
+                    <a href="javascript:;"><img src="{{item.img}}"></a>
+                  </div>
+                  <div class="text">
+                    <p class="title">{{item.title}}</p>
+                    <p class="price">
+                      <span class="pri">{{item.pri}}</span>
+                      <span class="nub">{{item.nub}}</span>
+                    </p>
+                  </div>
+                </div>
+              {{# }); }}
+            </script>
+            <div id="demo0" style="text-align: center;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  layui.config({
+    base: '/assets/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+  }).use(['mm','laypage','jquery','login_on','layer'],function(){
+      var laypage = layui.laypage,$ = layui.$,mm = layui.mm,login_on = layui.login_on,layer = layui.layer;
+
+    $('html').hide();
+    $('html').fadeIn(500);
+
+      //显示用户
+       login_on.login_success();
+      //用户退出
+      $('.quit').on('click',function () {
+        login_on.login_quit();
+        layer.msg('已成功退出',{icon:1,time:1500},function () {
+          location.replace('/page/web/login.html');
+        });
+      })
+
+
+
+
+    // 模版引擎导入
+     var html = demo.innerHTML;
+     var listCont = document.getElementById('list-cont');
+     // console.log(layui.router("#/about.html"))
+    mm.request({
+        url: '/page/web/json/commodity.json',
+        success : function(res){
+          console.log(res)
+          listCont.innerHTML = mm.renderHtml(html,res);
+
+          //分页
+          laypage.render({
+            elem: 'demo0'
+            ,count: res.menu.milk.content.length //数据总数
+            ,limit:6
+          });
+
+        },
+        error: function(res){
+          console.log(res);
+        }
+      })
+
+    $('.sort a').on('click',function(){
+      $(this).addClass('active').siblings().removeClass('active');
+    })
+    $('.list-box dt').on('click',function(){
+      if($(this).attr('off')){
+        $(this).removeClass('active').siblings('dd').show()
+        $(this).attr('off','')
+      }else{
+        $(this).addClass('active').siblings('dd').hide()
+        $(this).attr('off',true)
+      }
+    })
+
+
+
+
+});
+</script>
+
+
+</body>
+</html>

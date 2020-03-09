@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>关于我们</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/assets/layui/css/layui.css">
+  <script type="text/javascript" src="/assets/layui/layui.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+<body>
+
+  <div class="site-nav-bg">
+    <div class="site-nav w1200">
+      <p class="sn-back-home">
+        <i class="layui-icon layui-icon-home"></i>
+        <a href="commodity.html">首页</a>
+      </p>
+      <div class="sn-quick-menu">
+        <div class="login"><a href="login.html">登录</a></div>
+        <div class="sp-cart"><a href="shopcart.html">购物车</a><i class="layui-icon layui-icon-cart-simple"></i></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="header">
+    <div class="headerLayout w1200">
+      <div class="headerCon">
+        <h1 class="mallLogo">
+          <a href="#" title="农产品">
+            <img src="/assets/img/农产品小标题.png">
+          </a>
+        </h1>
+        <div class="mallSearch">
+          <!--<form action="" class="layui-form" novalidate>-->
+            <!--<input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">-->
+            <!--<button class="layui-btn" lay-submit lay-filter="formDemo">-->
+                <!--<i class="layui-icon layui-icon-search"></i>-->
+            <!--</button>-->
+            <!--<input type="hidden" name="" value="">-->
+          <!--</form>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content content-nav-base about-content">
+    <div class="main-nav">
+      <div class="inner-cont0">
+        <div class="inner-cont1 w1200">
+          <div class="inner-cont2">
+            <a href="commodity.html">所有商品</a>
+            <a href="buytoday.html">今日团购</a>
+            <a href="information.html">农产品资讯</a>
+            <a href="about.html"  class="active">关于我们</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="banner-box">
+      <div class="banner"></div>
+    </div>
+    <!--<div class="brief-content layui-clear w1200">-->
+      <!--<div class="img-box">-->
+        <!--<img src="../res/static/img/us_img1.jpg">-->
+        <!--<img class="top" src="../res/static/img/us_img2.jpg">-->
+      <!--</div>-->
+      <!--<div class="text">-->
+        <!--<p>。。。</p>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="banner-text">-->
+      <!--<div class="w1200">-->
+        <!--<p>。。。</p>-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="after-sale w1200">
+      <h1>我们的宗旨</h1>
+      <h5>最天然！</h5>
+      <h5>最特色！</h5>
+      <h5>最保障！</h5>
+      <h4>配送售后</h4>
+      <div class="item-box">
+        <div class="item item1">
+          <div class="img-box">
+            <img src="/assets/img/us_icon1.png">
+          </div>
+          <p>7天无理由退换货</p>
+        </div>
+        <div class="item item2">
+          <div class="img-box">
+            <img src="/assets/img/us_icon2.png">
+          </div>
+          <p>全场满99元顺丰包邮</p>
+        </div>
+        <div class="item item3">
+          <div class="img-box">
+            <img src="/assets/img/us_icon3.png">
+          </div>
+          <p>优质客服服务</p>
+        </div>
+        <h6>TEL：15082025399 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E-Mail：www.natural@163.com</h6>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+
+layui.config({
+    base: '/assets/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+  }).use(['mm','login_on','layer','jquery'],function(){
+      var mm = layui.mm,login_on = layui.login_on,layer = layui.layer,$ = layui.jquery;
+
+  $('html').hide();
+  $('html').fadeIn(500);
+  //显示用户
+  login_on.login_success();
+  //用户退出
+  $('.quit').on('click',function () {
+    login_on.login_quit();
+    layer.msg('已成功退出',{icon:1,time:1500},function () {
+      location.replace('/page/web/commodity.html');
+    });
+  })
+  
+    
+
+});
+</script>
+</body>
+</html>

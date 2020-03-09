@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>登录</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/assets/layui/css/layui.css">
+  <script type="text/javascript" src="/assets/layui/layui.js"></script>
+  <script type="text/javascript" src="/assets/js/admin.js"></script>
+  <script type="text/javascript" src="/assets/js/common.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+<body>
+
+  <div class="site-nav-bg">
+    <div class="site-nav w1200">
+      <p class="sn-back-home">
+        <i class="layui-icon layui-icon-home"></i>
+        <a href="commodity.html">首页</a>
+      </p>
+      <div class="sn-quick-menu">
+        <div class="login"><a href="login.html">登录</a></div>
+        <div class="sp-cart"><a href="shopcart.html">购物车</a><i class="layui-icon layui-icon-cart-simple"></i></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="header">
+    <div class="headerLayout w1200">
+      <div class="headerCon">
+        <h1 class="mallLogo">
+          <a href="#" title="农产品">
+            <img src="/assets/img/农产品小标题.png">
+          </a>
+        </h1>
+        <div class="mallSearch">
+          <form action="" class="layui-form" novalidate>
+            <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">
+                <i class="layui-icon layui-icon-search"></i>
+            </button>
+            <input type="hidden" name="" value="">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content content-nav-base  login-content">
+    <div class="main-nav">
+      <div class="inner-cont0">
+        <div class="inner-cont1 w1200">
+          <div class="inner-cont2">
+            <a href="commodity.html" class="active">所有商品</a>
+            <a href="buytoday.html">今日团购</a>
+            <a href="information.html">农产品资讯</a>
+            <a href="about.html">关于我们</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="login-bg">
+      <div class="login-cont w1200">
+        <div class="form-box">
+          <form class="layui-form" action="">
+            <legend>用户登录</legend>
+            <div class="layui-form-item">
+              <div class="layui-inline iphone">
+                <div class="layui-input-inline">
+                  <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+                  <input type="tel" name="name" id="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-inline veri-code">
+                <div class="layui-input-inline">
+                  <i class="layui-icon layui-icon-password password-icon"></i>
+                  <input id="password" type="password" name="pass" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input pnum pass">
+                  <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
+                </div>
+              </div>
+            </div>
+            <div class="layui-form-item login-btn">
+              <div class="layui-input-block">
+                <button class="layui-btn" id="login" lay-submit="" lay-filter="demo1" onclick="return false">登录</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="ng-promise-box">
+      <div class="ng-promise w1200">
+        <p class="text">
+          <a class="icon1" href="javascript:;">7天无理由退换货</a>
+          <a class="icon2" href="javascript:;">满99元全场免邮</a>
+          <a class="icon3" style="margin-right: 0" href="javascript:;">100%品质保证</a>
+        </p>
+      </div>
+    </div>
+    <div class="mod_help w1200">                                     
+      <p>
+        <a href="about.html">关于我们</a>
+        <span>|</span>
+        <a href="javascript:;">帮助中心</a>
+        <span>|</span>
+        <a href="about.html">售后服务</a>
+        <span>|</span>
+        <a href="information.html">特色农产品资讯</a>
+        <span>|</span>
+        <a href="javascript:;">关于货源</a>
+      </p>
+      <p class="coty">农产品商城版权所有 &copy; 2012-2020</p>
+    </div>
+  </div>
+  <script type="text/javascript">
+   layui.config({
+      base: '../res/static/js/util' //你存放新模块的目录，注意，不是layui的模块目录
+    }).use(['jquery','form','layer','admin'],function(){
+          var $ = layui.$,form = layui.form,layer = layui.layer,admin=layui.admin;
+
+     $('html').hide();
+     $('html').fadeIn(500);
+
+         // 表单提交、登录
+         form.on('submit(demo1)', function (data) {
+           var field = data.field;
+           console.log(field);
+
+           //表单提交
+           $.ajax({
+             type:"get",
+             data: field,
+             url: "/main/login",
+             // dataType:"json",
+             success:function (res) {
+               admin.btnLoading('#btnLoading', false);
+               if (res.code==0){
+                 layer.msg('登录成功', {icon: 1, time: 1000}, function () {
+                   location.replace('/page/web/commodity.html');
+                 });
+               }else {
+                 admin.btnLoading('#btnLoading', false);
+                 layer.msg('登录失败，请重试<br><cite>(' + res.msg + ')</cite>', {icon: 5});
+               }
+             }
+           });
+           return false;
+
+         });
+          //校验表单
+         // $("#phone").click(function () {
+         //   $("#phone").mouseout(function() {
+         //     if(!/^1\d{10}$/.test($("#phone").val())){
+         //       // layer.msg("请输入正确的手机号");
+         //       return false;
+         //     }
+         //   })
+         // });
+
+
+    })
+  </script>
+  <script>
+    // $.ajax({
+    //   type:"get",
+    //   url: "",
+    //   dataType:"json",
+    //   success:function () {
+    //
+    //   },error:function (msg) {
+    //     console.log(msg);
+    //   }
+    // });
+
+  </script>
+</body>
+</html>
