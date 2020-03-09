@@ -1,3 +1,4 @@
+登录用户接口：main/login
 所有商品（需要分页）：
                  左边侧栏分类——main/productcenter/list    （3个一组，一共9个id（小类），分3组，每组3个，每一组有个title用来介绍这一组的大类别）
                  右边分类里的条目（需要分页）——main/productdisplay/list ? {typeId} & page=1  (默认为第一类的第一页的所有条目)
