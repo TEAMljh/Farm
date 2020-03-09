@@ -10,4 +10,4 @@
 
 具体商品：main/productdisplay ？{id}     （product_detail表中具体某个单品id）
 
-搜索（模糊查询）：main/productdisplay/all  （product_detail表中所有商品条目，传值name，进行查询，展示所有符合条目。）
+搜索（模糊查询）：main/productdisplay/all  （product_detail表中所有商品条目，模糊查询name值，展示所有符合条目信息。）
