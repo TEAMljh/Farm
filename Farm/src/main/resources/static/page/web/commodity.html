@@ -66,24 +66,26 @@
         <div class="left-nav">
           <div class="title">所有分类</div>
           <div class="list-box">
-            <dl>
-             <dt>三个品类一组的msg</dt>
-             <dd><a href="javascript:;">水果类</a></dd>
-             <dd><a href="javascript:;">蔬菜类</a></dd>
-             <dd><a href="javascript:;">果实籽仁类</a></dd>
-            </dl>
-            <dl>
-             <dt>米面粮油</dt>
-             <dd><a href="javascript:;">五谷杂粮</a></dd>
-             <dd><a href="javascript:;">食用油</a></dd>
-             <dd><a href="javascript:;">调味品</a></dd>
-            </dl>
-            <dl>
-             <dt>农副产品</dt>
-             <dd><a href="javascript:;">酒茶冲饮</a></dd>
-             <dd><a href="javascript:;">肉蛋类</a></dd>
-             <dd><a href="javascript:;">零食特产</a></dd>
-            </dl>
+
+<!--            <dl>-->
+<!--             <dt>三个品类一组的msg</dt>-->
+<!--             <dd><a href="javascript:;">水果类</a></dd>-->
+<!--             <dd><a href="javascript:;">蔬菜类</a></dd>-->
+<!--             <dd><a href="javascript:;">果实籽仁类</a></dd>-->
+<!--            </dl>-->
+<!--            <dl>-->
+<!--             <dt>米面粮油</dt>-->
+<!--             <dd><a href="javascript:;">五谷杂粮</a></dd>-->
+<!--             <dd><a href="javascript:;">食用油</a></dd>-->
+<!--             <dd><a href="javascript:;">调味品</a></dd>-->
+<!--            </dl>-->
+<!--            <dl>-->
+<!--             <dt>农副产品</dt>-->
+<!--             <dd><a href="javascript:;">酒茶冲饮</a></dd>-->
+<!--             <dd><a href="javascript:;">肉蛋类</a></dd>-->
+<!--             <dd><a href="javascript:;">零食特产</a></dd>-->
+<!--            </dl>-->
+
 
           </div>
         </div>
@@ -144,31 +146,77 @@
         });
       })
 
+    //左边侧栏渲染
 
+    $.ajax({
+      type:"get",
+      url: "main/productcenter/list?typeId=1",
+      // dataType:"json",
+      success:function () {
+          console.log(1111)
+      },error:function (msg) {
+        console.log('失败');
+      }
+    });
+    // for(i=1;i<=3;i++){
+    //   left($(".list-box"),i);
+    // }
+    //
+    // function left(obj,a){
+    //   $.ajax({
+    //     type:"get",
+    //     url: "main/productcenter/list?typeId=" + a ,
+    //     dataType:"json",
+    //     success:function (res) {
+    //       obj.append("<dl><dt class='list'>" + res[0].typeName + "</dt></dl>");
+    //       for(var i = 0 ;i < res.length ; i++){
+    //         $('.list').after("<dd><a href='javascript:; ' id='"+ res[i].id +"'>"+res[i].name+"</a></dd>")
+    //       }
+    //     },error:function (msg) {
+    //
+    //     }
+    //   });
+    // }
 
+    //首页默认
+    // $.ajax({
+    //   type:"get",
+    //   url: "",
+    //   dataType:"json",
+    //   success:function () {
+    //
+    //   },error:function (msg) {
+    //     console.log(msg);
+    //   }
+    // });
 
     // 模版引擎导入
      var html = demo.innerHTML;
      var listCont = document.getElementById('list-cont');
      // console.log(layui.router("#/about.html"))
+
+
     mm.request({
         url: '/page/web/json/commodity.json',
         success : function(res){
           console.log(res)
           listCont.innerHTML = mm.renderHtml(html,res);
-
-          //分页
-          laypage.render({
-            elem: 'demo0'
-            ,count: res.menu.milk.content.length //数据总数
-            ,limit:6
-          });
-
         },
         error: function(res){
           console.log(res);
         }
-      })
+      });
+
+    //分页
+    // laypage.render({
+    //   elem: 'demo0'
+    //   ,count: res.menu.milk.content.length //数据总数
+    //   ,limit:6
+    // });
+
+
+
+
 
     $('.sort a').on('click',function(){
       $(this).addClass('active').siblings().removeClass('active');

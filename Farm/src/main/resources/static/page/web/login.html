@@ -143,6 +143,9 @@
                admin.btnLoading('#btnLoading', false);
                if (res.code==0){
                  layer.msg('登录成功', {icon: 1, time: 1000}, function () {
+                   sessionStorage.setItem('login_success',res.code);
+                   sessionStorage.setItem('username',$('#username').val());
+                   // console.log(sessionStorage.getItem('username'));
                    location.replace('/page/web/commodity.html');
                  });
                }else {
