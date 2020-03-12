@@ -26,7 +26,7 @@ public class InformationController {
 
     @GetMapping("news/list")
     public Object news(@RequestParam(required = false, defaultValue = "1") int page,
-                       @RequestParam(required = false, defaultValue = "10") int limit) {
+                       @RequestParam(required = false, defaultValue = "3") int limit) {
         Page<Information> poPage = new Page<>(page, limit);
         QueryWrapper<Information> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderBy(true, false, "create_time");

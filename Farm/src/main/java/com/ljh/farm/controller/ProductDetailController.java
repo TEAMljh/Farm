@@ -46,7 +46,7 @@ public class ProductDetailController {
 
     @GetMapping("today")
     public Object today(@RequestParam(required = false, defaultValue = "1") int page,
-                        @RequestParam(required = false, defaultValue = "10") int limit) {
+                        @RequestParam(required = false, defaultValue = "8") int limit) {
 
 //        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 //        System.out.println(df.format(new Date()));
@@ -65,15 +65,15 @@ public class ProductDetailController {
     }
 
     @GetMapping("productdisplay/all")
-    public Object productdisplayAll(ProductDetail productDetail, @RequestParam(required = false, defaultValue = "1") Integer typeId, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
-                                    @RequestParam(required = false, defaultValue = "10") int limit) {
+    public Object productdisplayAll(String name, @RequestParam(required = false, defaultValue = "1") Integer typeId, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
+                                    @RequestParam(required = false, defaultValue = "6") int limit) {
         Page<ProductDetail> poPage = new Page<>(page, limit);
         QueryWrapper<ProductDetail> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderBy(true, false, "create_time").eq("type_id", typeId);
         LambdaQueryWrapper<ProductDetail> lambdaQueryWrapper = queryWrapper.lambda();
         // 根据名称搜索
-        if (StringUtils.isNotEmpty(productDetail.getName())) {
-            lambdaQueryWrapper.like(ProductDetail::getName, productDetail.getName());
+        if (StringUtils.isNotEmpty(name)) {
+            lambdaQueryWrapper.like(ProductDetail::getName, name);
         }
         IPage<ProductDetail> iPage = productDetailService.page(poPage, queryWrapper);
         return LayUIResult.ok(iPage);
