@@ -36,10 +36,8 @@
         </h1>
         <div class="mallSearch">
           <form action="" class="layui-form" novalidate>
-            <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">
-                <i class="layui-icon layui-icon-search"></i>
-            </button>
+            <input id="search_pro" type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
+            <input type="button" class="search_bt" class="layui-btn" lay-submit lay-filter="formDemo"><i class="layui-icon layui-icon-search" class="search_bt"></i>
             <input type="hidden" name="" value="">
           </form>
         </div>
@@ -66,24 +64,24 @@
         <div class="left-nav">
           <div class="title">所有分类</div>
           <div class="list-box">
-            <dl>
-             <dt>三个品类一组的msg</dt>
-             <dd><a href="javascript:;">水果类</a></dd>
-             <dd><a href="javascript:;">蔬菜类</a></dd>
-             <dd><a href="javascript:;">果实籽仁类</a></dd>
-            </dl>
-            <dl>
-             <dt>米面粮油</dt>
-             <dd><a href="javascript:;">五谷杂粮</a></dd>
-             <dd><a href="javascript:;">食用油</a></dd>
-             <dd><a href="javascript:;">调味品</a></dd>
-            </dl>
-            <dl>
-             <dt>农副产品</dt>
-             <dd><a href="javascript:;">酒茶冲饮</a></dd>
-             <dd><a href="javascript:;">肉蛋类</a></dd>
-             <dd><a href="javascript:;">零食特产</a></dd>
-            </dl>
+<!--            <dl>-->
+<!--             <dt>三个品类一组的msg</dt>-->
+<!--             <dd><a href="javascript:;">水果类</a></dd>-->
+<!--             <dd><a href="javascript:;">蔬菜类</a></dd>-->
+<!--             <dd><a href="javascript:;">果实籽仁类</a></dd>-->
+<!--            </dl>-->
+<!--            <dl>-->
+<!--             <dt>米面粮油</dt>-->
+<!--             <dd><a href="javascript:;">五谷杂粮</a></dd>-->
+<!--             <dd><a href="javascript:;">食用油</a></dd>-->
+<!--             <dd><a href="javascript:;">调味品</a></dd>-->
+<!--            </dl>-->
+<!--            <dl>-->
+<!--             <dt>农副产品</dt>-->
+<!--             <dd><a href="javascript:;">酒茶冲饮</a></dd>-->
+<!--             <dd><a href="javascript:;">肉蛋类</a></dd>-->
+<!--             <dd><a href="javascript:;">零食特产</a></dd>-->
+<!--            </dl>-->
 
           </div>
         </div>
@@ -103,22 +101,25 @@
             </div>
             <!-- 模版引擎导入 -->
             <script type="text/html" id="demo">
-              {{# layui.each(d.menu.milk.content,function(index,item){}}    
+              {{# layui.each(d.data.records,function(index,item){}}
                 <div class="item">
                   <div class="img">
                     <a href="javascript:;"><img src="{{item.img}}"></a>
                   </div>
                   <div class="text">
-                    <p class="title">{{item.title}}</p>
+                    <p class="title">{{item.name}}</p>
                     <p class="price">
                       <span class="pri">{{item.pri}}</span>
-                      <span class="nub">{{item.nub}}</span>
+                      <span class="nub">{{item.discount}}折</span>
                     </p>
                   </div>
                 </div>
               {{# }); }}
             </script>
-            <div id="demo0" style="text-align: center;"></div>
+            <div id="onpage" style="text-align: center;">
+              <button class="prevpage">上一页</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <button class="nextpage">下一页</button>
+            </div>
           </div>
         </div>
       </div>
@@ -130,9 +131,42 @@
     base: '/assets/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
   }).use(['mm','laypage','jquery','login_on','layer'],function(){
       var laypage = layui.laypage,$ = layui.$,mm = layui.mm,login_on = layui.login_on,layer = layui.layer;
+      var pages = null;
+      var current = null;
 
     $('html').hide();
     $('html').fadeIn(500);
+
+    //模糊查询
+    $(document).on('click','.search_bt',function () {
+      var keyWord = $('#search_pro').val();
+      search_pro(keyWord);
+      console.log(keyWord)
+    });
+
+
+    //模糊查询
+    function search_pro(p){
+      var html = demo.innerHTML;
+      var listCont = document.getElementById('list-cont');
+      // console.log(layui.router("#/about.html"))
+      mm.request({
+        url: '/main/productdisplay/all?name='+ p,
+        async: false,
+        success : function(res){
+          listCont.innerHTML = mm.renderHtml(html,res);
+          pages = res.data.pages;
+          current = res.data.current;
+          if (pages === 1) {
+            $('#onpage').hide();
+          }else{
+            $('#onpage').show();
+          }
+        },
+        error: function(res){
+        }
+      });
+    }
 
       //显示用户
        login_on.login_success();
@@ -144,36 +178,110 @@
         });
       })
 
+    //左边侧栏渲染
+    for(i=1;i<=3;i++){
+      left($(".list-box"),i);
+    }
+    function left(obj,a){
+      $.ajax({
+        type:"get",
+        url: "/main/productcenter/list" + "?typeId=" + a,
+        contentType: "json",
+        success:function (res) {
+          obj.append("<dl><dt class='"+ a +"'>" + res[0].typeName + "</dt></dl>");
+          // console.log(a);
+          for(var i = 0 ;i < res.length ; i++){
+            $("."+ a).after("<dd class='mid_class' id='"+ res[i].id +"'><a href='javascript:; '>"+res[i].name+"</a></dd>")
+          }
+        },error:function () {
+        }
+      });
+    }
 
+
+    //默认第一类第一页显示
+    going(1,1);
+
+    //点击小类，展示商品
+      $(document).on('click',".mid_class",function(){
+        sessionStorage.setItem('typeid',$(this).attr('id'));
+
+        var page = 1;
+        going(sessionStorage.getItem('typeid'),page);
+
+      });
 
 
     // 模版引擎导入
-     var html = demo.innerHTML;
-     var listCont = document.getElementById('list-cont');
-     // console.log(layui.router("#/about.html"))
-    mm.request({
-        url: '/page/web/json/commodity.json',
+    //分页内容显示的方法
+    function going(typeid,page){
+      var html = demo.innerHTML;
+      var listCont = document.getElementById('list-cont');
+      // console.log(layui.router("#/about.html"))
+      mm.request({
+        url: '/main/productdisplay/list' + '?typeId='+ typeid + '&page='+ page,
+        async: false,
         success : function(res){
-          console.log(res)
           listCont.innerHTML = mm.renderHtml(html,res);
-
-          //分页
-          laypage.render({
-            elem: 'demo0'
-            ,count: res.menu.milk.content.length //数据总数
-            ,limit:6
-          });
-
+          pages = res.data.pages;
+          current = res.data.current;
+          if (pages === 1) {
+            $('#onpage').hide();
+          }else{
+            $('#onpage').show();
+          }
         },
         error: function(res){
-          console.log(res);
         }
-      })
+      });
+    }
 
-    $('.sort a').on('click',function(){
+
+
+  //分页
+  $(document).on('click','.prevpage',function () {
+    $('#list-cont').empty();
+    if (current > 1) {
+      $('.nextpage').removeAttr('disabled');
+      $('.nextpage').css('color', '#5E6166');
+      current--;
+      going(sessionStorage.getItem('typeid'),current);
+      $('.prevpage').css('color', '#5E6166')
+    } else {
+      $('.prevpage').css('color', '#718CAF');
+      current = 1;
+      going(sessionStorage.getItem('typeid'),current);
+      $('.prevpage').attr('disabled', 'true')
+    }
+  });
+  $(document).on('click','.nextpage',function () {
+    // $('#list-cont').empty();
+    if (current < pages) {
+      $('.prevpage').removeAttr('disabled');
+      $('.prevpage').css('color', '#5E6166');
+      current++;
+      going(sessionStorage.getItem('typeid'),current);
+      $('.nextpage').css('color', '#5E6166')
+    } else {
+      $('.nextpage').css('color', '#718CAF');
+      current = pages;
+      going(sessionStorage.getItem('typeid'),current);
+      $('.nextpage').attr('disabled', 'true')
+    }
+  })
+
+
+
+
+
+
+
+
+
+    $(document).on('click','.sort a',function(){
       $(this).addClass('active').siblings().removeClass('active');
     })
-    $('.list-box dt').on('click',function(){
+    $(document).on('click','.list-box dt',function(){
       if($(this).attr('off')){
         $(this).removeClass('active').siblings('dd').show()
         $(this).attr('off','')

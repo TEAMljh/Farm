@@ -73,16 +73,16 @@
 
   <!-- 文章导入  模版引擎导入 -->
 <script type="text/html" id="demo">
-    {{# layui.each(d.listCont,function(index,item){
+    {{# layui.each(d.data.records,function(index,item){
     }}
     <div class="item">
       <div class="img">
         <img src={{item.img}} alt="">
       </div>
       <div class="text">
-        <h4>{{item.text}}</h4>
-        <p class="data">{{item.data}}</p>
-        <p class="info-cont">{{item.infoCont}}</p>
+        <h4>{{item.name}}</h4>
+        <p class="data">{{item.createTime}}</p>
+        <p class="info-cont">{{item.content}}</p>
       </div>
     </div>
     {{# })}}
@@ -107,33 +107,34 @@
       });
     })
 
-
     // 文章导入 模版引擎导入
      var html = demo.innerHTML;
      var listCont = document.getElementById('list-cont');
       mm.request({
-        url: '/page/web/json/information.json',
+        url: '/main/news/list',
+        async: false,
         success : function(res){
-          console.log(res)
           listCont.innerHTML = mm.renderHtml(html,res);
 
-          //分页
-          console.log(res.listCont.length);
-          laypage.render({
-            elem: 'demo0'
-            ,count:res.listCont.length//数据总条数
-            ,limit:3  //每页条数
-            , jump:function (obj,first) {
-              //obj是当前分页的所有选项值，first是否首次，用于是否首次加载判断。
-
-
-          }
-          });
         },
         error: function(res){
           console.log(res);
         }
-      })
+      });
+
+
+    //分页
+    // console.log(res.listCont.length);
+    // laypage.render({
+    //   elem: 'demo0'
+    //   ,count:res.listCont.length//数据总条数
+    //   ,limit:3  //每页条数
+    //   , jump:function (obj,first) {
+    //     //obj是当前分页的所有选项值，first是否首次，用于是否首次加载判断。
+    //
+    //
+    //   }
+    // });
 });
 
 </script>

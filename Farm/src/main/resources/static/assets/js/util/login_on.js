@@ -12,7 +12,7 @@ layui.define(['jquery','layer'],function(exports){
         //用户登录成功
         login_success : function(){
             if(sessionStorage.getItem('login_success') == 0){
-                console.log(sessionStorage.getItem('username'));
+                // console.log(sessionStorage.getItem('username'));
                 $('.login').text(sessionStorage.getItem('username')).append('&nbsp;&nbsp;&nbsp;&nbsp;<a class="quit">退出</a>');
             }
         },

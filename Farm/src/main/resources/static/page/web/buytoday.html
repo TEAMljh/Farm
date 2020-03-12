@@ -80,15 +80,15 @@
         <div class="list-cont">
         <div class="list-cont">
           <div class="item-box layui-clear tuan">
-              {{# layui.each(d.productList,function(index,item){}}
+              {{# layui.each(d.data.records,function(index,item){}}
               <div class="item">
                 <img src="{{item.img}}" alt="">
                 <div class="text-box">
-                  <p class="title">{{item.title}}</p>
+                  <p class="title">{{item.name}}</p>
                   <p class="plic">
-                    <span class="ciur-pic">{{item.ciurPic}}</span>
-                    <span class="Ori-pic">{{item.OriPic}}</span>
-                    <span class="discount">{{item.discount}}</span>
+                    <span class="ciur-pic">{{item.pri}}</span>
+                    <span class="Ori-pic">{{item.oldPri}}</span>
+                    <span class="discount">{{item.discount}}折</span>
                   </p>
                 </div>
               </div>
@@ -120,13 +120,18 @@
       <!--</div>-->
     </div>
   </script>
-  <div id="demo0" style="text-align: center;"></div>
+  <div id="onpage" style="text-align: center;">
+    <button class="prevpage">上一页</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="nextpage">下一页</button>
+  </div>
 <script>
 
   layui.config({
     base: '/assets/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
   }).use(['mm','laypage','jquery','login_on','layer'],function(){
       var laypage = layui.laypage,$ = layui.$,mm = layui.mm,login_on = layui.login_on,layer = layui.layer;
+    var pages = null;
+    var current = null;
 
     $('html').hide();
     $('html').fadeIn(500);
@@ -156,31 +161,62 @@
       })
 
     //模版引擎导入
-     var html = demo.innerHTML;
-     var listCont = document.getElementById('list-cont');
-     // console.log(layui.router("#/about.html"))
-    mm.request({
-        url: '/page/web/json/buytoday.json',
+    going(1);
+    function going(num){
+      var html = demo.innerHTML;
+      var listCont = document.getElementById('list-cont');
+      // console.log(layui.router("#/about.html"))
+      mm.request({
+        url: '/main/today'+ "?page=" + num,
         success : function(res){
-          console.log(res)
-          listCont.innerHTML = mm.renderHtml(html,res)
-
-          //分页
-          laypage.render({
-             elem: 'demo0'
-            ,count:res.productList.length//数据总条数
-            ,limit:8 //每页条数
-            , jump:function (obj,first) {
-              //obj是当前分页的所有选项值，first是否首次，用于是否首次加载判断。
-
-
-            }
-          });
+          listCont.innerHTML = mm.renderHtml(html,res);
+          pages = res.data.pages;
+          current = res.data.current;
+          //判断显示分页
+          if (pages === 1) {
+            $('#onpage').hide();
+          }else{
+            $('#onpage').show();
+          }
         },
         error: function(res){
-          console.log(res);
         }
       })
+    }
+
+
+    //分页
+    $(document).on('click','.prevpage',function () {
+      $('#list-cont').empty();
+      if (current > 1) {
+        $('.nextpage').removeAttr('disabled');
+        $('.nextpage').css('color', '#5E6166');
+        current--;
+        going(current);
+        $('.prevpage').css('color', '#5E6166')
+      } else {
+        $('.prevpage').css('color', '#718CAF');
+        current = 1;
+        going(current);
+        $('.prevpage').attr('disabled', 'true')
+      }
+    });
+    $(document).on('click','.nextpage',function () {
+      // $('#list-cont').empty();
+      if (current < pages) {
+        $('.prevpage').removeAttr('disabled');
+        $('.prevpage').css('color', '#5E6166');
+        current++;
+        going(current);
+        $('.nextpage').css('color', '#5E6166')
+      } else {
+        $('.nextpage').css('color', '#718CAF');
+        current = pages;
+        going(current);
+        $('.nextpage').attr('disabled', 'true')
+      }
+    })
+
 
 });
 </script>
