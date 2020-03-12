@@ -1,8 +1,6 @@
 package com.ljh.farm.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
@@ -17,10 +15,7 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @TableName("user")
-public class User {
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+public class User extends Base{
 
     @TableField("name")
     private String name;

@@ -1,14 +1,12 @@
 package com.ljh.farm.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 /**
  * @Description
- * @Author rqy
+ * @Author ljh
  * @Date 2020/3/11 15:26
  */
 @Data
@@ -17,10 +15,7 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @TableName("product_center")
-public class ProductCenter {
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+public class ProductCenter extends Base{
 
     @TableField("name")
     private String name;

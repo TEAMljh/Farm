@@ -1,8 +1,6 @@
 package com.ljh.farm.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -20,10 +18,7 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @TableName("information")
-public class Information {
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+public class Information extends Base{
 
     @TableField("name")
     private String name;
