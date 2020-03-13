@@ -37,7 +37,7 @@
         <div class="mallSearch">
           <form action="" class="layui-form" novalidate>
             <input id="search_pro" type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
-            <input type="button" class="search_bt" class="layui-btn" lay-submit lay-filter="formDemo"><i class="layui-icon layui-icon-search" class="search_bt"></i>
+            <input type="button" class="search_bt" class="layui-btn" lay-verify="required" value="🔍">
             <input type="hidden" name="" value="">
           </form>
         </div>
@@ -64,24 +64,6 @@
         <div class="left-nav">
           <div class="title">所有分类</div>
           <div class="list-box">
-<!--            <dl>-->
-<!--             <dt>三个品类一组的msg</dt>-->
-<!--             <dd><a href="javascript:;">水果类</a></dd>-->
-<!--             <dd><a href="javascript:;">蔬菜类</a></dd>-->
-<!--             <dd><a href="javascript:;">果实籽仁类</a></dd>-->
-<!--            </dl>-->
-<!--            <dl>-->
-<!--             <dt>米面粮油</dt>-->
-<!--             <dd><a href="javascript:;">五谷杂粮</a></dd>-->
-<!--             <dd><a href="javascript:;">食用油</a></dd>-->
-<!--             <dd><a href="javascript:;">调味品</a></dd>-->
-<!--            </dl>-->
-<!--            <dl>-->
-<!--             <dt>农副产品</dt>-->
-<!--             <dd><a href="javascript:;">酒茶冲饮</a></dd>-->
-<!--             <dd><a href="javascript:;">肉蛋类</a></dd>-->
-<!--             <dd><a href="javascript:;">零食特产</a></dd>-->
-<!--            </dl>-->
 
           </div>
         </div>
@@ -102,14 +84,14 @@
             <!-- 模版引擎导入 -->
             <script type="text/html" id="demo">
               {{# layui.each(d.data.records,function(index,item){}}
-                <div class="item">
+                <div class="item pro_detail"  id="{{item.id}}">
                   <div class="img">
-                    <a href="javascript:;"><img src="{{item.img}}"></a>
+                    <a href="javascript:;" title="点我!了解详情!"><img src="{{item.img}}"></a>
                   </div>
                   <div class="text">
                     <p class="title">{{item.name}}</p>
                     <p class="price">
-                      <span class="pri">{{item.pri}}</span>
+                      <span class="pri">{{item.pri}}元</span>
                       <span class="nub">{{item.discount}}折</span>
                     </p>
                   </div>
@@ -117,8 +99,8 @@
               {{# }); }}
             </script>
             <div id="onpage" style="text-align: center;">
-              <button class="prevpage">上一页</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <button class="nextpage">下一页</button>
+              <button class="prevpage layui-btn">上一页</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <button class="nextpage layui-btn">下一页</button>
             </div>
           </div>
         </div>
@@ -133,39 +115,39 @@
       var laypage = layui.laypage,$ = layui.$,mm = layui.mm,login_on = layui.login_on,layer = layui.layer;
       var pages = null;
       var current = null;
+      sessionStorage.setItem('typeid',1);
 
     $('html').hide();
     $('html').fadeIn(500);
 
-    //模糊查询
-    $(document).on('click','.search_bt',function () {
-      var keyWord = $('#search_pro').val();
-      search_pro(keyWord);
-      console.log(keyWord)
-    });
+    // $('#onpage').show(1500);
 
-
-    //模糊查询
-    function search_pro(p){
-      var html = demo.innerHTML;
-      var listCont = document.getElementById('list-cont');
-      // console.log(layui.router("#/about.html"))
-      mm.request({
-        url: '/main/productdisplay/all?name='+ p,
-        async: false,
-        success : function(res){
-          listCont.innerHTML = mm.renderHtml(html,res);
-          pages = res.data.pages;
-          current = res.data.current;
-          if (pages === 1) {
-            $('#onpage').hide();
-          }else{
-            $('#onpage').show();
-          }
-        },
-        error: function(res){
+    //模糊查询(点击查询或按enter键)
+      $(document).on('click','.search_bt',function () {
+        var keyWord = $('#search_pro').val();
+        login_on.login_search(keyWord);
+      });
+      $(document).on('keypress','#search_pro',function (e) {
+        var keyWord = $('#search_pro').val();
+        if(e.which == 13){
+          console.log(1111111111111);
+          login_on.login_search(keyWord);
+          return false;   //禁止form表单里input用enter提交的自动刷新页面
         }
       });
+
+
+
+
+
+    //判断其他地方sous
+    if (sessionStorage.getItem('keyWord') == null) {
+      //默认第一类第一页显示
+      going(sessionStorage.getItem('typeid'),1);
+    }else{
+      console.log(sessionStorage.getItem('keyWord'));
+      login_on.login_search(sessionStorage.getItem('keyWord'));
+      sessionStorage.removeItem('keyWord');
     }
 
       //显示用户
@@ -198,19 +180,21 @@
       });
     }
 
-
-    //默认第一类第一页显示
-    going(1,1);
-
     //点击小类，展示商品
       $(document).on('click',".mid_class",function(){
         sessionStorage.setItem('typeid',$(this).attr('id'));
-
         var page = 1;
         going(sessionStorage.getItem('typeid'),page);
+        console.log("点击第" + sessionStorage.getItem('typeid') + "类");
 
       });
 
+      //点击进入详情页
+    $(document).on('click','.pro_detail',function () {
+      sessionStorage.setItem('pro_detail',this.id);
+      console.log("这是具体商品：" + sessionStorage.getItem('pro_detail'));
+      window.location.href = '/page/web/details.html';
+    })
 
     // 模版引擎导入
     //分页内容显示的方法
@@ -225,7 +209,7 @@
           listCont.innerHTML = mm.renderHtml(html,res);
           pages = res.data.pages;
           current = res.data.current;
-          if (pages === 1) {
+          if (pages === 1 || pages ===0) {
             $('#onpage').hide();
           }else{
             $('#onpage').show();
@@ -243,27 +227,20 @@
     $('#list-cont').empty();
     if (current > 1) {
       $('.nextpage').removeAttr('disabled');
-      $('.nextpage').css('color', '#5E6166');
       current--;
       going(sessionStorage.getItem('typeid'),current);
-      $('.prevpage').css('color', '#5E6166')
     } else {
-      $('.prevpage').css('color', '#718CAF');
       current = 1;
       going(sessionStorage.getItem('typeid'),current);
       $('.prevpage').attr('disabled', 'true')
     }
   });
   $(document).on('click','.nextpage',function () {
-    // $('#list-cont').empty();
     if (current < pages) {
       $('.prevpage').removeAttr('disabled');
-      $('.prevpage').css('color', '#5E6166');
       current++;
       going(sessionStorage.getItem('typeid'),current);
-      $('.nextpage').css('color', '#5E6166')
     } else {
-      $('.nextpage').css('color', '#718CAF');
       current = pages;
       going(sessionStorage.getItem('typeid'),current);
       $('.nextpage').attr('disabled', 'true')

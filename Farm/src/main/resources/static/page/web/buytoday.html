@@ -36,10 +36,8 @@
         </h1>
         <div class="mallSearch">
           <form action="" class="layui-form" novalidate>
-            <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">
-                <i class="layui-icon layui-icon-search"></i>
-            </button>
+            <input id="search_pro" type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
+            <input type="button" class="search_bt" class="layui-btn" lay-verify="required" value="🔍">
             <input type="hidden" name="" value="">
           </form>
         </div>
@@ -81,20 +79,23 @@
         <div class="list-cont">
           <div class="item-box layui-clear tuan">
               {{# layui.each(d.data.records,function(index,item){}}
-              <div class="item">
-                <img src="{{item.img}}" alt="">
+              <div class="item pro_detail" id="{{item.id}}">
+                <a href="javascript:;" title="今日团购!快来抢购!"><img src="{{item.img}}"></a>
                 <div class="text-box">
                   <p class="title">{{item.name}}</p>
                   <p class="plic">
-                    <span class="ciur-pic">{{item.pri}}</span>
-                    <span class="Ori-pic">{{item.oldPri}}</span>
+                    <stron style="color:#ee0000;font-size: 30px; "><span class="ciur-pic">￥{{item.pri}}</span></stron>
+                    <span class="Ori-pic">￥{{item.oldPri}}</span>
                     <span class="discount">{{item.discount}}折</span>
                   </p>
                 </div>
               </div>
               {{#})}}
           </div>
-
+          <div id="onpage" style="text-align: center;">
+            <button class="prevpage layui-btn">上一页</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="nextpage layui-btn">下一页</button>
+          </div>
         </div>
       </div>  
     </div>
@@ -120,10 +121,7 @@
       <!--</div>-->
     </div>
   </script>
-  <div id="onpage" style="text-align: center;">
-    <button class="prevpage">上一页</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button class="nextpage">下一页</button>
-  </div>
+
 <script>
 
   layui.config({
@@ -146,19 +144,18 @@
       });
     })
 
-      $('body').on('click','*[data-content]',function(){
-        $(this).addClass('active').siblings().removeClass('active')
-        var dataConte = $(this).attr('data-content');
-        $('*[cont]').each(function(i,item){
-          var itemCont = $(item).attr('cont');
-          console.log(item)
-          if(dataConte === itemCont){
-            $(item).removeClass('layui-hide');
-          }else{
-            $(item).addClass('layui-hide');
-          }
-        })
-      })
+    //模糊查询
+    $(document).on('click','.search_bt',function () {
+      sessionStorage.setItem('keyWord',$('#search_pro').val());
+      window.location.href = '/page/web/commodity.html';
+    });
+
+    //点击进入详情页
+    $(document).on('click','.pro_detail',function () {
+      sessionStorage.setItem('pro_detail',this.id);
+      console.log("这是具体商品：" + sessionStorage.getItem('pro_detail'));
+      window.location.href = '/page/web/details.html';
+    })
 
     //模版引擎导入
     going(1);
@@ -173,7 +170,7 @@
           pages = res.data.pages;
           current = res.data.current;
           //判断显示分页
-          if (pages === 1) {
+          if (pages === 1 || pages ===0) {
             $('#onpage').hide();
           }else{
             $('#onpage').show();
@@ -190,12 +187,9 @@
       $('#list-cont').empty();
       if (current > 1) {
         $('.nextpage').removeAttr('disabled');
-        $('.nextpage').css('color', '#5E6166');
         current--;
         going(current);
-        $('.prevpage').css('color', '#5E6166')
       } else {
-        $('.prevpage').css('color', '#718CAF');
         current = 1;
         going(current);
         $('.prevpage').attr('disabled', 'true')
@@ -205,12 +199,9 @@
       // $('#list-cont').empty();
       if (current < pages) {
         $('.prevpage').removeAttr('disabled');
-        $('.prevpage').css('color', '#5E6166');
         current++;
         going(current);
-        $('.nextpage').css('color', '#5E6166')
       } else {
-        $('.nextpage').css('color', '#718CAF');
         current = pages;
         going(current);
         $('.nextpage').attr('disabled', 'true')

@@ -38,10 +38,8 @@
         </h1>
         <div class="mallSearch">
           <form action="" class="layui-form" novalidate>
-            <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">
-                <i class="layui-icon layui-icon-search"></i>
-            </button>
+            <input id="search_pro" type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
+            <input type="button" class="search_bt" class="layui-btn" lay-verify="required" value="🔍">
             <input type="hidden" name="" value="">
           </form>
         </div>
@@ -87,6 +85,9 @@
               <div class="layui-input-block">
                 <button class="layui-btn" id="login" lay-submit="" lay-filter="demo1" onclick="return false">登录</button>
               </div>
+              <div class="layui-input-block">
+                <button class="layui-btn" id="register" lay-submit="" lay-filter="demo2" onclick="return false">注册</button>
+              </div>
             </div>
           </form>
         </div>
@@ -128,6 +129,12 @@
      $('html').hide();
      $('html').fadeIn(500);
 
+     //模糊查询
+     $(document).on('click','.search_bt',function () {
+       sessionStorage.setItem('keyWord',$('#search_pro').val());
+       window.location.href = '/page/web/commodity.html';
+     });
+
          // 表单提交、登录
          form.on('submit(demo1)', function (data) {
            var field = data.field;
@@ -156,15 +163,23 @@
            return false;
 
          });
-          //校验表单
-         // $("#phone").click(function () {
-         //   $("#phone").mouseout(function() {
-         //     if(!/^1\d{10}$/.test($("#phone").val())){
-         //       // layer.msg("请输入正确的手机号");
-         //       return false;
-         //     }
-         //   })
-         // });
+
+         //注册
+     $('#register').on('click',function () {
+           $.ajax({
+             type:"get",
+             url: "",
+             data: {
+               name: $('#username').val(),
+               pass: $('#password').val()
+             },
+             success:function () {
+               layer.msg("注册成功！请登录！")
+             },error:function (msg) {
+               console.log(msg);
+             }
+           });
+     })
 
 
     })

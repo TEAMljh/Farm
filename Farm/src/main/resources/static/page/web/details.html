@@ -36,10 +36,8 @@
         </h1>
         <div class="mallSearch">
           <form action="" class="layui-form" novalidate>
-            <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">
-                <i class="layui-icon layui-icon-search"></i>
-            </button>
+            <input id="search_pro" type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
+            <input type="button" class="search_bt" class="layui-btn" lay-verify="required" value="🔍">
             <input type="hidden" name="" value="">
           </form>
         </div>
@@ -71,26 +69,26 @@
       </div>
       <div class="product-intro layui-clear">
         <div class="preview-wrap">
-          <a href="javascript:;"><img src="/assets/img/details_img1.jpg"></a>
+          <a href="javascript:;"><img src="" class="detail_img" style="width: 400px;height: 400px;"></a>
         </div>
         <div class="itemInfo-wrap">
           <div class="itemInfo">
             <div class="title">
-              <h4>男女宝宝秋冬装套装0一1岁婴儿衣服潮加厚连体衣保暖冬季外出抱衣 </h4>
+              <h4 class="detail_name"></h4>
               <span>
                 <!--<i class="layui-icon layui-icon-rate-solid"></i>-->
                 <!--收藏-->
               </span>
             </div>
             <div class="summary">
-              <p class="reference"><span>参考价</span> <del>￥280.00</del></p>
-              <p class="activity"><span>活动价</span><strong class="price"><i>￥</i>99.00</strong></p>
+              <p class="reference"><span>参考价</span> <del class="detail_old"></del></p>
+              <p class="activity"><span>活动价</span><strong class="price"><i>￥</i><span class="detail_pri"></span></strong></p>
               <p class="address-box"><span>送&nbsp;&nbsp;&nbsp;至</span>
-                <strong class="address">江西&nbsp;&nbsp;南昌&nbsp;&nbsp;东湖区</strong></p>
+                <strong class="address detail_address">江西&nbsp;&nbsp;南昌&nbsp;&nbsp;东湖区</strong></p>
             </div>
             <div class="choose-attrs">
-              <div class="color layui-clear"><span class="title">单品规格</span> <div class="color-cont"><span class="btn">单品规格明细</span> </div></div>
-              <div class="number layui-clear"><span class="title">数&nbsp;&nbsp;&nbsp;量</span><div class="number-cont"><span class="cut btn">-</span><input onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" maxlength="4" type="" name="" value="1"><span class="add btn">+</span></div></div>
+              <div class="color layui-clear"><span class="title">单品规格</span> <div class="color-cont"><span class="detail_single"></span> </div></div>
+              <div class="number layui-clear"><span class="title">数&nbsp;&nbsp;&nbsp;量</span><div class="number-cont"><span class="cut btn">-</span><input onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" maxlength="4" type="" name="" placeholder="1" value="1" class="num"><span class="add btn">+</span></div></div>
             </div>
             <div class="choose-btns">
               <button class="layui-btn layui-btn-primary purchase-btn">立刻购买</button>
@@ -100,35 +98,6 @@
         </div>
       </div>
       <div class="layui-clear">
-        <!--<div class="aside">-->
-          <!--<h4>热销推荐</h4>-->
-          <!--<div class="item-list">-->
-            <!--<div class="item">-->
-              <!--<img src="/assets/img/details_img2.jpg">-->
-              <!--<p><span>可爱宝宝粉色连体秋裤</span><span class="pric">￥99.00</span></p>-->
-            <!--</div>-->
-            <!--<div class="item">-->
-              <!--<img src="/assets/img/details_img2.jpg">-->
-              <!--<p><span>可爱宝宝粉色连体秋裤</span><span class="pric">￥99.00</span></p>-->
-            <!--</div>-->
-            <!--<div class="item">-->
-              <!--<img src="/assets/img/details_img2.jpg">-->
-              <!--<p><span>可爱宝宝粉色连体秋裤</span><span class="pric">￥99.00</span></p>-->
-            <!--</div>-->
-            <!--<div class="item">-->
-              <!--<img src="/assets/img/details_img2.jpg">-->
-              <!--<p><span>可爱宝宝粉色连体秋裤</span><span class="pric">￥99.00</span></p>-->
-            <!--</div>-->
-            <!--<div class="item">-->
-              <!--<img src="/assets/img/details_img2.jpg">-->
-              <!--<p><span>可爱宝宝粉色连体秋裤</span><span class="pric">￥99.00</span></p>-->
-            <!--</div>-->
-            <!--<div class="item">-->
-              <!--<img src="/assets/img/details_img2.jpg">-->
-              <!--<p><span>可爱宝宝粉色连体秋裤</span><span class="pric">￥99.00</span></p>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
         <div class="detail">
           <h4>详情</h4>
           <div class="item">
@@ -144,6 +113,9 @@
   }).use(['mm','jquery','layer','login_on'],function(){
       var mm = layui.mm,$ = layui.$,layer = layui.layer,login_on = layui.login_on;
 
+    $('html').hide();
+    $('html').fadeIn(500);
+
     //显示用户
     login_on.login_success();
     //用户退出
@@ -153,6 +125,70 @@
         location.replace('/page/web/login.html');
       });
     })
+
+    //模糊查询
+    $(document).on('click','.search_bt',function () {
+      sessionStorage.setItem('keyWord',$('#search_pro').val());
+      window.location.href = '/page/web/commodity.html';
+    });
+
+
+    //获取具体商品信息
+        var pro_detail = sessionStorage.getItem('pro_detail');
+        console.log("这是具体商品：" + pro_detail);
+        show(pro_detail);
+
+    function show(pro_detail){
+      $.ajax({
+        type:"get",
+        url: "/main/productdisplay?id=" + pro_detail,
+        dataType:"json",
+        success:function (res) {
+          $('.detail_name').html(res.name);
+          $('.detail_old').html('￥' + res.oldPri + '&nbsp;');
+          $('.detail_pri').html(res.pri);
+          $('.detail_address').html('获取用户地址');
+          $('.detail_single').html(res.single);
+          $('.detail_img').attr('src',res.img);
+
+          // $(document).on('click','.car-btn',function () {
+          //   console.log($('.num').val());
+          // })
+
+
+          //加购物车
+          $(document).on('click','.car-btn',function () {
+            if (sessionStorage.getItem('login_success') == 0) {
+              $.ajax({
+                type:"get",
+                url: "http://192.168.11.190:8080/main/shopcart",
+                // dataType:"json",
+                data:{
+                  img : res.img,
+                  title: res.name,
+                  single:res.single,
+                  pri:  res.pri,
+                  num:  $('.num').val()
+                },
+                success:function () {
+                  layer.msg('加购成功,请前往购物车查看详情!')
+                },error:function (msg) {
+                  console.log(msg);
+                }
+              });
+            }else{
+              layer.msg("亲! 请先进行登录,再购买!")
+            }
+
+
+          })
+
+        },error:function (msg) {
+
+        }
+      });
+    }
+
 
       var cur = $('.number-cont input').val();
       $('.number-cont .btn').on('click',function(){

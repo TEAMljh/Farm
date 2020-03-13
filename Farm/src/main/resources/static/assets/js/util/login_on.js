@@ -5,8 +5,8 @@
 *@Copyright:layui.com
 */
 
-layui.define(['jquery','layer'],function(exports){
-    var $ = layui.jquery,layer = layui.layer;
+layui.define(['jquery','layer','mm'],function(exports){
+    var $ = layui.jquery,layer = layui.layer,mm = layui.mm;
 
     var login_on = {
         //用户登录成功
@@ -21,6 +21,30 @@ layui.define(['jquery','layer'],function(exports){
         login_quit :function () {
             sessionStorage.removeItem('username');
             sessionStorage.removeItem('login_success');
+        },
+
+        //搜索商品
+        login_search :function (p) {
+                // window.location.href = '/page/web/commodity.html';
+                var html = demo.innerHTML;
+                var listCont = document.getElementById('list-cont');
+                // console.log(layui.router("#/about.html"))
+                mm.request({
+                    url: '/main/productdisplay/all?name='+ p,
+                    async: false,
+                    success : function(res){
+                        listCont.innerHTML = mm.renderHtml(html,res);
+                        pages = res.data.pages;
+                        current = res.data.current;
+                        if (pages === 1) {
+                            $('#onpage').hide();
+                        }else{
+                            $('#onpage').show();
+                        }
+                    },
+                    error: function(res){
+                    }
+                })
         }
     }
 
