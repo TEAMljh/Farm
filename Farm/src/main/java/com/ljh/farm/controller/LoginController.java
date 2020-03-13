@@ -45,4 +45,15 @@ public class LoginController {
             return LayUIResult.error("登陆失败");
         }
     }
+
+    @GetMapping("login/register")
+    public Object regist(User user) {
+        User user1 = userService.getOne(new QueryWrapper<User>().eq("name", user.getName()));
+        if (user1 != null) {
+            return LayUIResult.error("该用户已存在！");
+        } else {
+            userService.save(user);
+            return LayUIResult.ok("注册成功！");
+        }
+    }
 }

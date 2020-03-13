@@ -1,0 +1,34 @@
+package com.ljh.farm.entity;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.*;
+
+/**
+ * @Description
+ * @Author ljh
+ * @Date 2020/3/13 16:27
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode(callSuper = false)
+@TableName("shopcart")
+public class Shopcart extends Base {
+
+    @TableField("img")
+    private String img;
+
+    @TableField("title")
+    private String title;
+
+    @TableField("single")
+    private String single;
+
+    @TableField("pri")
+    private Integer pri;
+
+    @TableField("num")
+    private Integer num;
+}
