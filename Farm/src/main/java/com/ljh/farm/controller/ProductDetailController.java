@@ -31,14 +31,14 @@ public class ProductDetailController {
     private ProductDetailService productDetailService;
 
     @GetMapping("productdisplay/list")
-    public Object productdisplay(@RequestParam(required = false, defaultValue = "1") Integer typeId, QuerySort sort, ProductDetail productDetail,@RequestParam(required = false, defaultValue = "1") int page,
+    public Object productdisplay(@RequestParam(required = false, defaultValue = "1") Integer typeId, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
                                  @RequestParam(required = false, defaultValue = "6") int limit) {
         Page<ProductDetail> poPage = new Page<>(page, limit);
         QueryWrapper<ProductDetail> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderBy(true, false, "create_time").eq("type_id", typeId);
-        if (StringUtils.isNotEmpty(sort.getSort())) {
+        /*if (StringUtils.isNotEmpty(sort.getSort())) {
             queryWrapper.orderBy(true, "asc".equalsIgnoreCase(sort.getOrder()), sort.getSort());
-        }
+        }*/
         IPage<ProductDetail> iPage = productDetailService.page(poPage, queryWrapper);
         return LayUIResult.ok(iPage);
 //        return new LayUIResult(0,"",iPage.getTotal(),iPage.getRecords());
