@@ -28,4 +28,10 @@ public class ShopcartController {
             return LayUIResult.error("添加失败");
         }
     }
+
+    @GetMapping("shopping")
+    public Object shopping() {
+
+        return LayUIResult.ok(shopcartService.list());
+    }
 }
