@@ -35,7 +35,7 @@ public class ShopcartController {
         return LayUIResult.ok(shopcartService.list(queryWrapper));
     }
 
-    @PostMapping("shoping/del/{id}")
+    @PostMapping("shopping/del/{id}")
     public Object deleteOne(@PathVariable Integer id) {
         if (shopcartService.removeById(id)) {
             return LayUIResult.ok("删除成功");
