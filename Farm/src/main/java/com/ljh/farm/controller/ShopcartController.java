@@ -1,12 +1,11 @@
 package com.ljh.farm.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ljh.farm.entity.Shopcart;
 import com.ljh.farm.service.ShopcartService;
 import com.ljh.farm.util.LayUIResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Description
@@ -30,8 +29,18 @@ public class ShopcartController {
     }
 
     @GetMapping("shopping")
-    public Object shopping() {
+    public Object shopping(String userName) {
+        QueryWrapper<Shopcart> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_name", userName);
+        return LayUIResult.ok(shopcartService.list(queryWrapper));
+    }
 
-        return LayUIResult.ok(shopcartService.list());
+    @PostMapping("shoping/del/{id}")
+    public Object deleteOne(@PathVariable Integer id) {
+        if (shopcartService.removeById(id)) {
+            return LayUIResult.ok("删除成功");
+        } else {
+            return LayUIResult.error("删除失败");
+        }
     }
 }
