@@ -36,7 +36,8 @@ public class LoginController {
             if (user1 != null) {
                 session.setAttribute("user", user1);
                 session.setMaxInactiveInterval(30 * 60);
-                return LayUIResult.ok("登陆成功");
+//                return LayUIResult.ok("登陆成功");
+                return new LayUIResult(0,"登陆成功",user1);
             } else {
                 return LayUIResult.error("用户名或密码错误!");
             }

@@ -31,4 +31,7 @@ public class Shopcart extends Base {
 
     @TableField("num")
     private Integer num;
+
+    @TableField("user_name")
+    private String userName;
 }
