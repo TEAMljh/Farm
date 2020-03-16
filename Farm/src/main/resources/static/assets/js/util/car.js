@@ -4,8 +4,8 @@
 *@Copyright:layui.com
 */
 
-layui.define(['layer'],function(exports){
-	var layer = layui.layer;
+layui.define(['layer','jquery'],function(exports){
+	var layer = layui.layer,$ = layui.jquery;
 	
 var car = {
   init : function(){
@@ -64,6 +64,7 @@ var car = {
           var less = this.getElementsByClassName('less')[0];
           var val = parseInt(input.value);
           var that = this;
+
           switch(cls){
             case 'add layui-btn':
               input.value = val + 1;
@@ -76,10 +77,23 @@ var car = {
               getSubTotal(this)
               break;
             case 'dele-btn':
-              layer.confirm('你确定要删除吗',{
+              layer.confirm('你确定要删除吗?',{
                 yes:function(index,layero){
-                  layer.close(index)
-                  that.parentNode.removeChild(that);
+                  layer.close(index);
+                    var id = $(that).attr("id");
+
+                    //逻辑删除
+                    $.ajax({
+                      type:"post",
+                      url: "/main/shopping/del/" + id,
+                      dataType:"json",
+                      success:function () {
+
+                      },error:function (msg) {
+                        console.log(msg);
+                      }
+                    });
+                    that.parentNode.removeChild(that);
                 }
               })
               break;

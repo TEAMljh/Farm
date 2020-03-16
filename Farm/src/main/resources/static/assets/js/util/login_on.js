@@ -21,6 +21,10 @@ layui.define(['jquery','layer','mm'],function(exports){
         login_quit :function () {
             sessionStorage.removeItem('username');
             sessionStorage.removeItem('login_success');
+            sessionStorage.removeItem('address1');
+            sessionStorage.removeItem('address2');
+            sessionStorage.removeItem('address3');
+
         },
 
         //搜索商品
@@ -36,13 +40,16 @@ layui.define(['jquery','layer','mm'],function(exports){
                         listCont.innerHTML = mm.renderHtml(html,res);
                         pages = res.data.pages;
                         current = res.data.current;
-                        if (pages === 1) {
+                        if (pages === 1  ) {
                             $('#onpage').hide();
+                        }else if(pages === 0){
+                            $('#onpage').html('<strong>暂无商品，敬请期待！</strong>');
                         }else{
                             $('#onpage').show();
                         }
+                        console.log("我输出了")
                     },
-                    error: function(res){
+                    error: function(){
                     }
                 })
         }

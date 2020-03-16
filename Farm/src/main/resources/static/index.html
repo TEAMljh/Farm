@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>后台</title>
+    <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/assets/module/admin.css?v=315"/>
+    <link rel="stylesheet" href="/assets/css/common.css"/>
+<!--    <link rel="icon" href="/assets/images/favicon.ico">-->
+    <!--	<link rel="stylesheet" type="text/css" href="/assets/css/index.css"/>-->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!-- 头部 -->
+    <div class="layui-header">
+        <div class="layui-logo">
+            <img src="/assets/images/tz.jpg"/>
+            <cite>&nbsp;四川天正官网后台</cite>
+        </div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item" lay-unselect>
+                <a ew-event="flexible" title="侧边伸缩"><i class="layui-icon layui-icon-shrink-right"></i></a>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a ew-event="refresh" title="刷新"><i class="layui-icon layui-icon-refresh-3"></i></a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a ew-event="fullScreen" title="全屏"><i class="layui-icon layui-icon-screen-full"></i></a>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a>
+                    <img src="/assets/images/head.png" class="layui-nav-img">
+                    <cite id="huName">管理员</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd lay-unselect>
+                        <a id="changePassword" data-url="/admin/user/changePassword">修改密码</a>
+                    </dd>
+                    <dd lay-unselect>
+                        <a id="logout" ew-event="logout" data-url="/logout">退出</a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a ew-event="theme" title="主题"><i class="layui-icon layui-icon-more-vertical"></i></a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 侧边栏 -->
+    <div class="layui-side">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" lay-filter="admin-side-nav" lay-accordion="true"
+                style="margin: 15px 0;/*overflow-y: auto; height: 100%;*/">
+                <li class="layui-nav-item">
+                    <a lay-href="page/admin/main.html"><i class="layui-icon layui-icon-home"></i>&emsp;<cite>主页</cite></a>
+                </li>
+
+                <li class="layui-nav-item">
+                    <a lay-href="page/admin/product/table.html"><i class="layui-icon layui-icon-file"></i>&emsp;<cite>产品中心</cite></a>
+                </li>
+                <li class="layui-nav-item">
+                    <a lay-href="page/admin/productMaintain/table.html"><i class="layui-icon layui-icon-file"></i>&emsp;<cite>产品类型</cite></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 主体部分 -->
+    <div class="layui-body"></div>
+    <!-- 底部 -->
+</div>
+
+<!-- 加载动画 -->
+<div class="page-loading">
+    <div class="ball-loader">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
+<!-- 侧边栏渲染模板 -->
+<!--<script id="sideNav" type="text/html">-->
+<!--    {{#  layui.each(d, function(index, item){ }}-->
+<!--    <li class="layui-nav-item">-->
+<!--        <a lay-href="{{(item.address&&item.level==2)? item.address:'javascript:;'}}"><i class="layui-icon {{item.icon}}"></i>&emsp;<cite>{{item.name}}</cite></a>-->
+<!--        {{# if(item.children&&item.children.length>0){ }}-->
+<!--        <dl class="layui-nav-child">-->
+<!--            {{# layui.each(item.children, function(index, subItem){ }}-->
+<!--            <dd>-->
+<!--                <a lay-href="{{ subItem.address ? subItem.address:'javascript:;'}}">{{ subItem.name }}</a>-->
+<!--                {{# if(subItem.children&&subItem.children.length>0){ }}-->
+<!--                <dl class="layui-nav-child">-->
+<!--                    {{# layui.each(subItem.children, function(index, thrItem){ }}-->
+<!--                    <dd><a lay-href="{{ thrItem.address ? thrItem.address:'javascript:;'}}">{{ thrItem.name }}</a></dd>-->
+<!--                    {{# }); }}-->
+<!--                </dl>-->
+<!--                {{# } }}-->
+<!--            </dd>-->
+<!--            {{# }); }}-->
+<!--        </dl>-->
+<!--        {{# } }}-->
+<!--    </li>-->
+<!--    {{#  }); }}-->
+<!--</script>-->
+
+<script type="text/html" id="changePwd">
+    <form class="layui-form model-form" id="form-psw">
+        <div class="layui-form-item">
+            <label class="layui-form-label">原始密码:</label>
+            <div class="layui-input-block">
+                <input type="password" name="oldPassword" placeholder="请输入原始密码" class="layui-input"
+                       lay-verType="tips" lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码:</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" placeholder="请输入新密码" class="layui-input"
+                       lay-verType="tips" lay-verify="required|psw" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码:</label>
+            <div class="layui-input-block">
+                <input type="password" name="repassword" placeholder="请再次输入新密码" class="layui-input"
+                       lay-verType="tips" lay-verify="required|repsw" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block text-right">
+                <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+                <button class="layui-btn" lay-filter="submitPsw" lay-submit>保存</button>
+            </div>
+        </div>
+    </form>
+</script>
+<!-- js部分 -->
+<script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="/assets/js/common.js?v=315"></script>
+<script>
+    layui.use(['layer', 'element', 'admin', 'index', 'laytpl', 'notice', 'form'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var index = layui.index;
+        var laytpl = layui.laytpl;
+        var element = layui.element;
+        var notice = layui.notice;
+        var form = layui.form;
+
+        // 默认加载主页
+        index.loadHome({
+            menuPath: '/page/admin/main.html',
+            menuName: '<i class="layui-icon layui-icon-home"></i>'
+        });
+
+        // 检查是否登录
+        admin.req('/admin/user/getUser?' + new Date().getTime(), {}, function (res) {
+            if (res.code == 401) {
+                // index.removeToken();
+                return window.top.location.replace('/page/admin/login.html');
+            } else if (res.code == 0) {
+                // res.data.user.authorities = res.data.auths;
+                // index.putUser(res.data.user);
+                $('#huName').text(res.data.user.name);
+                renderMenu(res.data.user.id);
+            }
+
+        }, 'GET');
+
+        var renderMenu = function (userId) {
+            admin.req('admin/user/getAuths?' + new Date().getTime(), {userId: userId}, function (res) {
+                if (res.code == 0) {
+                    var data = res.data;
+                    var obj = transform(data);
+                    laytpl(sideNav.innerHTML).render(obj[0].children, function (html) {
+                        html = html;
+                        $('*[lay-filter=admin-side-nav]').html(html);
+                        element.render('nav');
+                        admin.activeNav('/page/home.html');
+                    });
+                }
+            }, 'GET');
+        }
+
+        function transform(list) {
+            var group = {};
+            $.each(list, function (i, e) {
+                var parentId = e.parent;
+                if (!group.hasOwnProperty(parentId)) {
+                    group[parentId] = [];
+                }
+                group[parentId].push(e);
+            });
+
+            $.each(list, function (i, e) {
+                var id = e.id;
+                if (group.hasOwnProperty(id)) {
+                    e.children = group[id];
+                }
+            });
+            console.log(group["-1"]);
+            return group["-1"];
+        }
+
+        $('#changePassword').click(function () {
+            changePassword();
+        });
+        function changePassword() {
+            admin.open({
+                type: 1,
+                title: '修改密码',
+                content: $('#changePwd').html(),
+                success: function (index, layero) {
+                    form.on('submit(submitPsw)', function (data) {
+                        var formData = data.field;
+                        //若两次新密码不一致
+                        if(formData.password != formData.repassword){
+                            layer.msg('两次输入的新密码不一致', {icon: 2});
+                        }else{
+                            admin.req('/admin/user/changePassword', formData, function (res) {
+                                if (res.code == 0){
+                                    layer.msg(res.msg, {icon: 1});
+                                    admin.req('/logout', {}, function () {
+                                        window.location.href = '/login';
+                                    }, 'GET');
+                                } else{
+                                    layer.msg(res.msg, {icon: 2});
+                                }
+                            }, 'POST');
+                        }
+                        return false;
+                    });
+                }
+                
+            });
+        }
+    });
+</script>
+</body>
+</html>

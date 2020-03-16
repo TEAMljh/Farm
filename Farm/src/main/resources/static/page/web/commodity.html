@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <title>主页</title>
   <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
-  <link rel="stylesheet" type="text/css" href="/assets/layui/css/layui.css">
-  <script type="text/javascript" src="/assets/layui/layui.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/libs/layui/css/layui.css">
+  <script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 </head>
@@ -130,7 +130,6 @@
       $(document).on('keypress','#search_pro',function (e) {
         var keyWord = $('#search_pro').val();
         if(e.which == 13){
-          console.log(1111111111111);
           login_on.login_search(keyWord);
           return false;   //禁止form表单里input用enter提交的自动刷新页面
         }
@@ -192,7 +191,7 @@
       //点击进入详情页
     $(document).on('click','.pro_detail',function () {
       sessionStorage.setItem('pro_detail',this.id);
-      console.log("这是具体商品：" + sessionStorage.getItem('pro_detail'));
+      // console.log("这是具体商品：" + sessionStorage.getItem('pro_detail'));
       window.location.href = '/page/web/details.html';
     })
 

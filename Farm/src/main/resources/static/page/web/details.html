@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <title>单品详情</title>
   <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
-  <link rel="stylesheet" type="text/css" href="/assets/layui/css/layui.css">
-  <script type="text/javascript" src="/assets/layui/layui.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/libs/layui/css/layui.css">
+  <script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 </head>
@@ -84,7 +84,7 @@
               <p class="reference"><span>参考价</span> <del class="detail_old"></del></p>
               <p class="activity"><span>活动价</span><strong class="price"><i>￥</i><span class="detail_pri"></span></strong></p>
               <p class="address-box"><span>送&nbsp;&nbsp;&nbsp;至</span>
-                <strong class="address detail_address">江西&nbsp;&nbsp;南昌&nbsp;&nbsp;东湖区</strong></p>
+                <strong class="address detail_address"></strong></p>
             </div>
             <div class="choose-attrs">
               <div class="color layui-clear"><span class="title">单品规格</span> <div class="color-cont"><span class="detail_single"></span> </div></div>
@@ -135,7 +135,7 @@
 
     //获取具体商品信息
         var pro_detail = sessionStorage.getItem('pro_detail');
-        console.log("这是具体商品：" + pro_detail);
+        // console.log("这是具体商品：" + pro_detail);
         show(pro_detail);
 
     function show(pro_detail){
@@ -147,7 +147,7 @@
           $('.detail_name').html(res.name);
           $('.detail_old').html('￥' + res.oldPri + '&nbsp;');
           $('.detail_pri').html(res.pri);
-          $('.detail_address').html('获取用户地址');
+          $('.detail_address').html(sessionStorage.getItem('address1')+  '&nbsp;'+sessionStorage.getItem('address2') +  '&nbsp;'+sessionStorage.getItem('address3'));
           $('.detail_single').html(res.single);
           $('.detail_img').attr('src',res.img);
 
@@ -168,7 +168,8 @@
                   title: res.name,
                   single:res.single,
                   pri:  res.pri,
-                  num:  $('.num').val()
+                  num:  $('.num').val(),
+                  userName: sessionStorage.getItem('username')
                 },
                 success:function () {
                   layer.msg('加购成功,请前往购物车查看详情!')
@@ -183,7 +184,7 @@
 
           })
 
-        },error:function (msg) {
+        },error:function () {
 
         }
       });
