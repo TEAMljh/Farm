@@ -42,6 +42,27 @@
             <input type="text" name="name" lay-verify="required" lay-verType="tips" placeholder="请输入名称" autocomplete="off" class="layui-input">
         </div>
     </div>
+<!-- 新增的 现价，原价，折扣-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">现价</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="pri" lay-verify="required" lay-verType="tips" placeholder="请输入现价" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">原价</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="oldPri" lay-verify="required" lay-verType="tips" placeholder="请输入原价" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">折扣</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="discount" lay-verify="required" lay-verType="tips" placeholder="请输入折扣" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">产品类型</label>
@@ -52,17 +73,12 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">简述</label>
+        <label class="layui-form-label">单品规格</label>
         <div class="layui-input-block">
-            <textarea name="summary" lay-verify="required" lay-verType="tips" placeholder="请输入简述" autocomplete="off" class="layui-textarea"></textarea>
+            <textarea name="single" lay-verify="required" lay-verType="tips" placeholder="请输入简述" autocomplete="off" class="layui-textarea"></textarea>
         </div>
     </div>
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">内容</label>
-        <div class="layui-input-block">
-            <textarea name="content" id="contentEdit" lay-verType="tips"></textarea>
-        </div>
-    </div>
+
     <div class="layui-form-item">
         <div class="layui-input-block" style="float: right;">
             <button ew-event="closeThisTabs" type="button" class="layui-btn layui-btn-primary">&emsp;关闭&emsp;</button>
@@ -146,9 +162,11 @@
                 'id': data.id,
                 'headImg': data.headImg,
                 'name': data.name,
-                'content': data.content,
+                'pri': data.pri,
+                'oldPri': data.old_pri,
+                'discount': data.discount,
                 'typeId': data.typeId,
-                'summary': data.summary
+                'single': data.single
             });
         }
 

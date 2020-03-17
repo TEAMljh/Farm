@@ -1,3 +1,10 @@
+用户（因客户在网站注册，所以只有查看操作，不可对他们进行删除和修改密码操作）：/admin/user/page  用户分页
 
-                   
-             
+农产品类型管理：/admin/productMaintain/page   分页
+                         /admin/productMaintain/del/  删除
+                         /admin/productMaintain/addOrUpdate  添加修改
+
+
+农产品详细管理：/admin/product/page  分页
+                         /admin/product/del/删除
+                         /admin/product/addOrUpdate 添加修改

@@ -41,14 +41,6 @@
                                 <option value="">请选择产品类型</option>
                             </select>
                         </div>
-                        <label class="layui-form-label">重要产品</label>
-                        <div class="layui-input-inline" style="width:100px;">
-                            <select name="weight" id="weight" lay-verType="tips" lay-filter="weight">
-                                <option value="">是否重要</option>
-                                <option value="1">是</option>
-                                <option value="0">否</option>
-                            </select>
-                        </div>
                     </div>
                     <div class="layui-inline" style="padding-right: 110px;">
                         <button class="layui-btn icon-btn" lay-filter="formSubSearch" lay-submit>
@@ -99,30 +91,19 @@
             cellMinWidth: 100,
             cols: [[
                 {type: 'numbers'},
-                {field: 'name', align: 'center', sort: true, width: 150,title: '名称'},
+                {field: 'name', align: 'center', sort: true, width: 150,title: '农产品名称'},
                 {
-                    field: 'typeName', align: 'center', sort: true, width:100, title: '产品类型'
+                    field: 'typeName', align: 'center', sort: true, width:100, title: '农产品类型'
                 },
-                {field: 'summary', align: 'center', sort: true, title: '简述'},
-                {field: 'content', align: 'center', sort: true, title: '内容', templet: function (d) {
+                {field: 'pri', align: 'center', sort: true, title: '现价'},
+                {field: 'oldPri', align: 'center', sort: true, title: '原价'},
+                {field: 'discount', align: 'center', sort: true, title: '折扣'},
+                {field: 'single', align: 'center', sort: true, title: '单品规格', templet: function (d) {
                         return $('<div/>').text(d.content).html();
                     }
                 },
-                {field: 'readNum', align: 'center', sort: true, title: '阅读量'},
                 {
                     field: 'createTime', sort: true, align: 'center', title: '创建时间'
-                },
-                {
-                    field: 'updateTime', sort: true, align: 'center', title: '更新时间'
-                },
-                {
-                    field: 'weight', sort: true, title: '是否重要', align: 'center', templet: function (d) {
-                        if (d.weight == '1') {
-                            return "<input type='checkbox' value='" + d.id + "' name='weight' lay-filter='ckState' lay-skin='switch' lay-text='是|否' checked >";
-                        } else {
-                            return "<input type='checkbox' value='" + d.id + "' name='weight' lay-filter='ckState' lay-skin='switch' lay-text='是|否' >";
-                        }
-                    }
                 },
                 {align: 'center', toolbar: '#tableBarTbBas', title: '操作', minWidth: 150}
             ]],done:function(res){
@@ -173,24 +154,7 @@
                 doDel(data.id);
             }
         });
-        form.on('switch(ckState)', function (data) {
-            layer.confirm('是否更改？', {
-                skin: 'layui-layer-admin',
-                shade: .1
-            }, function (index) {
-                admin.req('/admin/product/changeWeight', {id: data.value}, function (res) {
-                    if (res.code == 0) {
-                        layer.msg(res.msg, {icon: 1, time: 2000});
-                        insTb.reload();
-                    } else {
-                        layer.msg(res.msg, {icon: 2, time: 1000});
-                        insTb.reload();
-                    }
-                }, "POST");
-            }, function (data) {
-                insTb.reload();
-            });
-        });
+
         // 删除
         function doDel(id) {
             layer.confirm('确定删除此条数据吗', function(index){

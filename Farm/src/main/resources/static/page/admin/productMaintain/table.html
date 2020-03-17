@@ -29,7 +29,7 @@
             <div class="layui-form toolbar">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label w-auto">产品类型</label>
+                        <label class="layui-form-label w-auto">农产品类型</label>
                         <div class="layui-input-inline mr0">
                             <input name="name" class="layui-input" type="text" placeholder="输入关键字"/>
                         </div>
@@ -59,7 +59,7 @@
     <form id="addStationForm" lay-filter="addStationForm" class="layui-form model-form">
         <input name="id" type="hidden"/>
         <div class="layui-form-item">
-            <label class="layui-form-label">类型名</label>
+            <label class="layui-form-label">产品类型名</label>
             <div class="layui-input-block">
                 <input name="name" placeholder="请输入关键字" type="text" class="layui-input" maxlength="20"
                        lay-verType="tips" lay-verify="required" required/>
@@ -95,8 +95,7 @@
             cols: [[
                 {field: 'id',hide:true},
                 {type: 'numbers'},
-                {field: 'name', align: 'center', sort: true, title: '类型名'},
-                {field: 'createTime', align: 'center', sort: true, title: '创建时间'},
+                {field: 'name', align: 'center', sort: true, title: '农产品类型'},
                 {align: 'center', toolbar: '#tableBarTbBas', title: '操作', minWidth: 200}
             ]]
         });
