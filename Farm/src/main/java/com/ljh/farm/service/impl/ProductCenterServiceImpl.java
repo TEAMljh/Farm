@@ -1,5 +1,7 @@
 package com.ljh.farm.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ljh.farm.entity.ProductCenter;
 import com.ljh.farm.entity.vo.ProductCenterVO;
@@ -22,7 +24,12 @@ public class ProductCenterServiceImpl extends ServiceImpl<ProductCenterMapper, P
     private ProductCenterMapper productCenterMapper;
 
     @Override
-    public List<ProductCenterVO> list(Integer typeId) {
-        return productCenterMapper.list(typeId);
+    public List<ProductCenterVO> list(Wrapper wrapper) {
+        return productCenterMapper.list(wrapper);
+    }
+
+    @Override
+    public IPage<ProductCenterVO> page(IPage iPage, Wrapper wrapper) {
+        return productCenterMapper.page(iPage, wrapper);
     }
 }

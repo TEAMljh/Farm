@@ -1,5 +1,7 @@
 package com.ljh.farm.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.ljh.farm.entity.vo.ProductCenterVO;
 import com.ljh.farm.service.ProductCenterService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,8 @@ public class ProductCenterController {
     private ProductCenterService productCenterService;
 
     @GetMapping("/productcenter/list")
-    public Object list( Integer typeId){
-        return productCenterService.list(typeId);
+    public Object list(Integer typeId) {
+        QueryWrapper<ProductCenterVO> queryWrapper = new QueryWrapper<>();
+        return productCenterService.list(queryWrapper.eq("type_id", typeId));
     }
 }

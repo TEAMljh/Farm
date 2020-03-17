@@ -1,9 +1,13 @@
 package com.ljh.farm.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.ljh.farm.entity.ProductCenter;
 import com.ljh.farm.entity.vo.ProductCenterVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -18,6 +22,11 @@ public interface ProductCenterMapper extends BaseMapper<ProductCenter> {
 
     @Select("select p.id,p.`name`,p.type_id as typeId,m.`name` as typeName from product_center p " +
             "LEFT JOIN max_class m\n" +
-            "on m.id=p.type_id where p.type_id=#{typeId}")
-    List<ProductCenterVO> list(Integer typeId);
+            "on m.id=p.type_id ${ew.customSqlSegment}")
+    List<ProductCenterVO> list(@Param(Constants.WRAPPER) Wrapper wrapper);
+
+    @Select("select p.id,p.`name`,p.type_id as typeId,p.del_flag as delFlag,m.`name` as typeName from product_center p " +
+            "LEFT JOIN max_class m\n" +
+            "on m.id=p.type_id ${ew.customSqlSegment}")
+    IPage<ProductCenterVO> page(IPage iPage, @Param(Constants.WRAPPER) Wrapper wrapper);
 }
