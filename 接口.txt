@@ -13,5 +13,8 @@
 
 搜索（模糊查询）：main/productdisplay/all   ok！！！
 
-购物提交数据url：/main/shopcart
-注册提交数据（选）：main/login/
+购物提交数据url：/main/shopcart   ok！！！
+      删除加购数据：/main/shopping/del/" + id   ok！！！
+注册提交数据（选）：/main/login/register   ok！！！
+
+

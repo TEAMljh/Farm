@@ -1,5 +1,5 @@
 /*
-*@Name: 母婴商城
+*@Name: 特色农产品商城
 *@Author: ljh
 *@Copyright:layui.com
 */
@@ -124,7 +124,7 @@ i{font-style: normal;}
 
 
 /*commodity*/
-.commodity-content .commod-cont-wrap{background: #f8f8f8; padding: 50px 0 90px 0;}
+.commodity-content .commod-cont-wrap{background-color: rgba(255,255,255,0.5); padding: 50px 0 90px 0;}
 .commodity-content .commod-cont .left-nav{width: 200px; line-height: 38px; background: #fff; float: left; margin-right: 58px;}
 .commodity-content .commod-cont .left-nav .list-box{border:1px solid #eeeeee;}
 .commodity-content .commod-cont .left-nav .title{color: #fff; font-size: 16px; background: #333333; text-align: center;} 
@@ -217,11 +217,11 @@ i{font-style: normal;}
 
 
 /*information*/
-.information-content .info-list-box{padding:63px 0 84px 0; background: #f8f8f8;}
+.information-content .info-list-box{padding:63px 0 84px 0;}
 .information-content .info-list .item-box{width: 1250px;}
-.information-content .info-list .item-box .item{cursor: pointer;width: 1250px; float: left; margin:0 22px 27px 0; background: #fff; height: 360px; padding:40px 30px; box-sizing: border-box;}
-.information-content .info-list .item-box .img{width: 400px;height: 300px;float: left; margin-right: 28px;}
-.information-content .info-list .item-box .img img{width: 400px;height: 280px;}
+.information-content .info-list .item-box .item{cursor: pointer;width: 1210px; float: left; margin:0 22px 27px 0; background: #F8F8F8; height: 280px; padding:40px 30px; box-sizing: border-box;}
+.information-content .info-list .item-box .img{width: 400px;height: 210px;float: left; margin-right: 28px;}
+.information-content .info-list .item-box .img img{width: 400px;height: 210px;}
 .information-content .info-list .item-box .text h4{font-size: 18px; line-height: 28px; margin-top: 28px; margin-bottom: 15px;}
 .information-content .info-list .item-box .text .data{font-size: 12px; color: #888888; margin-bottom: 30px;}
 .information-content .info-list .item-box .text .info-cont{line-height: 24px; color: #555555; overflow : hidden; text-overflow: ellipsis;
@@ -272,12 +272,13 @@ i{font-style: normal;}
 
 
 /*about*/
-.about-content .banner-box .banner{height: 750px; width: 100%; background: url(../img/关于我们03.jpg) no-repeat ; background-size: cover;box-shadow: inset 0 -200px 100px 10px rgba(255, 255, 255, 0.5);}
+.about-content .banner-box .banner{height: 500px; width: 100%;
+    background-image: url(../img/back1.jpg) ;background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;box-shadow: inset 0 -200px 100px 10px rgba(255, 255, 255, 0.5);}
 .about-content .brief-content{padding:198px 0 280px 0;}
 .about-content .brief-content .img-box{float: left; width: 630px; height: 640px; position: relative; padding-right: 100px;}
 .about-content .brief-content .img-box .top{position: absolute; right: 100px; bottom: 0;}
 .about-content .brief-content .text{line-height: 45px; font-size: 20px; color: #888; padding-top: 130px;}
-.about-content .banner-text{height: 760px; width: 100%; background: url(../img/us_img3.png) no-repeat; background-size: cover;}
+.about-content .banner-text{height: 760px; width: 100%; background-size: cover;}
 .about-content .banner-text p{width: 446px; font-size: 20px; line-height: 45px; color: #888888; padding: 210px 0 0 55px;}
 .about-content .after-sale{padding-bottom: 204px;}
 .about-content .after-sale h1{font-size: 60px; color: #555; letter-spacing:8px; padding:100px 0 0 0; text-align: center;}
@@ -298,7 +299,7 @@ i{font-style: normal;}
 
 
 /*login*/
-.login-content .login-bg{width: 100%; background: url(../img/水果大图.png) no-repeat; background-size: cover;opacity: 1;box-shadow: inset 1px 1px 200px 200px rgba(248,163,43,0.5);}
+.login-content .login-bg{width: 100%; background-size: cover;opacity: 1;box-shadow: inset 1px 1px 200px 200px rgba(248,163,43,0.1);}
 .login-content .login-bg .login-cont{ height: 772px; position: relative;}
 .login-content .login-bg .login-cont .form-box{width: 300px; height: 390px; border:1px solid #d9dadc; background: #fff; position: absolute; top: 196px; right: 90px; padding:0 30px;}
 .login-content .login-bg .login-cont .form-box legend{font-size: 20px; color: #323232; text-align: center; padding:50px 0;}

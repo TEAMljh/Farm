@@ -54,7 +54,8 @@ var car = {
           getTotal()
         }
       }
-
+       //批量删除存数组
+      var arry = [];
       for(var i = 0; i < uls.length;i++){
         uls[i].onclick = function(e){
           e = e || window.event;
@@ -103,15 +104,18 @@ var car = {
       }
       batchdeletion.onclick = function(){
         if(SelectedPieces.innerHTML != 0){
-          layer.confirm('你确定要删除吗',{
+          layer.confirm('你确定要删除吗!!!',{
             yes:function(index,layero){
               layer.close(index)
               for(var i = 0;i < uls.length;i++){
                 var input = uls[i].getElementsByTagName('input')[0];
                 if(input.checked){
-                  uls[i].parentNode.removeChild(uls[i]); 
+                  arry = ($(uls[i]).attr('id'));
+                  uls[i].parentNode.removeChild(uls[i]);
                   i--;
+
                 }
+                // console.log(arry)
               }
               getTotal() 
             }
