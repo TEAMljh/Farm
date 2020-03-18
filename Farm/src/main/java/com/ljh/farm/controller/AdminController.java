@@ -1,17 +1,22 @@
 package com.ljh.farm.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ljh.farm.entity.ProductCenter;
 import com.ljh.farm.entity.ProductDetail;
 import com.ljh.farm.entity.vo.ProductCenterVO;
+import com.ljh.farm.service.MaxClassService;
 import com.ljh.farm.service.ProductCenterService;
 import com.ljh.farm.service.ProductDetailService;
 import com.ljh.farm.util.LayUIResult;
 import com.ljh.farm.util.QuerySort;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Description
@@ -28,13 +33,20 @@ public class AdminController {
     @Autowired
     private ProductDetailService productDetailService;
 
+    @Autowired
+    private MaxClassService maxClassService;
+
     @GetMapping("productMaintain/page")
-    public Object listProductType(QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
+    public Object listProductType(ProductCenterVO productCenterVO, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
                                   @RequestParam(required = false, defaultValue = "10") int limit) {
         Page<ProductCenterVO> voPage = new Page<>(page, limit);
         QueryWrapper<ProductCenterVO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("p.del_flag", '0');
-        IPage<ProductCenterVO> iPage = productCenterService.page(voPage, queryWrapper);
+        LambdaQueryWrapper<ProductCenterVO> lambdaQueryWrapper = queryWrapper.lambda();
+        if (StringUtils.isNotEmpty(productCenterVO.getTypeName())) {
+            lambdaQueryWrapper.like(ProductCenterVO::getTypeName, productCenterVO.getTypeName());
+        }
+        IPage<ProductCenterVO> iPage = productCenterService.pageCenter(voPage, lambdaQueryWrapper);
         return new LayUIResult(0, "", iPage.getTotal(), iPage.getRecords());
     }
 
@@ -63,13 +75,52 @@ public class AdminController {
         }
     }
 
+    @GetMapping("productMaintain/list")
+    public Object listMaintain() {
+        return LayUIResult.ok(maxClassService.list());
+    }
+
 
     @GetMapping("product/page")
-    public Object pageProduct(QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
+    public Object pageProduct(ProductDetail productDetail, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
                               @RequestParam(required = false, defaultValue = "10") int limit) {
         Page<ProductDetail> poPage = new Page<>(page, limit);
         QueryWrapper<ProductDetail> queryWrapper = new QueryWrapper<>();
-        IPage<ProductDetail> iPage = productDetailService.page(poPage, queryWrapper);
+        LambdaQueryWrapper<ProductDetail> lambdaQueryWrapper = queryWrapper.lambda();
+        if (StringUtils.isNotEmpty(productDetail.getName())) {
+            lambdaQueryWrapper.like(ProductDetail::getName, productDetail.getName());
+        }
+        IPage<ProductDetail> iPage = productDetailService.page(poPage, lambdaQueryWrapper);
         return new LayUIResult(0, "", iPage.getTotal(), iPage.getRecords());
+    }
+
+    @PostMapping("product/del/{id}")
+    public Object delProduct(@PathVariable Integer id) {
+        if (productDetailService.removeById(id)) {
+            return LayUIResult.ok("删除成功");
+        } else {
+            return LayUIResult.error("删除失败");
+        }
+    }
+
+    @GetMapping("product/addOrUpdate")
+    public Object addOrUpdateProducDetail(ProductDetail productDetail) {
+        if (productDetail.getId() != null) {
+            if (productDetailService.save(productDetail)) {
+                return LayUIResult.ok("添加成功");
+            } else {
+                return LayUIResult.error("添加失败");
+            }
+        }
+        if (productDetailService.updateById(productDetail)) {
+            return LayUIResult.ok("修改成功");
+        } else {
+            return LayUIResult.error("修改失败");
+        }
+    }
+
+    @GetMapping("product/list")
+    public Object listProducType() {
+        return LayUIResult.ok(productCenterService.list());
     }
 }

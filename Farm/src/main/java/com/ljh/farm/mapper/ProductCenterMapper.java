@@ -23,10 +23,10 @@ public interface ProductCenterMapper extends BaseMapper<ProductCenter> {
     @Select("select p.id,p.`name`,p.type_id as typeId,m.`name` as typeName from product_center p " +
             "LEFT JOIN max_class m\n" +
             "on m.id=p.type_id ${ew.customSqlSegment}")
-    List<ProductCenterVO> list(@Param(Constants.WRAPPER) Wrapper wrapper);
+    List<ProductCenterVO> listCenter(@Param(Constants.WRAPPER) Wrapper wrapper);
 
     @Select("select p.id,p.`name`,p.type_id as typeId,p.del_flag as delFlag,m.`name` as typeName from product_center p " +
             "LEFT JOIN max_class m\n" +
             "on m.id=p.type_id ${ew.customSqlSegment}")
-    IPage<ProductCenterVO> page(IPage iPage, @Param(Constants.WRAPPER) Wrapper wrapper);
+    IPage<ProductCenterVO> pageCenter(IPage iPage, @Param(Constants.WRAPPER) Wrapper wrapper);
 }

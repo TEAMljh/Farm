@@ -24,12 +24,12 @@ public class ProductCenterServiceImpl extends ServiceImpl<ProductCenterMapper, P
     private ProductCenterMapper productCenterMapper;
 
     @Override
-    public List<ProductCenterVO> list(Wrapper wrapper) {
-        return productCenterMapper.list(wrapper);
+    public List<ProductCenterVO> listCenter(Wrapper wrapper) {
+        return productCenterMapper.listCenter(wrapper);
     }
 
     @Override
-    public IPage<ProductCenterVO> page(IPage iPage, Wrapper wrapper) {
-        return productCenterMapper.page(iPage, wrapper);
+    public IPage<ProductCenterVO> pageCenter(IPage iPage, Wrapper wrapper) {
+        return productCenterMapper.pageCenter(iPage, wrapper);
     }
 }

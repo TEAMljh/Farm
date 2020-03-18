@@ -14,7 +14,7 @@ import java.util.List;
  * @Date 2020/3/11 15:34
  */
 public interface ProductCenterService extends IService<ProductCenter> {
-    List<ProductCenterVO> list(Wrapper wrapper);
+    List<ProductCenterVO> listCenter(Wrapper wrapper);
 
-    IPage<ProductCenterVO> page(IPage iPage, Wrapper wrapper);
+    IPage<ProductCenterVO> pageCenter(IPage iPage, Wrapper wrapper);
 }
