@@ -35,6 +35,12 @@
                         </div>
                     </div>
                     <div class="layui-inline">
+                        <label class="layui-form-label w-auto">地区</label>
+                        <div class="layui-input-inline mr0">
+                            <input name="detail" class="layui-input" type="text" placeholder="输入关键字"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
                         <button class="layui-btn icon-btn" lay-filter="formSubSearchTbBas" lay-submit>
                             <i class="layui-icon">&#xe615;</i>搜索
                         </button>
@@ -105,7 +111,7 @@
                 {field: 'province', align: 'center', sort: true, title: '省级'},
                 {field: 'city', align: 'center', sort: true, title: '市级'},
                 {field: 'county', align: 'center', sort: true, title: '县级'},
-                {field: 'derail', align: 'center', sort: true, title: '详细地址'},
+                {field: 'detail', align: 'center', sort: true, title: '详细地址'},
                 // {align: 'center', toolbar: '#tableBarTbBas', title: '操作', minWidth: 300}
             ]]
         });

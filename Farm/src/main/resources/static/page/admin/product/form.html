@@ -28,9 +28,11 @@
     <div class="layui-form-item">
         <label class="layui-form-label">图片</label>
         <input type="hidden" name="headImg" id="headImg" >
+        <input type="hidden" name="detailImg" id="detailImg" >
         <div class="layui-upload">
             <div class="layui-upload-list">
-                <img class="layui-upload-img" id="showImg" style="display: none;">
+                <img class="layui-upload-img" id="headImg_show" style="display: none;">
+                <img class="layui-upload-img" id="detailImg_show" style="display: none;">
                 <button type="button" class="layui-btn" id="uploadImg">上传图片</button>
                 <p id="demoText"></p>
             </div>
@@ -110,13 +112,15 @@
         layui.data('productdata', null);
         $(document).ready(function () {
             if(data){
-                if(data.headImg!=null&&data.headImg!=''){
-                    $('#showImg').css('display','');
-                    $('#showImg').attr('src', data.headImg);
+                if(data.img!=null&&data.img!='' && data.imgDetail!=null && data.imgDetail!=''){
+                    $('#headImg_show').css('display','');
+                    $('#headImg_show').attr('src', data.img);
+                    $('#detailImg_show').css('display','');
+                    $('#detailImg_show').attr('src', data.imgDetail);
                 }
             }
             $.ajax({
-                url:'/website/productMaintain/list',
+                url:'/admin/productMaintain/list',
                 type:'GET', //GET
                 async:false,
                 dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
@@ -136,7 +140,8 @@
             , before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
-                    $('#showImg').attr('src', result); //图片链接（base64）
+                    $('#headImg_show').attr('src', result); //图片链接（base64）
+                    $('#detailImg_show').attr('src', result);
                 });
             }
             , done: function (res) {
@@ -145,8 +150,10 @@
                     return layer.msg('上传失败');
                 }
                 //上传成功
-                $('#showImg').css('display','');
+                $('#headImg_show').css('display','');
                 $('#headImg').val(res.data.url);
+                $('#detailImg_show').css('display','');
+                $('#detailImg').val(res.data.url);
             }
             , error: function () {
                 //演示失败状态，并实现重传
@@ -163,7 +170,7 @@
                 'headImg': data.headImg,
                 'name': data.name,
                 'pri': data.pri,
-                'oldPri': data.old_pri,
+                'oldPri': data.oldPri,
                 'discount': data.discount,
                 'typeId': data.typeId,
                 'single': data.single

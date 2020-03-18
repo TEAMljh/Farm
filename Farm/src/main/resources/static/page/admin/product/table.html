@@ -39,6 +39,7 @@
                         <div class="layui-input-inline" style="width:160px;">
                             <select name="typeId" id="typeId"  lay-verType="tips" lay-search>
                                 <option value="">请选择产品类型</option>
+<!--                                <option value="水果">水果类</option>-->
                             </select>
                         </div>
                     </div>
@@ -76,7 +77,7 @@
         layui.config({
                 version: true
             },
-            admin.req('/admin/productMaintain/list', null, function (res) {
+            admin.req('/admin/product/list', null, function (res) {
                 if (res.code == 0) {
                     data = res.data;
                     infomationType(res);
@@ -86,25 +87,18 @@
         // 渲染表格
         var insTb = table.render({
             elem: '#tableTbBas',
-            url: 'http://192.168.11.190:8080/admin/product/page',
+            url: '/admin/product/page',
             page: true,
             cellMinWidth: 100,
             cols: [[
                 {type: 'numbers'},
                 {field: 'name', align: 'center', sort: true, width: 150,title: '农产品名称'},
-                {
-                    field: 'typeName', align: 'center', sort: true, width:100, title: '农产品类型'
-                },
+                {field: 'typeName', align: 'center', sort: true, width:100, title: '农产品类型'},
                 {field: 'pri', align: 'center', sort: true, title: '现价'},
                 {field: 'oldPri', align: 'center', sort: true, title: '原价'},
                 {field: 'discount', align: 'center', sort: true, title: '折扣'},
-                {field: 'single', align: 'center', sort: true, title: '单品规格', templet: function (d) {
-                        return $('<div/>').text(d.content).html();
-                    }
-                },
-                {
-                    field: 'createTime', sort: true, align: 'center', title: '创建时间'
-                },
+                {field: 'single', align: 'center', sort: true, title: '单品规格'},
+                {field: 'createTime', sort: true, align: 'center', title: '创建时间'},
                 {align: 'center', toolbar: '#tableBarTbBas', title: '操作', minWidth: 150}
             ]],done:function(res){
                 tdTitle();
@@ -119,6 +113,7 @@
                 $(element).attr('title',$(element).text());
             });
         };
+
         // 按类型搜索
         function infomationType(result){
             for (var i = 0; i < result.data.length; i++) {
@@ -160,8 +155,8 @@
             layer.confirm('确定删除此条数据吗', function(index){
                 layer.close(index);
                 $.ajax({
-                    url: "/admin/product/del/"+id,
-                    type: "get",
+                    url: "/admin/product/del/" + id,
+                    type: "post",
                     async: false,   //不要让它异步提交
                     dataType: "json",
                     success: function (data) {
