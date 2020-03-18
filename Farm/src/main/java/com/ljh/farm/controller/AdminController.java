@@ -6,10 +6,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ljh.farm.entity.ProductCenter;
 import com.ljh.farm.entity.ProductDetail;
+import com.ljh.farm.entity.User;
 import com.ljh.farm.entity.vo.ProductCenterVO;
 import com.ljh.farm.service.MaxClassService;
 import com.ljh.farm.service.ProductCenterService;
 import com.ljh.farm.service.ProductDetailService;
+import com.ljh.farm.service.UserService;
 import com.ljh.farm.util.LayUIResult;
 import com.ljh.farm.util.QuerySort;
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +37,25 @@ public class AdminController {
 
     @Autowired
     private MaxClassService maxClassService;
+
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("user/page")
+    public Object userPage(User user, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
+                           @RequestParam(required = false, defaultValue = "10") int limit) {
+        Page<User> poPage = new Page<>(page, limit);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<User> lambdaQueryWrapper = queryWrapper.lambda();
+        if (StringUtils.isNotEmpty(user.getName())) {
+            lambdaQueryWrapper.like(User::getName, user.getName());
+        }
+        if (StringUtils.isNotEmpty(user.getDetail())) {
+            lambdaQueryWrapper.like(User::getDetail, user.getName());
+        }
+        IPage<User> iPage = userService.page(poPage, lambdaQueryWrapper);
+        return new LayUIResult(0, "", iPage.getTotal(), iPage.getRecords());
+    }
 
     @GetMapping("productMaintain/page")
     public Object listProductType(ProductCenterVO productCenterVO, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
