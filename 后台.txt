@@ -6,7 +6,7 @@
                         /admin/productMaintain/list   所有大类（三大类）
  
 农产品详细管理：/admin/product/page  分页   ✔  还需要返回所属类名；商品搜索&name=   类型搜索&typeId=
-                         /admin/product/del/删除
+                         /admin/product/del/删除    ✔
                          /admin/product/addOrUpdate 添加修改
 
-                         /main/productcenter/list   所有小类（这个是之前门户的接口，当时只能加typeid查分了组的小类，你看可以改一下不，如果不接typeid就查全部小类）
+                         /main/productcenter/list   所有小类（这个是之前门户的接口，当时只能加typeid查分了组的小类，你看可以改一下不，如果不接typeid就查全部小类） ✔

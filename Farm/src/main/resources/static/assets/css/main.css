@@ -124,7 +124,8 @@ i{font-style: normal;}
 
 
 /*commodity*/
-.commodity-content .commod-cont-wrap{background-color: rgba(255,255,255,0.5); padding: 50px 0 90px 0;}
+.commodity-content .commod-cont-wrap{
+    height: 1110px;background-color: rgba(255,255,255,0.5); padding: 50px 0 90px 0;}
 .commodity-content .commod-cont .left-nav{width: 200px; line-height: 38px; background: #fff; float: left; margin-right: 58px;}
 .commodity-content .commod-cont .left-nav .list-box{border:1px solid #eeeeee;}
 .commodity-content .commod-cont .left-nav .title{color: #fff; font-size: 16px; background: #333333; text-align: center;} 
@@ -309,9 +310,20 @@ i{font-style: normal;}
 .login-content .login-bg .login-cont .iphone{margin-bottom: 20px;}
 .login-content .login-bg .login-cont .iphone .layui-input{padding-left: 40px;}
 .login-content .login-bg .login-cont .veri-code .layui-input{padding-left: 40px;}
+
+/*弹出框样式*/
+.login-bg .login-cont .form-box1{width: 300px; height: 390px; border:1px solid #d9dadc; background: #fff; position: absolute; top: 196px; right: 90px; padding:0 30px;}
+.form-box1 legend{font-size: 20px; color: #323232; text-align: center; padding:50px 0;}
+#registerForm .layui-inline,.login-content .login-bg .login-cont .layui-input-inline{ position: relative;}
+#registerForm .layui-input-inline .iphone-icon,.password-icon,.location-icon{position: absolute; top: 8px; left: 10px; color: #d3d3d3; font-size: 20px;}
+#registerForm .iphone,.veri-code{margin: 20px 40px 20px 60px;}
+#registerForm .veri-code{margin-bottom: 20px;}
+#registerForm .iphone .layui-input{padding-left: 40px;}
+#registerForm .veri-code .layui-input{padding-left: 40px;}
 /*.login-content .login-bg .login-cont .veri-code .layui-btn{width: 102px; background: #eeeeee; text-align: center; color: #333; height: 36px; line-height: 36px; display: inline-block; border:none; cursor: pointer; position: absolute; top: 1px; right: 1px; font-size: 12px; padding:0 14px;}*/
 .login-content .login-bg .login-cont .login-btn .layui-input-block{margin-left: 0; padding-top: 25px;}
 .login-content .login-bg .login-cont .login-btn .layui-input-block button{width: 100%; background: green; font-size: 18px;}
+#new_user{width: 300px; background: green; font-size: 18px;}
 /*end-login*/
 
 

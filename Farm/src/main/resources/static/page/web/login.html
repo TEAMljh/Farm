@@ -85,11 +85,11 @@
               <div class="layui-input-block">
                 <button class="layui-btn" id="login" lay-submit="" lay-filter="demo1" onclick="return false">登录</button>
               </div>
-              <div class="layui-input-block">
-                <button class="layui-btn" id="register" lay-submit="" lay-filter="demo2" onclick="return false">注册</button>
-              </div>
             </div>
           </form>
+          <div class="layui-input-line">
+            <button class="layui-btn" id="new_user" lay-submit="" lay-filter="demo2" onclick="return false">注册</button>
+          </div>
         </div>
       </div>
     </div>
@@ -120,6 +120,63 @@
       <p class="coty">农产品商城版权所有 &copy; 2012-2020</p>
     </div>
   </div>
+<!--  表单弹出-->
+  <script type="text/html" id="register">
+    <div class="form-box1">
+    <form class="layui-form" action="" id="registerForm">
+            <legend>用户注册</legend>
+            <div class="layui-form-item">
+            <div class="layui-inline iphone">
+            <div class="layui-input-inline">
+            <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+            <input type="tel" name="name" id="" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            </div>
+            </div>
+            <div class="layui-inline veri-code">
+            <div class="layui-input-inline">
+            <i class="layui-icon layui-icon-password password-icon"></i>
+            <input id="" type="password" name="pass" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input pnum pass">
+            <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
+            </div>
+            </div>
+              <div class="layui-inline veri-code">
+                <div class="layui-input-inline">
+                  <i class="layui-icon layui-icon-location location-icon"></i>
+                  <input id="" type="province" name="pass" lay-verify="required" placeholder="请输入所在省" autocomplete="off" class="layui-input pnum pass">
+                  <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
+                </div>
+              </div>
+              <div class="layui-inline veri-code">
+                <div class="layui-input-inline">
+                  <i class="layui-icon layui-icon-location location-icon"></i>
+                  <input id="" type="city" name="pass" lay-verify="required" placeholder="请输入所在市" autocomplete="off" class="layui-input pnum pass">
+                  <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
+                </div>
+              </div>
+              <div class="layui-inline veri-code">
+                <div class="layui-input-inline">
+                  <i class="layui-icon layui-icon-location location-icon"></i>
+                  <input id="" type="county" name="pass" lay-verify="required" placeholder="请输入所在县" autocomplete="off" class="layui-input pnum pass">
+                  <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
+                </div>
+              </div>
+              <div class="layui-inline veri-code">
+                <div class="layui-input-inline">
+                  <i class="layui-icon layui-icon-location location-icon"></i>
+                  <input id="" type="detail" name="pass" lay-verify="required" placeholder="请输入详细地址" autocomplete="off" class="layui-input pnum pass">
+                  <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
+                </div>
+              </div>
+            </div>
+      <div class="layui-form-item text-right">
+        <button style="right: 100px;" class="layui-btn layui-btn-primary layui-layer-close layui-layer-close1"
+                type="button" ew-event="closeDialog">取消
+        </button>
+        <button class="layui-btn" lay-filter="register" lay-submit>保存</button>
+      </div>
+            </form>
+    </div>
+  </script>
   <script type="text/javascript">
    layui.config({
       base: '../res/static/js/util' //你存放新模块的目录，注意，不是layui的模块目录
@@ -167,21 +224,30 @@
 
          });
 
-         //注册
-     $('#register').on('click',function () {
-           $.ajax({
-             type:"get",
-             url: "/main/login/register",
-             data: {
-               name: $('#username').val(),
-               pass: $('#password').val()
-             },
-             success:function (res) {
-               layer.msg(res.msg)
-             },error:function () {
-             }
-           });
-     })
+
+     //注册弹出
+     form.on('submit(demo2)',function(data){
+       layer.open({
+         type:1,
+         area: '600px',
+         content:$('#register').html()
+       })
+     });
+
+     // $('#register').on('click',function () {
+     //       $.ajax({
+     //         type:"get",
+     //         url: "/main/login/register",
+     //         data: {
+     //           name: $('#username').val(),
+     //           pass: $('#password').val()
+     //         },
+     //         success:function (res) {
+     //           layer.msg(res.msg)
+     //         },error:function () {
+     //         }
+     //       });
+     // })
 
 
     })
