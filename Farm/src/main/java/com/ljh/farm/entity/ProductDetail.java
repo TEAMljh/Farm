@@ -43,7 +43,7 @@ public class ProductDetail extends Base{
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GTM-8")
     @TableField("create_time")
-    private Date creatTime;
+    private Date createTime;
 
     @TableField("type_id")
     private Integer typeId;

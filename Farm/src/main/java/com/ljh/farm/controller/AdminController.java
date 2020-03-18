@@ -41,7 +41,7 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("user/page")
+    @GetMapping("user/page")
     public Object userPage(User user, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
                            @RequestParam(required = false, defaultValue = "10") int limit) {
         Page<User> poPage = new Page<>(page, limit);
@@ -51,7 +51,7 @@ public class AdminController {
             lambdaQueryWrapper.like(User::getName, user.getName());
         }
         if (StringUtils.isNotEmpty(user.getDetail())) {
-            lambdaQueryWrapper.like(User::getDetail, user.getName());
+            lambdaQueryWrapper.like(User::getDetail, user.getDetail());
         }
         IPage<User> iPage = userService.page(poPage, lambdaQueryWrapper);
         return new LayUIResult(0, "", iPage.getTotal(), iPage.getRecords());
@@ -110,6 +110,9 @@ public class AdminController {
         LambdaQueryWrapper<ProductDetail> lambdaQueryWrapper = queryWrapper.lambda();
         if (StringUtils.isNotEmpty(productDetail.getName())) {
             lambdaQueryWrapper.like(ProductDetail::getName, productDetail.getName());
+        }
+        if (productDetail.getTypeId()!=null) {
+            lambdaQueryWrapper.eq(ProductDetail::getTypeId, productDetail.getTypeId());
         }
         IPage<ProductDetail> iPage = productDetailService.page(poPage, lambdaQueryWrapper);
         return new LayUIResult(0, "", iPage.getTotal(), iPage.getRecords());
