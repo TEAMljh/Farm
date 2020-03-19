@@ -8,6 +8,7 @@ import com.ljh.farm.entity.ProductCenter;
 import com.ljh.farm.entity.ProductDetail;
 import com.ljh.farm.entity.User;
 import com.ljh.farm.entity.vo.ProductCenterVO;
+import com.ljh.farm.entity.vo.ProductDetailVO;
 import com.ljh.farm.service.MaxClassService;
 import com.ljh.farm.service.ProductCenterService;
 import com.ljh.farm.service.ProductDetailService;
@@ -105,7 +106,7 @@ public class AdminController {
     }
 
 
-    @GetMapping("product/page")
+   /* @GetMapping("product/page")
     public Object pageProduct(ProductDetail productDetail, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
                               @RequestParam(required = false, defaultValue = "10") int limit) {
         Page<ProductDetail> poPage = new Page<>(page, limit);
@@ -119,7 +120,24 @@ public class AdminController {
         }
         IPage<ProductDetail> iPage = productDetailService.page(poPage, lambdaQueryWrapper);
         return new LayUIResult(0, "", iPage.getTotal(), iPage.getRecords());
+    }*/
+
+    @GetMapping("product/page")
+    public Object pageProduct(ProductDetailVO productDetailVO, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
+                              @RequestParam(required = false, defaultValue = "10") int limit) {
+        Page<ProductDetailVO> voPage = new Page<>(page, limit);
+        QueryWrapper<ProductDetailVO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("pd.del_flag", '0');
+        if (StringUtils.isNotEmpty(productDetailVO.getName())) {
+            queryWrapper.like("pd.name", productDetailVO.getName());
+        }
+        if (productDetailVO.getTypeId() != null) {
+            queryWrapper.eq("pd.type_id", productDetailVO.getTypeId());
+        }
+        IPage<ProductDetailVO> iPage = productDetailService.pageDetail(voPage, queryWrapper);
+        return new LayUIResult(0, "", iPage.getTotal(), iPage.getRecords());
     }
+
 
     @PostMapping("product/del/{id}")
     public Object delProduct(@PathVariable Integer id) {
