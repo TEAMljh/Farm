@@ -64,10 +64,13 @@ public class AdminController {
         QueryWrapper<ProductCenterVO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("p.del_flag", '0');
         LambdaQueryWrapper<ProductCenterVO> lambdaQueryWrapper = queryWrapper.lambda();
-        if (StringUtils.isNotEmpty(productCenterVO.getTypeName())) {
+        /*if (StringUtils.isNotEmpty(productCenterVO.getTypeName())) {
             lambdaQueryWrapper.like(ProductCenterVO::getTypeName, productCenterVO.getTypeName());
+        }*/
+        if (productCenterVO.getTypeId() != null) {
+            queryWrapper.eq("p.type_id", productCenterVO.getTypeId());
         }
-        IPage<ProductCenterVO> iPage = productCenterService.pageCenter(voPage, lambdaQueryWrapper);
+        IPage<ProductCenterVO> iPage = productCenterService.pageCenter(voPage, queryWrapper);
         return new LayUIResult(0, "", iPage.getTotal(), iPage.getRecords());
     }
 
@@ -111,7 +114,7 @@ public class AdminController {
         if (StringUtils.isNotEmpty(productDetail.getName())) {
             lambdaQueryWrapper.like(ProductDetail::getName, productDetail.getName());
         }
-        if (productDetail.getTypeId()!=null) {
+        if (productDetail.getTypeId() != null) {
             lambdaQueryWrapper.eq(ProductDetail::getTypeId, productDetail.getTypeId());
         }
         IPage<ProductDetail> iPage = productDetailService.page(poPage, lambdaQueryWrapper);

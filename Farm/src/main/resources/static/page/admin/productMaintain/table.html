@@ -31,7 +31,8 @@
                     <div class="layui-inline">
                         <label class="layui-form-label w-auto">产品大类</label>
                         <div class="layui-input-inline mr0">
-                            <select name="typeId" id="" lay-filter="typeId" lay-verify="required" lay-verType="tips" lay-search>
+                            <select name="typeId" id="typeIdOut" lay-filter="typeId"  lay-verType="tips"
+                                    lay-search>
                                 <option value="">请选择类别</option>
                             </select>
                         </div>
@@ -40,9 +41,9 @@
                         <button class="layui-btn icon-btn" lay-filter="formSubSearchTbBas" lay-submit>
                             <i class="layui-icon">&#xe615;</i>搜索
                         </button>
-						<button class="layui-btn icon-btn" lay-filter="formSubAddTbBas" lay-submit>
-						    <i class="layui-icon ">&#xe654;</i>添加
-						</button>
+                        <button class="layui-btn icon-btn" lay-filter="formSubAddTbBas" lay-submit>
+                            <i class="layui-icon ">&#xe654;</i>添加
+                        </button>
                     </div>
                 </div>
             </div>
@@ -67,11 +68,12 @@
                        lay-verType="tips" lay-verify="required" required/>
             </div>
         </div>
-<!--        所属大类-->
+        <!--        所属大类-->
         <div class="layui-form-item">
             <label class="layui-form-label">所属大类</label>
             <div class="layui-input-inline" style="width:210px;">
-                <select name="typeId" id="typeId" lay-filter="typeId" lay-verify="required" lay-verType="tips" lay-search>
+                <select name="typeId" id="typeId" lay-filter="typeId" lay-verify="required" lay-verType="tips"
+                        lay-search>
                     <option value="">请选择类别</option>
                 </select>
             </div>
@@ -89,7 +91,7 @@
 <script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
 <script type="text/javascript" src="/assets/js/common.js?v=315"></script>
 <script>
-    layui.use(['layer', 'form', 'table', 'util', 'admin','upload'], function () {
+    layui.use(['layer', 'form', 'table', 'util', 'admin', 'upload'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
         var form = layui.form;
@@ -105,7 +107,7 @@
             page: true,
             cellMinWidth: 100,
             cols: [[
-                {field: 'id',hide:true},
+                {field: 'id', hide: true},
                 {type: 'numbers'},
                 {field: 'name', align: 'center', sort: true, title: '农产品类型'},
                 {field: 'typeName', align: 'center', sort: true, title: '所属大类'},
@@ -115,21 +117,22 @@
 
 
         //渲染添加类别下拉框
-        $.ajax({
-            url:'/admin/productMaintain/list',
-            type:'GET', //GET
-            async:false,
-            dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-            success:function(result){
-                console.log(1111);
-                for (var i = 0; i < result.data.length; i++) {
-                    console.log(result.data[i].name);
-                    $('.typeId').append("<option value="+result.data[i].id+">"+result.data[i].name+"</option>");
+        layer.ready(function () {
+            $.ajax({
+                url: '/admin/productMaintain/list',
+                type: 'GET', //GET
+                async: false,
+                dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success: function (result) {
+                    console.log(1111);
+                    for (var i = 0; i < result.data.length; i++) {
+                        console.log(result.data[i].name);
+                        $('#typeIdOut').append("<option value=" + result.data[i].id + ">" + result.data[i].name + "</option>");
+                    }
+                    form.render();
                 }
-                form.render();
-            }
-        })
-
+            })
+        });
 
 
         //监听工具条
@@ -139,9 +142,9 @@
 
             if (layEvent === 'edit') { // 修改
                 addOrUpdate(data);
-            }else if(layEvent === 'del'){
-                layer.confirm('确认删除吗？',function (index) {
-                    admin.req('/admin/productMaintain/del/'+data.id, {}, function (res) {
+            } else if (layEvent === 'del') {
+                layer.confirm('确认删除吗？', function (index) {
+                    admin.req('/admin/productMaintain/del/' + data.id, {}, function (res) {
                         if (res.code == 0) {
                             layer.msg(res.msg, {icon: 1});
                             admin.refresh('/page/admin/product/table.html');
@@ -158,10 +161,11 @@
         form.on('submit(formSubSearchTbBas)', function (data) {
             insTb.reload({where: data.field}, 'data');
         });
-		//添加按钮点击事件
-		form.on('submit(formSubAddTbBas)', function (data) {
+        //添加按钮点击事件
+        form.on('submit(formSubAddTbBas)', function (data) {
             addOrUpdate();
-		});
+        });
+
         function addOrUpdate(station) {
             admin.open({
                 type: 1,
@@ -187,7 +191,20 @@
                     });
                 }
             });
-
+            $.ajax({
+                url: '/admin/productMaintain/list',
+                type: 'GET', //GET
+                async: false,
+                dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success: function (result) {
+                    console.log(1111);
+                    for (var i = 0; i < result.data.length; i++) {
+                        console.log(result.data[i].name);
+                        $('#typeId').append("<option value=" + result.data[i].id + ">" + result.data[i].name + "</option>");
+                    }
+                    form.render();
+                }
+            })
 
         }
     });
