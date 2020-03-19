@@ -27,7 +27,7 @@
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-card-body">
-            <form id="modelProductForm" lay-filter="modelProductForm" class="layui-form model-form"
+            <form id="modelProductForm" lay-filter="modelProductForm" class="layui-form"
                   style="width: 90%;margin-top: 15px;">
                 <input name="id" type="hidden"/>
                 <div class="layui-form-item">
@@ -55,7 +55,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="name" lay-verify="required" lay-verType="tips" placeholder="请输入名称"
+                        <input type="text" id="name" name="name" lay-verify="required" lay-verType="tips" placeholder="请输入名称"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                 <div class="layui-form-item">
                     <div class="layui-input-block" style="float: right;">
                         <button ew-event="closeThisTabs" type="button" class="layui-btn layui-btn-primary">&emsp;关闭&emsp;</button>
-                        <button class="layui-btn" lay-filter="formSubmit" lay-submit>&emsp;确定&emsp;</button>
+                        <button class="layui-btn" type="button" lay-filter="formSubmit" lay-submit>&emsp;确定&emsp;</button>
                     </div>
                 </div>
             </form>
@@ -113,6 +113,7 @@
 </body>
 <script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
 <script type="text/javascript" src="/assets/js/common.js?v=315"></script>
+<script type="text/javascript" src="/assets/js/admin.js"></script>
 <script>
     layui.use(['layer', 'form', 'laydate', 'admin', 'upload'], function () {
         var $ = layui.jquery;
@@ -197,8 +198,9 @@
         form.on('submit(formSubmit)', function (data) {
 
             var formData = form.val('modelProductForm');
-            console.log(form.val('modelProductForm'));
-            admin.req('/admin/product/addOrUpdate', formData, function (res) {
+            var Data=document.getElementById('name').value;
+            console.log(Data);
+            admin.req('/admin/product/addOrUpdate', data.field, function (res) {
                 if (res.code == 0) {
                     layer.msg(res.msg, {icon: 1, time: 1000}, function () {
                         refreshAndClose();
@@ -208,7 +210,7 @@
                         //refreshAndClose();
                     });
                 }
-            }, 'POST');
+            }, 'GET');
             return false;
         });
 

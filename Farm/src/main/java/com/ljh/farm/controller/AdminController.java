@@ -149,8 +149,8 @@ public class AdminController {
         }
     }
 
-    @PostMapping("product/addOrUpdate")
-    public Object addOrUpdateProducDetail(@Valid ProductDetail productDetail) {
+    @GetMapping("product/addOrUpdate")
+    public Object addOrUpdateProducDetail(ProductDetail productDetail) {
         if (productDetail.getId() == null) {
             System.out.println(productDetail);
             if (productDetailService.save(productDetail)) {
