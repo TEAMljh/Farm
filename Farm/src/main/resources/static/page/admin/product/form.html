@@ -16,78 +16,97 @@
     <![endif]-->
     <title>Title</title>
     <style>
-        .layui-upload-img{width: 92px; height: 92px; margin: 0 10px 10px 0;}
+        .layui-upload-img {
+            width: 92px;
+            height: 92px;
+            margin: 0 10px 10px 0;
+        }
     </style>
 </head>
 <body>
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-card-body">
-            <form id="modelProductForm" lay-filter="modelProductForm" class="layui-form model-form" style="width: 90%;margin-top: 15px;">
-    <input name="id" type="hidden"/>
-    <div class="layui-form-item">
-        <label class="layui-form-label">图片</label>
-        <input type="hidden" name="headImg" id="headImg" >
-        <input type="hidden" name="detailImg" id="detailImg" >
-        <div class="layui-upload">
-            <div class="layui-upload-list">
-                <img class="layui-upload-img" id="headImg_show" style="display: none;">
-                <img class="layui-upload-img" id="detailImg_show" style="display: none;">
-                <button type="button" class="layui-btn" id="uploadImg">上传图片</button>
-                <p id="demoText"></p>
-            </div>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">名称</label>
-        <div class="layui-input-block">
-            <input type="text" name="name" lay-verify="required" lay-verType="tips" placeholder="请输入名称" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-<!-- 新增的 现价，原价，折扣-->
+            <form id="modelProductForm" lay-filter="modelProductForm" class="layui-form model-form"
+                  style="width: 90%;margin-top: 15px;">
+                <input name="id" type="hidden"/>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">小图片</label>
+                    <input type="hidden" name="img" id="headImg">
+                    <div class="layui-upload">
+                        <div class="layui-upload-list">
+                            <img class="layui-upload-img" id="headImg_show" style="display: none;">
+                            <button type="button" class="layui-btn" id="uploadImg01">上传图片</button>
+                            <p id="demoText01"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">詳情图片</label>
+                    <input type="hidden" name="imgDetail" id="detailImg">
+                    <div class="layui-upload">
+                        <div class="layui-upload-list">
+                            <img class="layui-upload-img" id="detailImg_show" style="display: none;">
+                            <button type="button" class="layui-btn" id="uploadImg02">上传图片</button>
+                            <p id="demoText02"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" lay-verify="required" lay-verType="tips" placeholder="请输入名称"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!-- 新增的 现价，原价，折扣-->
                 <div class="layui-form-item">
                     <label class="layui-form-label">现价</label>
                     <div class="layui-input-block">
-                        <input type="text" name="pri" lay-verify="required" lay-verType="tips" placeholder="请输入现价" autocomplete="off" class="layui-input">
+                        <input type="digit" name="pri" lay-verify="required" lay-verType="tips" placeholder="请输入现价"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">原价</label>
                     <div class="layui-input-block">
-                        <input type="text" name="oldPri" lay-verify="required" lay-verType="tips" placeholder="请输入原价" autocomplete="off" class="layui-input">
+                        <input type="digit" name="oldPri" lay-verify="required" lay-verType="tips" placeholder="请输入原价"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">折扣</label>
                     <div class="layui-input-block">
-                        <input type="text" name="discount" lay-verify="required" lay-verType="tips" placeholder="请输入折扣" autocomplete="off" class="layui-input">
+                        <input type="digit" name="discount" lay-verify="required" lay-verType="tips" placeholder="请输入折扣"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">产品类型</label>
-        <div class="layui-input-inline" style="width:150px;">
-            <select name="typeId" id="typeId" lay-verify="required" lay-verType="tips" lay-search>
-                <option value="">请选择产品类型</option>
-            </select>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">单品规格</label>
-        <div class="layui-input-block">
-            <textarea name="single" lay-verify="required" lay-verType="tips" placeholder="请输入简述" autocomplete="off" class="layui-textarea"></textarea>
-        </div>
-    </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">产品类型</label>
+                    <div class="layui-input-inline" style="width:150px;">
+                        <select name="typeId" id="typeId" lay-verify="required" lay-verType="tips" lay-search>
+                            <option value="">请选择产品类型</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">单品规格</label>
+                    <div class="layui-input-block">
+                        <textarea name="single" lay-verify="required" lay-verType="tips" placeholder="请输入简述"
+                                  autocomplete="off" class="layui-textarea"></textarea>
+                    </div>
+                </div>
 
-    <div class="layui-form-item">
-        <div class="layui-input-block" style="float: right;">
-            <button ew-event="closeThisTabs" type="button" class="layui-btn layui-btn-primary">&emsp;关闭&emsp;</button>
-            <button class="layui-btn" lay-filter="formSubmit" lay-submit>&emsp;确定&emsp;</button>
-        </div>
-    </div>
-</form>
+                <div class="layui-form-item">
+                    <div class="layui-input-block" style="float: right;">
+                        <button ew-event="closeThisTabs" type="button" class="layui-btn layui-btn-primary">&emsp;关闭&emsp;</button>
+                        <button class="layui-btn" lay-filter="formSubmit" lay-submit>&emsp;确定&emsp;</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -95,7 +114,7 @@
 <script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
 <script type="text/javascript" src="/assets/js/common.js?v=315"></script>
 <script>
-    layui.use(['layer', 'form', 'laydate','admin','upload'], function () {
+    layui.use(['layer', 'form', 'laydate', 'admin', 'upload'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
         var form = layui.form;
@@ -105,37 +124,37 @@
 
         layui.data('productdata', null);
         $(document).ready(function () {
-            if(data){
-                if(data.img!=null&&data.img!='' && data.imgDetail!=null && data.imgDetail!=''){
-                    $('#headImg_show').css('display','');
+            if (data) {
+                if (data.img != null && data.img != '') {
+                    $('#headImg_show').css('display', '');
                     $('#headImg_show').attr('src', data.img);
-                    $('#detailImg_show').css('display','');
-                    $('#detailImg_show').attr('src', data.imgDetail);
+                    // $('#detailImg_show').css('display','');
+                    // $('#detailImg_show').attr('src', data.imgDetail);
                 }
             }
             $.ajax({
-                url:'/admin/productMaintain/list',
-                type:'GET', //GET
-                async:false,
-                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-                success:function(result){
+                url: '/admin/productMaintain/list',
+                type: 'GET', //GET
+                async: false,
+                dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success: function (result) {
                     for (var i = 0; i < result.data.length; i++) {
-                        $('#typeId').append("<option value="+result.data[i].id+">"+result.data[i].name+"</option>");
+                        $('#typeId').append("<option value=" + result.data[i].id + ">" + result.data[i].name + "</option>");
                     }
                     form.render();
                 }
             })
         });
         var uploadInst = upload.render({
-            elem: '#uploadImg'
+            elem: '#uploadImg01'
             , accept: 'images'
-            , url: '/admin/fileUpload'
+            , url: '/file/fileUpload'
             , acceptMime: 'image/*'
             , before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
                     $('#headImg_show').attr('src', result); //图片链接（base64）
-                    $('#detailImg_show').attr('src', result);
+                    // $('#detailImg_show').attr('src', result);
                 });
             }
             , done: function (res) {
@@ -144,24 +163,27 @@
                     return layer.msg('上传失败');
                 }
                 //上传成功
-                $('#headImg_show').css('display','');
+                $('#headImg_show').css('display', '');
                 $('#headImg').val(res.data.url);
-                $('#detailImg_show').css('display','');
-                $('#detailImg').val(res.data.url);
+                // $('#detailImg_show').css('display','');
+                // $('#detailImg').val(res.data.url);
             }
             , error: function () {
                 //演示失败状态，并实现重传
-                var demoText = $('#demoText');
+                var demoText = $('#demoText01');
                 demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
                 demoText.find('.demo-reload').on('click', function () {
                     uploadInst.upload();
                 });
             }
         });
-        if (data){
+
+        layui.data('productdata', null);
+        if (data) {
             form.val('modelProductForm', {
                 'id': data.id,
-                'headImg': data.headImg,
+                'img': data.img,
+                'imgDetile':data.imgDetile,
                 'name': data.name,
                 'pri': data.pri,
                 'oldPri': data.oldPri,
@@ -173,9 +195,11 @@
 
         // 监听表单提交
         form.on('submit(formSubmit)', function (data) {
+
             var formData = form.val('modelProductForm');
+            console.log(form.val('modelProductForm'));
             admin.req('/admin/product/addOrUpdate', formData, function (res) {
-                if (res.code == 0){
+                if (res.code == 0) {
                     layer.msg(res.msg, {icon: 1, time: 1000}, function () {
                         refreshAndClose();
                     });
@@ -184,13 +208,14 @@
                         //refreshAndClose();
                     });
                 }
-            },'POST');
+            }, 'POST');
             return false;
         });
 
         $("#cancel").on('click', function () {
             refreshAndClose();
         });
+
         function refreshAndClose() {
             admin.refresh('/page/admin/product/table.html');
             admin.closeThisTabs();

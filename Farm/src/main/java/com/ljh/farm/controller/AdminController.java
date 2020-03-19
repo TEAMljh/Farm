@@ -19,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -148,9 +149,10 @@ public class AdminController {
         }
     }
 
-    @GetMapping("product/addOrUpdate")
-    public Object addOrUpdateProducDetail(ProductDetail productDetail) {
-        if (productDetail.getId() != null) {
+    @PostMapping("product/addOrUpdate")
+    public Object addOrUpdateProducDetail(@Valid ProductDetail productDetail) {
+        if (productDetail.getId() == null) {
+            System.out.println(productDetail);
             if (productDetailService.save(productDetail)) {
                 return LayUIResult.ok("添加成功");
             } else {

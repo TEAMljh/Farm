@@ -124,9 +124,7 @@
                 async: false,
                 dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
                 success: function (result) {
-                    console.log(1111);
                     for (var i = 0; i < result.data.length; i++) {
-                        console.log(result.data[i].name);
                         $('#typeIdOut').append("<option value=" + result.data[i].id + ">" + result.data[i].name + "</option>");
                     }
                     form.render();
