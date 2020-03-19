@@ -165,18 +165,18 @@
         });
 
         // 检查是否登录
-        admin.req('/admin/user/getUser?' + new Date().getTime(), {}, function (res) {
-            if (res.code == 401) {
-                // index.removeToken();
-                return window.top.location.replace('/page/admin/login.html');
-            } else if (res.code == 0) {
-                // res.data.user.authorities = res.data.auths;
-                // index.putUser(res.data.user);
-                $('#huName').text(res.data.user.name);
-                renderMenu(res.data.user.id);
-            }
-
-        }, 'GET');
+        // admin.req('/admin/user/getUser?' + new Date().getTime(), {}, function (res) {
+        //     if (res.code == 401) {
+        //         // index.removeToken();
+        //         return window.top.location.replace('/page/admin/login.html');
+        //     } else if (res.code == 0) {
+        //         // res.data.user.authorities = res.data.auths;
+        //         // index.putUser(res.data.user);
+        //         $('#huName').text(res.data.user.name);
+        //         renderMenu(res.data.user.id);
+        //     }
+        //
+        // }, 'GET');
 
         var renderMenu = function (userId) {
             admin.req('admin/user/getAuths?' + new Date().getTime(), {userId: userId}, function (res) {

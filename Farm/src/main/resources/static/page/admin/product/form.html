@@ -95,19 +95,13 @@
 <script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
 <script type="text/javascript" src="/assets/js/common.js?v=315"></script>
 <script>
-    layui.use(['layer', 'form', 'laydate','admin', 'tinymce', 'upload'], function () {
+    layui.use(['layer', 'form', 'laydate','admin','upload'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
         var form = layui.form;
         var admin = layui.admin;
-        var tinymce = layui.tinymce;
         var upload = layui.upload;
         var data = layui.data('productdata').ls;
-
-        tinymce.render({
-            selector: '#contentEdit',
-            height: 400
-        });
 
         layui.data('productdata', null);
         $(document).ready(function () {
@@ -179,7 +173,6 @@
 
         // 监听表单提交
         form.on('submit(formSubmit)', function (data) {
-            tinyMCE.triggerSave();
             var formData = form.val('modelProductForm');
             admin.req('/admin/product/addOrUpdate', formData, function (res) {
                 if (res.code == 0){

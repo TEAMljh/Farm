@@ -29,9 +29,11 @@
             <div class="layui-form toolbar">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label w-auto">农产品类型</label>
+                        <label class="layui-form-label w-auto">产品大类</label>
                         <div class="layui-input-inline mr0">
-                            <input name="typeName" class="layui-input" type="text" placeholder="输入关键字"/>
+                            <select name="typeId" id="" lay-filter="typeId" lay-verify="required" lay-verType="tips" lay-search>
+                                <option value="">请选择类别</option>
+                            </select>
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -112,6 +114,23 @@
         });
 
 
+        //渲染添加类别下拉框
+        $.ajax({
+            url:'/admin/productMaintain/list',
+            type:'GET', //GET
+            async:false,
+            dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+            success:function(result){
+                console.log(1111);
+                for (var i = 0; i < result.data.length; i++) {
+                    console.log(result.data[i].name);
+                    $('.typeId').append("<option value="+result.data[i].id+">"+result.data[i].name+"</option>");
+                }
+                form.render();
+            }
+        })
+
+
 
         //监听工具条
         table.on('tool(tableUser)', function (obj) {
@@ -169,21 +188,7 @@
                 }
             });
 
-            //渲染添加类别下拉框
-            $.ajax({
-                url:'/admin/productMaintain/list',
-                type:'GET', //GET
-                async:false,
-                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-                success:function(result){
-                    console.log(1111);
-                    for (var i = 0; i < result.data.length; i++) {
-                        console.log(result.data[i].name);
-                        $('#typeId').append("<option value="+result.data[i].id+">"+result.data[i].name+"</option>");
-                    }
-                    form.render();
-                }
-            })
+
         }
     });
 </script>

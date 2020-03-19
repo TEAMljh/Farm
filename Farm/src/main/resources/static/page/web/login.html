@@ -70,7 +70,7 @@
               <div class="layui-inline iphone">
                 <div class="layui-input-inline">
                   <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
-                  <input type="tel" name="name" id="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                  <input type="text" name="name" id="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input pnum">
                 </div>
               </div>
               <div class="layui-inline veri-code">
@@ -123,56 +123,56 @@
 <!--  表单弹出-->
   <script type="text/html" id="register">
     <div class="form-box1">
-    <form class="layui-form" action="" id="registerForm">
+    <form class="layui-form" action="" id="registerForm" lay-filter="registerForm">
             <legend>用户注册</legend>
             <div class="layui-form-item">
-            <div class="layui-inline iphone">
+            <div class="layui-inline veri-code">
             <div class="layui-input-inline">
             <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
-            <input type="tel" name="name" id="" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            <input type="text" name="name" type="name" id="name" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
             </div>
             </div>
             <div class="layui-inline veri-code">
             <div class="layui-input-inline">
             <i class="layui-icon layui-icon-password password-icon"></i>
-            <input id="" type="password" name="pass" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input pnum pass">
+            <input type="password" id="pass" type="password" name="pass" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input pnum pass">
             <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
             </div>
             </div>
               <div class="layui-inline veri-code">
                 <div class="layui-input-inline">
                   <i class="layui-icon layui-icon-location location-icon"></i>
-                  <input id="" type="province" name="pass" lay-verify="required" placeholder="请输入所在省" autocomplete="off" class="layui-input pnum pass">
+                  <input type="text" id="province" type="province" name="province" lay-verify="required" placeholder="请输入所在省" autocomplete="off" class="layui-input pnum">
                   <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
                 </div>
               </div>
               <div class="layui-inline veri-code">
                 <div class="layui-input-inline">
                   <i class="layui-icon layui-icon-location location-icon"></i>
-                  <input id="" type="city" name="pass" lay-verify="required" placeholder="请输入所在市" autocomplete="off" class="layui-input pnum pass">
+                  <input type="text" id="city" type="city" name="city" lay-verify="required" placeholder="请输入所在市" autocomplete="off" class="layui-input pnum">
                   <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
                 </div>
               </div>
               <div class="layui-inline veri-code">
                 <div class="layui-input-inline">
                   <i class="layui-icon layui-icon-location location-icon"></i>
-                  <input id="" type="county" name="pass" lay-verify="required" placeholder="请输入所在县" autocomplete="off" class="layui-input pnum pass">
+                  <input type="text" id="county" type="county" name="county" lay-verify="required" placeholder="请输入所在县" autocomplete="off" class="layui-input pnum">
                   <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
                 </div>
               </div>
               <div class="layui-inline veri-code">
                 <div class="layui-input-inline">
                   <i class="layui-icon layui-icon-location location-icon"></i>
-                  <input id="" type="detail" name="pass" lay-verify="required" placeholder="请输入详细地址" autocomplete="off" class="layui-input pnum pass">
+                  <input type="text" id="detail" type="detail" name="detail" lay-verify="required" placeholder="请输入详细地址" autocomplete="off" class="layui-input pnum">
                   <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
                 </div>
               </div>
             </div>
       <div class="layui-form-item text-right">
-        <button style="right: 100px;" class="layui-btn layui-btn-primary layui-layer-close layui-layer-close1"
+        <button style="right: 100px;width: 100px;" class="layui-btn layui-btn-primary layui-layer-close layui-layer-close1"
                 type="button" ew-event="closeDialog">取消
         </button>
-        <button class="layui-btn" lay-filter="register" lay-submit>保存</button>
+        <button class="layui-btn" lay-filter="register" id="register2" lay-submit style="margin-left: 100px;width: 100px;">保存</button>
       </div>
             </form>
     </div>
@@ -221,34 +221,51 @@
              }
            });
            return false;
-
          });
 
-
      //注册弹出
-     form.on('submit(demo2)',function(data){
+     form.on('submit(demo2)',function(data) {
        layer.open({
-         type:1,
+         type: 1,
+         title: '注册',
          area: '600px',
-         content:$('#register').html()
+         shade: 0.3,
+         content: $('#register').html(),
+         success: function (layero, index) {  //弹出成功的回调
+           console.log('弹出了' + layero, index);
+           //验证
+           $('#register2').on('click', function () {
+             $.ajax({
+               type: "get",
+               url: "/main/login/register",
+               data: {
+                 name: $('#name').val(),
+                 pass: $('#pass').val(),
+                 province: $('#province').val(),
+                 city: $('#city').val(),
+                 county: $('#county').val(),
+                 detail: $('#detail').val()
+               },
+               success: function (res) {
+                 if (res.code == 0) {
+                   layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+                     location.replace('/page/web/login.html');
+                   });
+                 }else{
+                   layer.msg(res.msg);
+                   form.render();
+                 }
+
+               }, error: function () {
+               }
+             });
+             return false;
+           })
+
+         }
        })
+
      });
-
-     // $('#register').on('click',function () {
-     //       $.ajax({
-     //         type:"get",
-     //         url: "/main/login/register",
-     //         data: {
-     //           name: $('#username').val(),
-     //           pass: $('#password').val()
-     //         },
-     //         success:function (res) {
-     //           layer.msg(res.msg)
-     //         },error:function () {
-     //         }
-     //       });
-     // })
-
 
     })
   </script>

@@ -316,9 +316,9 @@ i{font-style: normal;}
 .form-box1 legend{font-size: 20px; color: #323232; text-align: center; padding:50px 0;}
 #registerForm .layui-inline,.login-content .login-bg .login-cont .layui-input-inline{ position: relative;}
 #registerForm .layui-input-inline .iphone-icon,.password-icon,.location-icon{position: absolute; top: 8px; left: 10px; color: #d3d3d3; font-size: 20px;}
-#registerForm .iphone,.veri-code{margin: 20px 40px 20px 60px;}
+#registerForm .veri-code{margin: 20px 40px 20px 58px;}
 #registerForm .veri-code{margin-bottom: 20px;}
-#registerForm .iphone .layui-input{padding-left: 40px;}
+#registerForm .layui-input{padding-left: 40px;}
 #registerForm .veri-code .layui-input{padding-left: 40px;}
 /*.login-content .login-bg .login-cont .veri-code .layui-btn{width: 102px; background: #eeeeee; text-align: center; color: #333; height: 36px; line-height: 36px; display: inline-block; border:none; cursor: pointer; position: absolute; top: 1px; right: 1px; font-size: 12px; padding:0 14px;}*/
 .login-content .login-bg .login-cont .login-btn .layui-input-block{margin-left: 0; padding-top: 25px;}
