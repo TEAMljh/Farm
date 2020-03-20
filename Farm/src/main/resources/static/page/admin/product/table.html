@@ -11,7 +11,6 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <script type="text/javascript" src="page/website/JS/swiper.js?v=315"></script>
     <![endif]-->
 </head>
 
@@ -39,7 +38,6 @@
                         <div class="layui-input-inline" style="width:160px;">
                             <select name="typeId" id="typeId"  lay-verType="tips" lay-search>
                                 <option value="">请选择产品类型</option>
-<!--                                <option value="水果">水果类</option>-->
                             </select>
                         </div>
                     </div>
@@ -69,10 +67,10 @@
     layui.use(['layer', 'upload', 'laydate', 'upload', 'form', 'table', 'util', 'admin'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
-        var upload = layui.upload;
+        // var upload = layui.upload;
         var form = layui.form;
         var table = layui.table;
-        var util = layui.util;
+        // var util = layui.util;
         var admin = layui.admin;
         layui.config({
                 version: true
@@ -89,7 +87,6 @@
             elem: '#tableTbBas',
             url: '/admin/product/page',
             page: true,
-            type: 'post',
             cellMinWidth: 100,
             cols: [[
                 {type: 'numbers'},
