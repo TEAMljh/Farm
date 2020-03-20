@@ -6,6 +6,7 @@ import com.ljh.farm.util.LayUIResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,8 +61,9 @@ public class FileController {
         }
         try {
             //项目class目录绝对路径
-            String path = ResourceUtils.getFile("classpath:").getParent();
-
+            String path = ResourceUtils.getFile("classpath:").getParent().replace("target","/src/main/resources/static/assets");
+//            String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+            System.out.println(path);
             fileName = UUID.randomUUID() + suffixName;
             String url = "/upload/" + fileName;
             //保存路径
