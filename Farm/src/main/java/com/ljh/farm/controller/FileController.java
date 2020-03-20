@@ -45,10 +45,10 @@ public class FileController {
         //文件名
         String fileName = file.getOriginalFilename();
         String name = fileName.substring(0, fileName.lastIndexOf("."));
-        logger.info("The name of the upload file: " + fileName);
+        logger.info("The name of the uploadImg file: " + fileName);
         //后缀名
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
-        logger.info("The suffix of the upload file: " + suffixName);
+        logger.info("The suffix of the uploadImg file: " + suffixName);
         //格式限制
         List<ImgSuffix> limit = imgSuffixService.list();
         //判断
@@ -61,7 +61,7 @@ public class FileController {
         }
         try {
             //项目class目录绝对路径
-            String path = ResourceUtils.getFile("classpath:").getParent().replace("target","/src/main/resources/static/assets");
+            String path = ResourceUtils.getFile("classpath:").getParent().replace("target", "/src/main/resources/static");
 //            String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
             System.out.println(path);
             fileName = UUID.randomUUID() + suffixName;

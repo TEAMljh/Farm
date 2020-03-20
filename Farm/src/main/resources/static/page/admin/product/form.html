@@ -53,7 +53,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">名称</label>
                     <div class="layui-input-block">
-                        <input type="text"  name="name" lay-verify="required" lay-verType="tips" placeholder="请输入名称"
+                        <input type="text" name="name" lay-verify="required" lay-verType="tips" placeholder="请输入名称"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -101,7 +101,8 @@
                 <div class="layui-form-item">
                     <div class="layui-input-block" style="float: right;">
                         <button ew-event="closeThisTabs" type="button" class="layui-btn layui-btn-primary">&emsp;关闭&emsp;</button>
-                        <button class="layui-btn" type="button" lay-filter="formSubmit" lay-submit>&emsp;确定&emsp;</button>
+                        <button class="layui-btn" type="button" lay-filter="formSubmit" lay-submit>&emsp;确定&emsp;
+                        </button>
                     </div>
                 </div>
             </form>
@@ -121,21 +122,22 @@
         var data = layui.data('productdata').ls;
 
         layui.data('productdata', null);
-        $(document).ready(function () {
-            if (data) {
-                if (data.img != null && data.img != '' && data.imgDetail !=null && data.imgDetail !='') {
-                    console.log($('#headImg_show').attr('src'));
-                    console.log($('#detailImg_show').attr('src'));
+        layer.ready(function () {
+            // console.log("if前")
+            /* if (data) {
+                 if (data.img != null && data.img != '' && data.imgDetail != null && data.imgDetail != '') {
+                     console.log($('#headImg_show').attr('src'));
+                     console.log($('#detailImg_show').attr('src'));
 
-                    $('#headImg_show').css('display', '');
-                    $('#headImg_show').attr('src', data.img);
-                    console.log($('#headImg_show').attr('src'));
+                     $('#headImg_show').css('display', '');
+                     $('#headImg_show').attr('src', data.img);
+                     console.log($('#headImg_show').attr('src'));
 
-                    $('#detailImg_show').css('display','');
-                    $('#detailImg_show').attr('src', data.imgDetail);
-                    console.log($('#detailImg_show').attr('src'));
-                }
-            }
+                     $('#detailImg_show').css('display', '');
+                     $('#detailImg_show').attr('src', data.imgDetail);
+                     console.log($('#detailImg_show').attr('src'));
+                 }
+             }*/
             $.ajax({
                 url: '/admin/product/list',
                 type: 'GET', //GET
@@ -212,10 +214,11 @@
         });
 
         if (data) {
+            console.log("in")
             form.val('modelProductForm', {
                 'id': data.id,
                 'img': data.img,
-                'imgDetail':data.imgDetail,
+                'imgDetail': data.imgDetail,
                 'name': data.name,
                 'pri': data.pri,
                 'oldPri': data.oldPri,
@@ -223,6 +226,19 @@
                 'typeId': data.typeId,
                 'single': data.single
             });
+            console.log(data.img);
+            if (data.img != null && data.img != '' && data.imgDetail != null && data.imgDetail != '') {
+                console.log($('#headImg_show').attr('src'));
+                console.log($('#detailImg_show').attr('src'));
+
+                $('#headImg_show').css('display', '');
+                $('#headImg_show').attr('src', data.img);
+                console.log($('#headImg_show').attr('src'));
+
+                $('#detailImg_show').css('display', '');
+                $('#detailImg_show').attr('src', data.imgDetail);
+                console.log($('#detailImg_show').attr('src'));
+            }
         }
 
         // 监听表单提交
@@ -240,6 +256,7 @@
             }, 'Get');
             return false;
         });
+
         function refreshAndClose() {
             admin.refresh('page/admin/product/table.html');
             admin.closeThisTabs();
