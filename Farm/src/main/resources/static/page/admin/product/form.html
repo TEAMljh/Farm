@@ -9,10 +9,8 @@
     <link rel="stylesheet" href="/assets/module/admin.css?v=315"/>
     <link rel="stylesheet" href="/assets/css/common.css"/>
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-
-    <script type="text/javascript" src="page/website/JS/swiper.js?v=315"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js?v=315"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js?v=315"></script>
     <![endif]-->
     <title>Title</title>
     <style>
@@ -124,16 +122,16 @@
 
         layui.data('productdata', null);
         $(document).ready(function () {
-            // console.log(data.img);
             if (data) {
                 if (data.img != null && data.img != '' && data.imgDetail !=null && data.imgDetail !='') {
                     console.log($('#headImg_show').attr('src'));
-                    // console.log(data.img);
+                    console.log($('#detailImg_show').attr('src'));
                     $('#headImg_show').css('display', '');
                     $('#headImg_show').attr('src', data.img);
                     console.log($('#headImg_show').attr('src'));
                     $('#detailImg_show').css('display','');
                     $('#detailImg_show').attr('src', data.imgDetail);
+                    console.log($('#detailImg_show').attr('src'));
                 }
             }
             $.ajax({
@@ -244,7 +242,7 @@
             return false;
         });
         function refreshAndClose() {
-            admin.refresh('/page/admin/product/table.html');
+            admin.refresh('page/admin/product/table.html');
             admin.closeThisTabs();
         }
     });
