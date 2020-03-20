@@ -32,10 +32,10 @@
                 <input name="id" type="hidden"/>
                 <div class="layui-form-item">
                     <label class="layui-form-label">小图片</label>
-                    <input type="hidden" name="img" id="headImg">
+                    <input type="hidden" name="img" id="headImg" lay-verify="headImg">
                     <div class="layui-upload">
                         <div class="layui-upload-list">
-                            <img class="layui-upload-img" id="headImg_show" style="display: none;">
+                            <img class="layui-upload-img" id="headImg_show" style="display: none;" src="">
                             <button type="button" class="layui-btn" id="uploadImg01">上传图片</button>
                             <p id="demoText01"></p>
                         </div>
@@ -46,7 +46,7 @@
                     <input type="hidden" name="imgDetail" id="detailImg">
                     <div class="layui-upload">
                         <div class="layui-upload-list">
-                            <img class="layui-upload-img" id="detailImg_show" style="display: none;">
+                            <img class="layui-upload-img" id="detailImg_show" style="display: none;" src="">
                             <button type="button" class="layui-btn" id="uploadImg02">上传图片</button>
                             <p id="demoText02"></p>
                         </div>
@@ -55,7 +55,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">名称</label>
                     <div class="layui-input-block">
-                        <input type="text" id="name" name="name" lay-verify="required" lay-verType="tips" placeholder="请输入名称"
+                        <input type="text"  name="name" lay-verify="required" lay-verType="tips" placeholder="请输入名称"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -113,7 +113,6 @@
 </body>
 <script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
 <script type="text/javascript" src="/assets/js/common.js?v=315"></script>
-<script type="text/javascript" src="/assets/js/admin.js"></script>
 <script>
     layui.use(['layer', 'form', 'laydate', 'admin', 'upload'], function () {
         var $ = layui.jquery;
@@ -125,12 +124,16 @@
 
         layui.data('productdata', null);
         $(document).ready(function () {
+            // console.log(data.img);
             if (data) {
-                if (data.img != null && data.img != '') {
+                if (data.img != null && data.img != '' && data.imgDetail !=null && data.imgDetail !='') {
+                    console.log($('#headImg_show').attr('src'));
+                    // console.log(data.img);
                     $('#headImg_show').css('display', '');
                     $('#headImg_show').attr('src', data.img);
-                    // $('#detailImg_show').css('display','');
-                    // $('#detailImg_show').attr('src', data.imgDetail);
+                    console.log($('#headImg_show').attr('src'));
+                    $('#detailImg_show').css('display','');
+                    $('#detailImg_show').attr('src', data.imgDetail);
                 }
             }
             $.ajax({
@@ -146,7 +149,9 @@
                 }
             })
         });
-        var uploadInst = upload.render({
+
+        // 上传照片1
+        var uploadInst01 = upload.render({
             elem: '#uploadImg01'
             , accept: 'images'
             , url: '/file/fileUpload'
@@ -155,7 +160,6 @@
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
                     $('#headImg_show').attr('src', result); //图片链接（base64）
-                    // $('#detailImg_show').attr('src', result);
                 });
             }
             , done: function (res) {
@@ -166,15 +170,43 @@
                 //上传成功
                 $('#headImg_show').css('display', '');
                 $('#headImg').val(res.data.url);
-                // $('#detailImg_show').css('display','');
-                // $('#detailImg').val(res.data.url);
             }
             , error: function () {
                 //演示失败状态，并实现重传
                 var demoText = $('#demoText01');
                 demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
                 demoText.find('.demo-reload').on('click', function () {
-                    uploadInst.upload();
+                    uploadInst01.upload();
+                });
+            }
+        });
+        //上传图片2
+        var uploadInst02 = upload.render({
+            elem: '#uploadImg02'
+            , accept: 'images'
+            , url: '/file/fileUpload'
+            , acceptMime: 'image/*'
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#detailImg_show').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+                $('#detailImg_show').css('display', '');
+                $('#detailImg').val(res.data.url);
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText02');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst02.upload();
                 });
             }
         });
@@ -184,7 +216,7 @@
             form.val('modelProductForm', {
                 'id': data.id,
                 'img': data.img,
-                'imgDetile':data.imgDetile,
+                'imgDetail':data.imgDetail,
                 'name': data.name,
                 'pri': data.pri,
                 'oldPri': data.oldPri,
@@ -196,13 +228,11 @@
 
         // 监听表单提交
         form.on('submit(formSubmit)', function (data) {
-
-            var formData = form.val('modelProductForm');
-            var Data=document.getElementById('name').value;
-            console.log(Data);
             admin.req('/admin/product/addOrUpdate', data.field, function (res) {
                 if (res.code == 0) {
                     layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+                        // parent.location.reload();
+                        // parent.layui.admin.events.closeThisTabs();
                         refreshAndClose();
                     });
                 } else {
@@ -210,14 +240,9 @@
                         //refreshAndClose();
                     });
                 }
-            }, 'GET');
+            }, 'Get');
             return false;
         });
-
-        $("#cancel").on('click', function () {
-            refreshAndClose();
-        });
-
         function refreshAndClose() {
             admin.refresh('/page/admin/product/table.html');
             admin.closeThisTabs();

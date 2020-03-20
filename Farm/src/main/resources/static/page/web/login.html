@@ -129,7 +129,7 @@
             <div class="layui-inline veri-code">
             <div class="layui-input-inline">
             <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
-            <input type="text" name="name" type="name" id="name" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            <input type="text" name="name" id="name" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
             </div>
             </div>
             <div class="layui-inline veri-code">
@@ -142,28 +142,28 @@
               <div class="layui-inline veri-code">
                 <div class="layui-input-inline">
                   <i class="layui-icon layui-icon-location location-icon"></i>
-                  <input type="text" id="province" type="province" name="province" lay-verify="required" placeholder="请输入所在省" autocomplete="off" class="layui-input pnum">
+                  <input type="text" id="province" name="province" lay-verify="required" placeholder="请输入所在省" autocomplete="off" class="layui-input pnum">
                   <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
                 </div>
               </div>
               <div class="layui-inline veri-code">
                 <div class="layui-input-inline">
                   <i class="layui-icon layui-icon-location location-icon"></i>
-                  <input type="text" id="city" type="city" name="city" lay-verify="required" placeholder="请输入所在市" autocomplete="off" class="layui-input pnum">
+                  <input type="text" id="city" name="city" lay-verify="required" placeholder="请输入所在市" autocomplete="off" class="layui-input pnum">
                   <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
                 </div>
               </div>
               <div class="layui-inline veri-code">
                 <div class="layui-input-inline">
                   <i class="layui-icon layui-icon-location location-icon"></i>
-                  <input type="text" id="county" type="county" name="county" lay-verify="required" placeholder="请输入所在县" autocomplete="off" class="layui-input pnum">
+                  <input type="text" id="county" name="county" lay-verify="required" placeholder="请输入所在县" autocomplete="off" class="layui-input pnum">
                   <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
                 </div>
               </div>
               <div class="layui-inline veri-code">
                 <div class="layui-input-inline">
                   <i class="layui-icon layui-icon-location location-icon"></i>
-                  <input type="text" id="detail" type="detail" name="detail" lay-verify="required" placeholder="请输入详细地址" autocomplete="off" class="layui-input pnum">
+                  <input type="text" id="detail" name="detail" lay-verify="required" placeholder="请输入详细地址" autocomplete="off" class="layui-input pnum">
                   <!--<input type="button" class="layui-btn" id="find"  value="验证码" /> -->
                 </div>
               </div>
@@ -184,7 +184,7 @@
           var $ = layui.$,form = layui.form,layer = layui.layer,admin=layui.admin;
 
      $('html').hide();
-     $('html').fadeIn(500);
+     $('html').fadeIn(1000);
 
      //模糊查询
      $(document).on('click','.search_bt',function () {
@@ -248,7 +248,7 @@
                },
                success: function (res) {
                  if (res.code == 0) {
-                   layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+                   layer.msg(res.msg, {icon: 1, time: 1500}, function () {
                      location.replace('/page/web/login.html');
                    });
                  }else{
