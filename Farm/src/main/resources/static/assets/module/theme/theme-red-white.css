@@ -21,7 +21,7 @@ html {
 
 /** header样式 */
 .layui-layout-admin .layui-header {
-    background-color: #DD4B39;
+    background-color: green;
     height: 60px;
 }
 
@@ -363,7 +363,7 @@ html {
 
 /** 按钮 */
 .layui-btn:not(.layui-btn-primary):not(.layui-btn-normal):not(.layui-btn-warm):not(.layui-btn-danger):not(.layui-btn-disabled) {
-    background-color: #DD4B39;
+    background-color: forestgreen;
 }
 
 .layui-btn.layui-btn-primary:hover {

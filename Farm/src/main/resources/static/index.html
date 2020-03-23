@@ -20,7 +20,7 @@
     <!-- 头部 -->
     <div class="layui-header">
         <div class="layui-logo">
-            <img src="/assets/images/tz.jpg"/>
+            <img src="/assets/img/农产品小标题.png"/>
             <cite>&nbsp;农产品销售后台</cite>
         </div>
         <ul class="layui-nav layui-layout-left">
@@ -37,7 +37,7 @@
             </li>
             <li class="layui-nav-item" lay-unselect>
                 <a>
-                    <img src="/assets/images/head.png" class="layui-nav-img">
+                    <img src="/assets/img/用户.jpg" class="layui-nav-img">
                     <cite id="huName">管理员</cite>
                 </a>
                 <dl class="layui-nav-child">
@@ -45,7 +45,7 @@
                         <a id="changePassword" data-url="/admin/user/changePassword">修改密码</a>
                     </dd>
                     <dd lay-unselect>
-                        <a id="logout" ew-event="logout" data-url="/logout">退出</a>
+                        <a id="logout" ew-event="logout" data-url="/page/admin/login.html">退出</a>
                     </dd>
                 </dl>
             </li>
@@ -72,6 +72,9 @@
                 <li class="layui-nav-item">
                     <a lay-href="page/admin/productMaintain/table.html"><i class="layui-icon layui-icon-file"></i>&emsp;<cite>农产品类型管理</cite></a>
                 </li>
+                <li class="layui-nav-item">
+                    <a lay-href="page/admin/news/table.html"><i class="layui-icon layui-icon-file"></i>&emsp;<cite>生活资讯管理</cite></a>
+                </li>
             </ul>
         </div>
     </div>
@@ -88,30 +91,6 @@
     </div>
 </div>
 
-<!-- 侧边栏渲染模板 -->
-<!--<script id="sideNav" type="text/html">-->
-<!--    {{#  layui.each(d, function(index, item){ }}-->
-<!--    <li class="layui-nav-item">-->
-<!--        <a lay-href="{{(item.address&&item.level==2)? item.address:'javascript:;'}}"><i class="layui-icon {{item.icon}}"></i>&emsp;<cite>{{item.name}}</cite></a>-->
-<!--        {{# if(item.children&&item.children.length>0){ }}-->
-<!--        <dl class="layui-nav-child">-->
-<!--            {{# layui.each(item.children, function(index, subItem){ }}-->
-<!--            <dd>-->
-<!--                <a lay-href="{{ subItem.address ? subItem.address:'javascript:;'}}">{{ subItem.name }}</a>-->
-<!--                {{# if(subItem.children&&subItem.children.length>0){ }}-->
-<!--                <dl class="layui-nav-child">-->
-<!--                    {{# layui.each(subItem.children, function(index, thrItem){ }}-->
-<!--                    <dd><a lay-href="{{ thrItem.address ? thrItem.address:'javascript:;'}}">{{ thrItem.name }}</a></dd>-->
-<!--                    {{# }); }}-->
-<!--                </dl>-->
-<!--                {{# } }}-->
-<!--            </dd>-->
-<!--            {{# }); }}-->
-<!--        </dl>-->
-<!--        {{# } }}-->
-<!--    </li>-->
-<!--    {{#  }); }}-->
-<!--</script>-->
 
 <script type="text/html" id="changePwd">
     <form class="layui-form model-form" id="form-psw">
@@ -178,20 +157,20 @@
         //
         // }, 'GET');
 
-        var renderMenu = function (userId) {
-            admin.req('admin/user/getAuths?' + new Date().getTime(), {userId: userId}, function (res) {
-                if (res.code == 0) {
-                    var data = res.data;
-                    var obj = transform(data);
-                    laytpl(sideNav.innerHTML).render(obj[0].children, function (html) {
-                        html = html;
-                        $('*[lay-filter=admin-side-nav]').html(html);
-                        element.render('nav');
-                        admin.activeNav('/page/home.html');
-                    });
-                }
-            }, 'GET');
-        }
+        // var renderMenu = function (userId) {
+        //     admin.req('admin/user/getAuths?' + new Date().getTime(), {userId: userId}, function (res) {
+        //         if (res.code == 0) {
+        //             var data = res.data;
+        //             var obj = transform(data);
+        //             laytpl(sideNav.innerHTML).render(obj[0].children, function (html) {
+        //                 html = html;
+        //                 $('*[lay-filter=admin-side-nav]').html(html);
+        //                 element.render('nav');
+        //                 admin.activeNav('/page/home.html');
+        //             });
+        //         }
+        //     }, 'GET');
+        // }
 
         function transform(list) {
             var group = {};
@@ -213,6 +192,8 @@
             return group["-1"];
         }
 
+
+
         $('#changePassword').click(function () {
             changePassword();
         });
@@ -232,7 +213,7 @@
                                 if (res.code == 0){
                                     layer.msg(res.msg, {icon: 1});
                                     admin.req('/logout', {}, function () {
-                                        window.location.href = '/login';
+                                        window.location.href = '/page/admin/login.html';
                                     }, 'GET');
                                 } else{
                                     layer.msg(res.msg, {icon: 2});

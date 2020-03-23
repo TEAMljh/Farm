@@ -31,6 +31,7 @@ body {
 .login-body > .layui-card {
     max-width: 360px;
     margin: 0 auto;
+    background-color: ghostwhite;
 }
 
 .login-body .layui-card-header {
@@ -120,7 +121,7 @@ body {
 
 
 .login-header img {
-    height: 40px;
+
 }
 
 /** 移动设备样式 */

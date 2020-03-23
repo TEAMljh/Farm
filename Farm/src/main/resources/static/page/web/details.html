@@ -147,9 +147,14 @@
           $('.detail_name').html(res.name);
           $('.detail_old').html('￥' + res.oldPri + '&nbsp;');
           $('.detail_pri').html(res.pri);
-          $('.detail_address').html(sessionStorage.getItem('address1')+  '&nbsp;'+sessionStorage.getItem('address2') +  '&nbsp;'+sessionStorage.getItem('address3'));
           $('.detail_single').html(res.single);
           $('.detail_img').attr('src',res.img);
+          if (sessionStorage.getItem('address1') == null) {
+            $('.detail_address').html('亲!请先登录!')
+          }else{
+            $('.detail_address').html(sessionStorage.getItem('address1')+  '&nbsp;'+sessionStorage.getItem('address2') +  '&nbsp;'+sessionStorage.getItem('address3'));
+
+          }
 
           // $(document).on('click','.car-btn',function () {
           //   console.log($('.num').val());

@@ -34,7 +34,7 @@
           <a href="#" title="农产品">
             <img src="/assets/img/农产品小标题.png">
             <img src="/assets/img/标题2.jpg" >
-
+            <img src="/assets/img/小标题3.jpg">
           </a>
         </h1>
         <div class="mallSearch">
@@ -101,7 +101,7 @@
                 </div>
               {{# }); }}
             </script>
-            <div id="onpage" style="text-align: center;">
+            <div id="onpage" style="text-align: center;display: none">
               <button class="prevpage layui-btn">上一页</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <button class="nextpage layui-btn">下一页</button>
             </div>
@@ -122,8 +122,7 @@
 
     $('html').hide();
     $('html').fadeIn(500);
-
-    // $('#onpage').show(1500);
+    $('#onpage').attr('display','block');
 
     //模糊查询(点击查询或按enter键)
       $(document).on('click','.search_bt',function () {
@@ -206,7 +205,7 @@
       // console.log(layui.router("#/about.html"))
       mm.request({
         url: '/main/productdisplay/list' + '?typeId='+ typeid + '&page='+ page,
-        async: false,
+        // async: false,
         success : function(res){
           listCont.innerHTML = mm.renderHtml(html,res);
           pages = res.data.pages;

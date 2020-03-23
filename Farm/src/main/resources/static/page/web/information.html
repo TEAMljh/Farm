@@ -64,7 +64,7 @@
         <div class="item-box layui-clear" id="list-cont">
 
         </div>
-        <div id="onpage" style="text-align: center;">
+        <div id="onpage" style="text-align: center;display: none" >
           <button class="prevpage layui-btn">上一页</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <button class="nextpage layui-btn">下一页</button>
         </div>
@@ -99,8 +99,7 @@
 
     $('html').hide();
     $('html').fadeIn(500);
-    $('#onpage').hide();
-    $('#onpage').show(1500);
+    $('#onpage').attr('display','block');
 
     //显示用户
     login_on.login_success();
@@ -127,14 +126,14 @@
       var listCont = document.getElementById('list-cont');
       mm.request({
         url: '/main/news/list?page=' + num,
-        async: false,
+        // async: false,
         success : function(res){
           listCont.innerHTML = mm.renderHtml(html,res);
           pages = res.data.pages;
           current = res.data.current;
 
           //判断显示分页
-          if (pages === 1) {
+          if (pages === 1 || pages === 0) {
             $('#onpage').hide();
           }else{
             $('#onpage').show();

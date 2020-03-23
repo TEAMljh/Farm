@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>产品中心</title>
+    <link rel="stylesheet" href="/assets/libs/layui/css/layui.css?v=315"/>
+    <link rel="stylesheet" href="/assets/module/admin.css?v=315"/>
+    <link rel="stylesheet" href="/assets/css/common.css"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js?v=315"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js?v=315"></script>
+    <![endif]-->
+    <title>Title</title>
+    <style>
+        .layui-upload-img {
+            width: 92px;
+            height: 92px;
+            margin: 0 10px 10px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form id="modelNewsForm" lay-filter="modelNewsForm" class="layui-form"
+                  style="width: 90%;margin-top: 15px;">
+                <input name="id" type="hidden"/>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">小图片</label>
+                    <input type="hidden" name="img" id="headImg">
+                    <div class="layui-upload">
+                        <div class="layui-upload-list">
+                            <img src="" class="layui-upload-img" id="headImg_show" style="display: none;">
+                            <button type="button" class="layui-btn" id="uploadImg01">上传图片</button>
+                            <p id="demoText01"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" lay-verify="required" lay-verType="tips" placeholder="请输入标题"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">内容</label>
+                    <div class="layui-input-block">
+                        <textarea name="content" lay-verify="required" lay-verType="tips" placeholder="请输入生活小妙招"
+                                  autocomplete="off" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block" style="float: right;">
+                        <button ew-event="closeThisTabs" type="button" class="layui-btn layui-btn-primary">&emsp;关闭&emsp;</button>
+                        <button class="layui-btn" type="button" lay-filter="formSubmit" lay-submit>&emsp;确定&emsp;
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="/assets/js/common.js?v=315"></script>
+<script>
+    layui.use(['layer', 'form', 'laydate', 'admin', 'upload'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var admin = layui.admin;
+        var upload = layui.upload;
+        var data = layui.data('newsdata').ls;
+
+        layui.data('newsdata', null);
+
+        // 上传照片1
+        var uploadInst01 = upload.render({
+            elem: '#uploadImg01'
+            , accept: 'images'
+            , url: '/file/fileUpload'
+            , acceptMime: 'image/*'
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#headImg_show').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+                $('#headImg_show').css('display', '');
+                $('#headImg').val(res.data.url);
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText01');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst01.upload();
+                });
+            }
+        });
+        
+        if (data) {
+            form.val('modelNewsForm', {
+                'id': data.id,
+                'img': data.img,
+                'name': data.name,
+                'content': data.content
+            });
+            console.log(data.img);
+            if (data.img != null && data.img != '') {
+                console.log($('#headImg_show').attr('src'));
+                $('#headImg_show').css('display', '');
+                $('#headImg_show').attr('src', data.img);
+                console.log($('#headImg_show').attr('src'));
+            }
+        }
+
+        // 监听表单提交
+        form.on('submit(formSubmit)', function (data) {
+            admin.req('/admin/news/addOrUpdate', data.field, function (res) {
+                if (res.code == 0) {
+                    layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+                        refreshAndClose();
+                    });
+                } else {
+                    layer.msg(res.msg, {icon: 2, time: 1000}, function () {
+                        //refreshAndClose();
+                    });
+                }
+            }, 'Get');
+            return false;
+        });
+
+        function refreshAndClose() {
+            admin.refresh('page/admin/news/table.html');
+            admin.closeThisTabs();
+        }
+    });
+</script>
+</html>

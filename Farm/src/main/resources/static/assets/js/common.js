@@ -22,7 +22,7 @@ layui.config({
     CKEDITOR: 'ckeditor/ckeditor',
     Split: 'Split/Split',
     cascader: 'cascader/cascader'
-}).use(['layer', 'admin'], function () {
+}).use(['layer', 'admin','util'], function () {
     var $ = layui.jquery;
     var layer = layui.layer;
     var admin = layui.admin;

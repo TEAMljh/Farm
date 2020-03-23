@@ -6,7 +6,6 @@
   <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
   <link rel="stylesheet" type="text/css" href="/assets/libs/layui/css/layui.css">
   <script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
-  <script type="text/javascript" src="/assets/js/admin.js"></script>
   <script type="text/javascript" src="/assets/js/common.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -178,10 +177,9 @@
     </div>
   </script>
   <script type="text/javascript">
-   layui.config({
-      base: '../res/static/js/util' //你存放新模块的目录，注意，不是layui的模块目录
-    }).use(['jquery','form','layer','admin'],function(){
+   layui.use(['jquery','form','layer','admin'],function(){
           var $ = layui.$,form = layui.form,layer = layui.layer,admin=layui.admin;
+
 
      $('html').hide();
      $('html').fadeIn(1000);
