@@ -27,10 +27,10 @@ public class ProductDetail extends Base{
     private String img;
 
     @TableField("pri")
-    private Integer pri;
+    private Double pri;
 
     @TableField("old_pri")
-    private Integer oldPri;
+    private Double oldPri;
 
     @TableField("discount")
     private String discount;

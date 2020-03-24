@@ -94,7 +94,8 @@
                   <div class="text">
                     <p class="title">{{item.name}}</p>
                     <p class="price">
-                      <span class="pri">{{item.pri}}元</span>
+                      <span class="pri">{{item.pri}}元</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <span class="Ori-pic" style="text-decoration:line-through;">￥{{item.oldPri}}</span>
                       <span class="nub">{{item.discount}}折</span>
                     </p>
                   </div>
@@ -105,6 +106,7 @@
               <button class="prevpage layui-btn">上一页</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <button class="nextpage layui-btn">下一页</button>
             </div>
+            <strong id="pro_tips" style="display: none">暂无商品，敬请期待！</strong>
           </div>
         </div>
       </div>
@@ -210,10 +212,14 @@
           listCont.innerHTML = mm.renderHtml(html,res);
           pages = res.data.pages;
           current = res.data.current;
-          if (pages === 1 || pages ===0) {
+          if (pages === 1) {
+            $('#onpage,#pro_tips').hide();
+          }else if(pages ===0){
+            $('#pro_tips').show();
             $('#onpage').hide();
           }else{
             $('#onpage').show();
+            $('#pro_tips').hide();
           }
         },
         error: function(res){

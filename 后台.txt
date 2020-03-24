@@ -16,5 +16,5 @@
                 /admin/news/addOrUpdate 添加修改 
 
 更改密码  /admin/user/changePassword  
-               登录和注册的接口，大小写也需要匹配判断。
+登录和注册的接口，大小写也需要匹配判断。
  

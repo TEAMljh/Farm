@@ -41,11 +41,13 @@ layui.define(['jquery','layer','mm'],function(exports){
                         pages = res.data.pages;
                         current = res.data.current;
                         if (pages === 1  ) {
-                            $('#onpage').hide();
+                            $('#onpage,#pro_tips').hide();
                         }else if(pages === 0){
-                            $('#onpage').html('<strong>暂无商品，敬请期待！</strong>');
+                            $('#onpage').hide();
+                            $('#pro_tips').show();
                         }else{
                             $('#onpage').show();
+                            $('#pro_tips').hide();
                         }
                         console.log("我输出了")
                     },

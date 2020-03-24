@@ -91,7 +91,7 @@
               <div class="number layui-clear"><span class="title">数&nbsp;&nbsp;&nbsp;量</span><div class="number-cont"><span class="cut btn">-</span><input onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" maxlength="4" type="" name="" placeholder="1" value="1" class="num"><span class="add btn">+</span></div></div>
             </div>
             <div class="choose-btns">
-              <button class="layui-btn layui-btn-primary purchase-btn">立刻购买</button>
+              <button class="layui-btn layui-btn-primary purchase-btn buyNow-btn">立刻购买</button>
               <button class="layui-btn  layui-btn-danger car-btn"><i class="layui-icon layui-icon-cart-simple"></i>加入购物车</button>  
             </div>
           </div>
@@ -101,7 +101,7 @@
         <div class="detail">
           <h4>详情</h4>
           <div class="item">
-            <img src="/assets/img/details_imgbig.jpg">
+            <img src="/assets/img/details_imgbig.jpg" class="detail_bigImg">
           </div>
         </div>
       </div>
@@ -149,17 +149,13 @@
           $('.detail_pri').html(res.pri);
           $('.detail_single').html(res.single);
           $('.detail_img').attr('src',res.img);
+          $('.detail_bigImg').attr('src',res.imgDetail);
           if (sessionStorage.getItem('address1') == null) {
             $('.detail_address').html('亲!请先登录!')
           }else{
             $('.detail_address').html(sessionStorage.getItem('address1')+  '&nbsp;'+sessionStorage.getItem('address2') +  '&nbsp;'+sessionStorage.getItem('address3'));
 
           }
-
-          // $(document).on('click','.car-btn',function () {
-          //   console.log($('.num').val());
-          // })
-
 
           //加购物车
           $(document).on('click','.car-btn',function () {
@@ -187,7 +183,38 @@
             }
 
 
+          });
+
+          //立即购买
+          $(document).on('click','.buyNow-btn',function () {
+            if (sessionStorage.getItem('login_success') == 0) {
+              $.ajax({
+                type:"get",
+                url: "/main/shopcart",
+                // dataType:"json",
+                data:{
+                  img : res.img,
+                  title: res.name,
+                  single:res.single,
+                  pri:  res.pri,
+                  num:  $('.num').val(),
+                  userName: sessionStorage.getItem('username')
+                },
+                success:function (res) {
+                  layer.msg(res.msg,{icon:1,time:1500},function () {
+                    location.replace('/page/web/shopcart.html')
+                  })
+                },error:function (msg) {
+                  console.log(msg);
+                }
+              });
+            }else{
+              layer.msg("亲! 请先进行登录,再购买!")
+            }
+
+
           })
+
 
         },error:function () {
 
