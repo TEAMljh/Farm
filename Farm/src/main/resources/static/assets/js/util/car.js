@@ -138,6 +138,9 @@ var car = {
                       var input = uls[i].getElementsByTagName('input')[0];
                       if(input.checked){
                           arry = ($(uls[i]).attr('id'));
+
+                          //打印支付商品id
+                          console.log(arry);
                           $.ajax({
                               type:"post",
                               url: "/main/shopping/del/" + arry,

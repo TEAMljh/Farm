@@ -24,6 +24,7 @@ layui.define(['jquery','layer','mm'],function(exports){
             sessionStorage.removeItem('address1');
             sessionStorage.removeItem('address2');
             sessionStorage.removeItem('address3');
+            sessionStorage.removeItem('tel');
 
         },
 

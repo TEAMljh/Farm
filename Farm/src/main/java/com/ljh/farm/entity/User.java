@@ -34,4 +34,7 @@ public class User extends Base{
 
     @TableField("detail")
     private String detail;
+
+    @TableField("tel")
+    private String tel;
 }

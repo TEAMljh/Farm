@@ -127,10 +127,16 @@
             <div class="layui-form-item">
             <div class="layui-inline veri-code">
             <div class="layui-input-inline" style="width:270px;">
-            <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+            <i class="layui-icon layui-icon-username iphone-icon"></i>
             <input type="text" name="name" id="name" lay-verify="name" placeholder="用户名,可包括汉字或字母(3~11)" autocomplete="off" class="layui-input">
             </div>
             </div>
+              <div class="layui-inline veri-code">
+                <div class="layui-input-inline" style="width:270px;">
+                  <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+                  <input type="text" name="tel" id="phone" lay-verify="phone" placeholder="输入手机号" autocomplete="off" class="layui-input">
+                </div>
+              </div>
             <div class="layui-inline veri-code">
             <div class="layui-input-inline" style="width:270px;">
             <i class="layui-icon layui-icon-password password-icon"></i>
@@ -187,7 +193,7 @@
 
      //表单验证
      form.verify({
-       name:[/^[\u4e00-\u9fa5]|[a-zA-Z]{3,11}$/,'请输入正确的3-11位用户名'],
+       name:[/^[\u4e00-\u9fa5]|[a-zA-Z]{3,11}$/,'请输入正确的4-11位用户名'],
        pass:[/^(\w){3,11}$/,'请输入正确的3-11位密码,可包括字母、数字和下划线'],
        province:[/^[\u4e00-\u9fa5]*[省]{3,8}$/,'请输入正确地名'],
        city:[/^[\u4e00-\u9fa5]{3,8}$/,'请输入正确地名'],
@@ -215,6 +221,7 @@
                    sessionStorage.setItem('address1',res.data.province);
                    sessionStorage.setItem('address2',res.data.city);
                    sessionStorage.setItem('address3',res.data.county);
+                   sessionStorage.setItem('tel',res.data.tel);
                    location.replace('/page/web/commodity.html');
                  });
                }else {
