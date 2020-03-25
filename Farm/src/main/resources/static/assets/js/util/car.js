@@ -150,6 +150,8 @@ var car = {
                                   console.log(msg);
                               }
                           });
+
+
                           uls[i].parentNode.removeChild(uls[i]);
                           i--;
                       }

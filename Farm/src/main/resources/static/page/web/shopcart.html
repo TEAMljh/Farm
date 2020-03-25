@@ -179,13 +179,15 @@
         <div class="th batch-deletion">
           <span class="batch-dele-btn">批量删除</span>
         </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="layui-input-inline" style="width:120px;">
-          <select name="send" id="send"  lay-verType="" lay-search>
+        <div class="layui-input-inline" style="">
+          <select name="send" id="send"  lay-verType="" lay-search style="width: 150px;height: 30px;font-size: 20px;">
+            <option value="中通快递">选择快递方式</option>
             <option value="中通快递">中通快递</option>
             <option value="圆通快递">圆通快递</option>
             <option value="顺丰快递">顺丰快递</option>
             <option value="天天快递">天天快递</option>
           </select>
+          <span>! 默认为中通快递</span>
         </div>
         <div class="th Settlement">
           <button class="layui-btn pay">结算</button>
@@ -218,7 +220,7 @@
     })
 
 
-    // 模版导入数据
+    // 导入数据
     var html = demo.innerHTML,
     listCont = document.getElementById('list-cont');
     mm.request({
@@ -233,13 +235,8 @@
       }
     })
 
-
+    //购物车功能
     car.init();
-
-
-
-
-
 });
 </script>
   <script>

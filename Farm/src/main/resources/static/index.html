@@ -97,21 +97,21 @@
         <div class="layui-form-item">
             <label class="layui-form-label">原始密码:</label>
             <div class="layui-input-block">
-                <input type="password" name="oldPassword" placeholder="请输入原始密码" class="layui-input"
+                <input type="password" name="oldPass" placeholder="请输入原始密码" class="layui-input"
                        lay-verType="tips" lay-verify="required" required/>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">新密码:</label>
             <div class="layui-input-block">
-                <input type="password" name="password" placeholder="请输入新密码" class="layui-input"
+                <input type="password" name="pass" placeholder="请输入新密码" class="layui-input"
                        lay-verType="tips" lay-verify="required|psw" required/>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">确认密码:</label>
             <div class="layui-input-block">
-                <input type="password" name="repassword" placeholder="请再次输入新密码" class="layui-input"
+                <input type="password" name="repass" placeholder="请再次输入新密码" class="layui-input"
                        lay-verType="tips" lay-verify="required|repsw" required/>
             </div>
         </div>
@@ -205,6 +205,7 @@
                 success: function (index, layero) {
                     form.on('submit(submitPsw)', function (data) {
                         var formData = data.field;
+                        console.log(formData);
                         //若两次新密码不一致
                         if(formData.password != formData.repassword){
                             layer.msg('两次输入的新密码不一致', {icon: 2});

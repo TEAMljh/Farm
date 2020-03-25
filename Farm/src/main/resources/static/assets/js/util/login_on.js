@@ -5,15 +5,15 @@
 *@Copyright:layui.com
 */
 
-layui.define(['jquery','layer','mm'],function(exports){
-    var $ = layui.jquery,layer = layui.layer,mm = layui.mm;
+layui.define(['jquery','layer','mm', 'form'],function(exports){
+    var $ = layui.jquery,layer = layui.layer,mm = layui.mm,form = layui.form;
 
     var login_on = {
         //用户登录成功
         login_success : function(){
             if(sessionStorage.getItem('login_success') == 0){
                 // console.log(sessionStorage.getItem('username'));
-                $('.login').text(sessionStorage.getItem('username')).append('&nbsp;&nbsp;&nbsp;&nbsp;<a class="quit">退出</a>');
+                $('.login').text(sessionStorage.getItem('username')).append('&nbsp;&nbsp;&nbsp;&nbsp;<span id="change">修改信息</span>&nbsp;&nbsp;&nbsp;&nbsp;<a class="quit">退出</a>');
             }
         },
 
@@ -56,6 +56,38 @@ layui.define(['jquery','layer','mm'],function(exports){
                     }
                 })
         }
+
+        //修改密码
+        // login_changePassword : function () {
+        //     admin.open({
+        //         type: 1,
+        //         title: '修改密码',
+        //         content: $('#changePwd').html(),
+        //         success: function (index, layero) {
+        //             form.on('submit(submitPsw)', function (data) {
+        //                 var formData = data.field;
+        //                 console.log(formData);
+        //                 //若两次新密码不一致
+        //                 if(formData.password != formData.repassword){
+        //                     layer.msg('两次输入的新密码不一致', {icon: 2});
+        //                 }else{
+        //                     admin.req('/admin/user/changePassword', formData, function (res) {
+        //                         if (res.code == 0){
+        //                             layer.msg(res.msg, {icon: 1});
+        //                             admin.req('/logout', {}, function () {
+        //                                 window.location.href = '/page/admin/login.html';
+        //                             }, 'GET');
+        //                         } else{
+        //                             layer.msg(res.msg, {icon: 2});
+        //                         }
+        //                     }, 'POST');
+        //                 }
+        //                 return false;
+        //             });
+        //         }
+        //
+        //     });
+        // }
     }
 
 

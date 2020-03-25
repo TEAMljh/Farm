@@ -22,6 +22,8 @@ i{font-style: normal;}
 .sn-quick-menu div{float: left;}
 .sn-quick-menu div.login{margin-right: 22px;
     font-size: 20px;font-weight: bold;color: green;}
+.sn-quick-menu div.login #change{
+    font-size: 16px;cursor: pointer;}
 .sn-quick-menu div.login a{font-size:16px;color: #ff5500;cursor: pointer}
 .sn-quick-menu div.sp-cart a{font-size:16px;}
 /*end-site-nav*/

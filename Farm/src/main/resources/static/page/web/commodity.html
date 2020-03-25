@@ -113,11 +113,69 @@
     </div>
   </div>
 
+  <!--  修改信息弹窗-->
+  <script type="text/html" id="changeUser">
+    <div class="form-box1">
+      <form class="layui-form" action="" id="changeUserForm" lay-filter="changeUserForm">
+        <legend>用户修改信息</legend>
+        <div class="layui-form-item">
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-username iphone-icon"></i>
+              <input type="text" name="name" id="name" lay-verify="name" placeholder="" autocomplete="off" class="layui-input layui-disabled">
+            </div>
+          </div>
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+              <input type="text" name="tel" id="phone" lay-verify="phone" placeholder="修改手机号" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-password password-icon"></i>
+              <input type="password" id="pass" type="password" name="pass" lay-verify="pass" placeholder="修改密码" autocomplete="off" class="layui-input pnum pass">
+            </div>
+          </div>
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-location location-icon"></i>
+              <input type="text" id="province" name="province" lay-verify="province" placeholder="修改所在省" autocomplete="off" class="layui-input pnum">
+            </div>
+          </div>
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-location location-icon"></i>
+              <input type="text" id="city" name="city" lay-verify="city" placeholder="修改所在市" autocomplete="off" class="layui-input pnum">
+            </div>
+          </div>
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-location location-icon"></i>
+              <input type="text" id="county" name="county" lay-verify="county" placeholder="修改所在县" autocomplete="off" class="layui-input pnum">
+            </div>
+          </div>
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-location location-icon"></i>
+              <input type="text" id="detail" name="detail" lay-verify="detail" placeholder="修改详细地址" autocomplete="off" class="layui-input pnum">
+            </div>
+          </div>
+        </div>
+        <div class="layui-form-item text-right">
+          <button style="right: 100px;width: 100px;" class="layui-btn layui-btn-primary layui-layer-close layui-layer-close1"
+                  type="button" ew-event="closeDialog">取消
+          </button>
+          <button class="layui-btn" lay-filter="changeUser" id="changeUser2" lay-submit=""  style="margin-left: 100px;width: 100px;">保存</button>
+        </div>
+      </form>
+    </div>
+  </script>
 <script>
   layui.config({
     base: '/assets/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
-  }).use(['mm','laypage','jquery','login_on','layer'],function(){
-      var laypage = layui.laypage,$ = layui.$,mm = layui.mm,login_on = layui.login_on,layer = layui.layer;
+  }).use(['mm','laypage','jquery','login_on','layer','form'],function(){
+      var laypage = layui.laypage,$ = layui.$,mm = layui.mm,login_on = layui.login_on,layer = layui.layer,form = layui.form;
       var pages = null;
       var current = null;
       sessionStorage.setItem('typeid',1);
@@ -161,7 +219,62 @@
         layer.msg('已成功退出',{icon:1,time:1500},function () {
           location.replace('/page/web/login.html');
         });
-      })
+      });
+
+      //用户修改密码
+     $(document).on('click','#change',function () {
+      // changeUser();
+     });
+
+     function changeUser(){
+       layer.open({
+         type: 1,
+         title: '修改信息',
+         area: '800px',
+         shade: 0.3,
+         content: $('#changeUser').html(),
+         success: function (layero, index) {  //弹出成功的回调
+           console.log('弹出了' + layero, index);
+
+           //表单验证
+           form.verify({
+             name:[/^[a-zA-Z\u4E00-\u9FA5][a-zA-Z0-9\u4E00-\u9FA5_-]{3,11}$/,'请输入正确的3-11位用户名'],
+             pass:[/^(\w){3,11}$/,'请输入正确的3-11位密码,可包括字母、数字和下划线'],
+             province:[/^[\u4e00-\u9fa5]{3,8}$/,'请输入正确地名'],
+             city:[/^[\u4e00-\u9fa5]{3,8}$/,'请输入正确地名'],
+             county:[/^[\u4e00-\u9fa5]{3,8}$/,'请输入正确地名'],
+             detail:[/^[\u4e00-\u9fa5]{9,30}$/,'请输入正确地名']
+           });
+
+           //验证
+
+           form.on('submit(changeUser)',function (data) {
+             var field = data.field;
+
+             $.ajax({
+               type: "get",
+               url: "/main/login/changeUser",
+               data: field,
+               success: function (res) {
+                 admin.btnLoading('#btnLoading', false);
+                 if (res.code == 0) {
+                   layer.msg(res.msg, {icon: 1, time: 1500}, function () {
+                     location.replace('/page/web/login.html');
+                   });
+                 }else{
+                   layer.msg(res.msg);
+                   form.render();
+                 }
+
+               }, error: function () {
+               }
+             });
+             return false;
+           });
+         }
+       })
+
+     }
 
     //左边侧栏渲染
     for(i=1;i<=3;i++){
