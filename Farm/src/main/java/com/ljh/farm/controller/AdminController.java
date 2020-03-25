@@ -181,4 +181,20 @@ public class AdminController {
         IPage iPage = shopcartService.page(poPage, queryWrapper);
         return new LayUIResult(0, "", iPage.getTotal(), iPage.getRecords());
     }
+
+    @GetMapping("shopcart/changeGoods")
+    public Object changeGoods(Integer id) {
+        Shopcart shopcart = shopcartService.getById(id);
+        if ("0".equals(shopcart.getGoodsFlag())) {
+            shopcart.setGoodsFlag("1");
+        } else {
+            shopcart.setGoodsFlag("0");
+        }
+
+        if (shopcartService.updateById(shopcart)) {
+            return LayUIResult.ok("状态更新成功");
+        } else {
+            return LayUIResult.error("状态更新失败");
+        }
+    }
 }
