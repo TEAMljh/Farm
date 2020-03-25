@@ -37,4 +37,13 @@ public class Shopcart extends Base {
 
     @TableField("user_tel")
     private String userTel;
+
+    @TableField("user_address")
+    private String userAddress;
+
+    @TableField("order_flag")
+    private String orderFlag;
+
+    @TableField("goods_flag")
+    private String goodsFlag;
 }

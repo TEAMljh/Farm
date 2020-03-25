@@ -6,13 +6,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ljh.farm.entity.ProductCenter;
 import com.ljh.farm.entity.ProductDetail;
+import com.ljh.farm.entity.Shopcart;
 import com.ljh.farm.entity.User;
 import com.ljh.farm.entity.vo.ProductCenterVO;
 import com.ljh.farm.entity.vo.ProductDetailVO;
-import com.ljh.farm.service.MaxClassService;
-import com.ljh.farm.service.ProductCenterService;
-import com.ljh.farm.service.ProductDetailService;
-import com.ljh.farm.service.UserService;
+import com.ljh.farm.service.*;
 import com.ljh.farm.util.LayUIResult;
 import com.ljh.farm.util.QuerySort;
 import org.apache.commons.lang3.StringUtils;
@@ -42,6 +40,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ShopcartService shopcartService;
 
     @GetMapping("user/page")
     public Object userPage(User user, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
@@ -169,5 +170,15 @@ public class AdminController {
     @GetMapping("product/list")
     public Object listProducType() {
         return LayUIResult.ok(productCenterService.list());
+    }
+
+    @GetMapping("shopcart/page")
+    public Object pageShopcart(Shopcart shopcart, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
+                               @RequestParam(required = false, defaultValue = "10") int limit) {
+        Page<Shopcart> poPage = new Page<>(page, limit);
+        QueryWrapper<Shopcart> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_flag", '1');
+        IPage iPage = shopcartService.page(poPage, queryWrapper);
+        return new LayUIResult(0, "", iPage.getTotal(), iPage.getRecords());
     }
 }

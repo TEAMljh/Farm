@@ -31,7 +31,7 @@ public class ShopcartController {
     @GetMapping("shopping")
     public Object shopping(String userName) {
         QueryWrapper<Shopcart> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_name", userName);
+        queryWrapper.eq("user_name", userName).eq("order_flag", '0');
         return LayUIResult.ok(shopcartService.list(queryWrapper));
     }
 
@@ -41,6 +41,33 @@ public class ShopcartController {
             return LayUIResult.ok("删除成功");
         } else {
             return LayUIResult.error("删除失败");
+        }
+    }
+
+    @PostMapping("shopping/bought/{id}")
+    public Object bought(@PathVariable Integer id) {
+        Shopcart shopcart = shopcartService.getById(id);
+        shopcart.setOrderFlag("1");
+        if (shopcartService.updateById(shopcart)) {
+            return LayUIResult.ok();
+        } else {
+            return LayUIResult.error();
+        }
+    }
+
+    @GetMapping("shopcart/changeGoods")
+    public Object changeGoods(Integer id) {
+        Shopcart shopcart = shopcartService.getById(id);
+        if ("0".equals(shopcart.getGoodsFlag())) {
+            shopcart.setGoodsFlag("1");
+        } else {
+            shopcart.setGoodsFlag("0");
+        }
+
+        if (shopcartService.updateById(shopcart)) {
+            return LayUIResult.ok("状态更新成功");
+        } else {
+            return LayUIResult.error("状态更新失败");
         }
     }
 }
