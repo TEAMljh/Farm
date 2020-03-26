@@ -182,7 +182,7 @@ public class AdminController {
         return new LayUIResult(0, "", iPage.getTotal(), iPage.getRecords());
     }
 
-    @GetMapping("shopcart/changeGoods")
+    @PostMapping("shopcart/changeGoods")
     public Object changeGoods(Integer id) {
         Shopcart shopcart = shopcartService.getById(id);
         if ("0".equals(shopcart.getGoodsFlag())) {
@@ -192,9 +192,24 @@ public class AdminController {
         }
 
         if (shopcartService.updateById(shopcart)) {
-            return LayUIResult.ok("状态更新成功");
+            return LayUIResult.ok("已发货");
         } else {
-            return LayUIResult.error("状态更新失败");
+            return LayUIResult.error("未发货");
         }
+    }
+
+    @PostMapping("user/changePassword")
+    public Object changePassword(User user, String oldPass) {
+        User user1 = userService.getById(user.getId());
+        if (user1.getPass().equals(oldPass)) {
+            if (userService.updateById(user)) {
+                return LayUIResult.ok("修改成功");
+            } else {
+                return LayUIResult.error("修改失败");
+            }
+        } else {
+            return LayUIResult.error("输入的原密码不正确");
+        }
+
     }
 }

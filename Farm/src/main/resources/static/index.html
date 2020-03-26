@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
     <link rel="stylesheet" href="/assets/module/admin.css?v=315"/>
     <link rel="stylesheet" href="/assets/css/common.css"/>
-<!--    <link rel="icon" href="/assets/images/favicon.ico">-->
+    <!--    <link rel="icon" href="/assets/images/favicon.ico">-->
     <!--	<link rel="stylesheet" type="text/css" href="/assets/css/index.css"/>-->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -61,10 +61,12 @@
             <ul class="layui-nav layui-nav-tree" lay-filter="admin-side-nav" lay-accordion="true"
                 style="margin: 15px 0;/*overflow-y: auto; height: 100%;*/">
                 <li class="layui-nav-item">
-                    <a lay-href="page/admin/main.html"><i class="layui-icon layui-icon-home"></i>&emsp;<cite>主页</cite></a>
+                    <a lay-href="page/admin/main.html"><i
+                            class="layui-icon layui-icon-home"></i>&emsp;<cite>主页</cite></a>
                 </li>
                 <li class="layui-nav-item">
-                    <a lay-href="page/admin/user/table.html"><i class="layui-icon layui-icon-file"></i>&emsp;<cite>客户管理</cite></a>
+                    <a lay-href="page/admin/user/table.html"><i
+                            class="layui-icon layui-icon-file"></i>&emsp;<cite>客户管理</cite></a>
                 </li>
                 <li class="layui-nav-item">
                     <a lay-href="page/admin/product/table.html"><i class="layui-icon layui-icon-file"></i>&emsp;<cite>农产品管理</cite></a>
@@ -73,8 +75,11 @@
                     <a lay-href="page/admin/productMaintain/table.html"><i class="layui-icon layui-icon-file"></i>&emsp;<cite>农产品类型管理</cite></a>
                 </li>
                 <li class="layui-nav-item">
-                    <a lay-href="page/admin/news/table.html"><i class="layui-icon layui-icon-file"></i>&emsp;<cite>生活资讯管理</cite></a>
+                    <a lay-href="page/admin/shopcart/table.html"><i class="layui-icon layui-icon-file"></i>&emsp;<cite>订单查看</cite></a>
                 </li>
+                <!--                <li class="layui-nav-item">-->
+                <!--                    <a lay-href="page/admin/news/table.html"><i class="layui-icon layui-icon-file"></i>&emsp;<cite>生活资讯管理</cite></a>-->
+                <!--                </li>-->
             </ul>
         </div>
     </div>
@@ -95,6 +100,7 @@
 <script type="text/html" id="changePwd">
     <form class="layui-form model-form" id="form-psw">
         <div class="layui-form-item">
+            <input id="userId" name="id" style="display: none">
             <label class="layui-form-label">原始密码:</label>
             <div class="layui-input-block">
                 <input type="password" name="oldPass" placeholder="请输入原始密码" class="layui-input"
@@ -193,30 +199,32 @@
         }
 
 
-
         $('#changePassword').click(function () {
             changePassword();
         });
+
         function changePassword() {
             admin.open({
                 type: 1,
                 title: '修改密码',
                 content: $('#changePwd').html(),
                 success: function (index, layero) {
+                    $('#userId').attr('value',sessionStorage.getItem('userId'));
                     form.on('submit(submitPsw)', function (data) {
                         var formData = data.field;
-                        console.log(formData);
                         //若两次新密码不一致
-                        if(formData.password != formData.repassword){
+                        if (formData.pass != formData.repass) {
                             layer.msg('两次输入的新密码不一致', {icon: 2});
-                        }else{
+                        } else {
                             admin.req('/admin/user/changePassword', formData, function (res) {
-                                if (res.code == 0){
-                                    layer.msg(res.msg, {icon: 1});
-                                    admin.req('/logout', {}, function () {
-                                        window.location.href = '/page/admin/login.html';
-                                    }, 'GET');
-                                } else{
+                                if (res.code == 0) {
+                                    layer.msg(res.msg, {icon: 1, time: 800}, function () {
+                                        admin.req('/logout', {}, function () {
+                                            window.location.href = '/page/admin/login.html';
+                                        }, 'GET');
+                                    });
+
+                                } else {
                                     layer.msg(res.msg, {icon: 2});
                                 }
                             }, 'POST');
@@ -224,7 +232,7 @@
                         return false;
                     });
                 }
-                
+
             });
         }
     });

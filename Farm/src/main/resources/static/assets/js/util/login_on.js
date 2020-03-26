@@ -55,39 +55,60 @@ layui.define(['jquery','layer','mm', 'form'],function(exports){
                     error: function(){
                     }
                 })
-        }
+        },
 
         //修改密码
-        // login_changePassword : function () {
-        //     admin.open({
-        //         type: 1,
-        //         title: '修改密码',
-        //         content: $('#changePwd').html(),
-        //         success: function (index, layero) {
-        //             form.on('submit(submitPsw)', function (data) {
-        //                 var formData = data.field;
-        //                 console.log(formData);
-        //                 //若两次新密码不一致
-        //                 if(formData.password != formData.repassword){
-        //                     layer.msg('两次输入的新密码不一致', {icon: 2});
-        //                 }else{
-        //                     admin.req('/admin/user/changePassword', formData, function (res) {
-        //                         if (res.code == 0){
-        //                             layer.msg(res.msg, {icon: 1});
-        //                             admin.req('/logout', {}, function () {
-        //                                 window.location.href = '/page/admin/login.html';
-        //                             }, 'GET');
-        //                         } else{
-        //                             layer.msg(res.msg, {icon: 2});
-        //                         }
-        //                     }, 'POST');
-        //                 }
-        //                 return false;
-        //             });
-        //         }
-        //
-        //     });
-        // }
+        login_changeUser :function () {
+            layer.open({
+                type: 1,
+                title: '修改信息',
+                area: '800px',
+                shade: 0.3,
+                content: $('#changeUser').html(),
+                success: function (layero, index) {  //弹出成功的回调
+                    console.log('弹出了' + layero, index);
+                    $('#changeUserId').val(sessionStorage.getItem('changeUserId'));
+                    console.log(sessionStorage.getItem('changeUserId'));
+                    $('#name').val(sessionStorage.getItem('username'));
+
+                    //表单验证
+                    form.verify({
+                        name:[/^[a-zA-Z\u4E00-\u9FA5][a-zA-Z0-9\u4E00-\u9FA5_-]{2,11}$/,'请输入正确的3-11位用户名'],
+                        pass:[/^(\w){3,11}$/,'请输入正确的3-11位密码,可包括字母、数字和下划线'],
+                        province:[/^[\u4e00-\u9fa5]{3,8}$/,'请输入正确地名'],
+                        city:[/^[\u4e00-\u9fa5]{3,8}$/,'请输入正确地名'],
+                        county:[/^[\u4e00-\u9fa5]{3,8}$/,'请输入正确地名'],
+                        detail:[/^[\u4e00-\u9fa5]{9,30}$/,'请输入正确地名']
+                    });
+
+                    //验证
+                    form.on('submit(changeUser)',function (data) {
+                        var field = data.field;
+
+                        $.ajax({
+                            type: "get",
+                            url: "/main/changeUser",
+                            data: field,
+                            success: function (res) {
+                                // admin.btnLoading('#btnLoading', false);
+                                if (res.code == 0) {
+                                    layer.msg(res.msg, {icon: 1, time: 1500}, function () {
+                                        location.replace('../../page/web/login.html');
+                                    });
+                                }else{
+                                    layer.msg(res.msg);
+
+                                    form.render();
+                                }
+
+                            }, error: function () {
+                            }
+                        });
+                        return false;
+                    });
+                }
+            })
+        }
     }
 
 

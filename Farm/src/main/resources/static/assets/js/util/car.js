@@ -111,6 +111,16 @@ var car = {
                 var input = uls[i].getElementsByTagName('input')[0];
                 if(input.checked){
                   arry = ($(uls[i]).attr('id'));
+                    $.ajax({
+                        type:"post",
+                        url: "/main/shopping/del/" + arry,
+                        dataType:"json",
+                        success:function () {
+                            getTotal();
+                        },error:function (msg) {
+                            console.log(msg);
+                        }
+                    });
                   uls[i].parentNode.removeChild(uls[i]);
                   i--;
                 }
@@ -133,7 +143,7 @@ var car = {
           if($('.pieces-total').text() != '￥0.00' ){
               layer.msg("购物成功！欢迎下次再来！",{icon:1,time:4000
 
-              },function () {
+              },setTimeout(function () {
                   for(var i = 0;i < uls.length;i++){
                       var input = uls[i].getElementsByTagName('input')[0];
                       if(input.checked){
@@ -143,7 +153,7 @@ var car = {
                           console.log(arry);
                           $.ajax({
                               type:"post",
-                              url: "/main/shopping/del/" + arry,
+                              url: "/main/shopping/bought/" + arry,
                               dataType:"json",
                               success:function () {
                               },error:function (msg) {
@@ -157,7 +167,7 @@ var car = {
                       }
                   }
                   getTotal();
-              });
+              },1000));
           }else{
               layer.msg('请选购后再结算',{icon:0,time:1500})
           }

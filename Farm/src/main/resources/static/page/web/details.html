@@ -107,6 +107,66 @@
       </div>
     </div>
   </div>
+
+  <!--  修改信息弹窗-->
+  <script type="text/html" id="changeUser">
+    <div class="form-box1">
+      <form class="layui-form" action="" id="changeUserForm" lay-filter="changeUserForm">
+        <legend>用户修改信息</legend>
+        <div class="layui-form-item">
+          <input type="text" id="changeUserId" name="id" value="" style="display: none">
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-username iphone-icon"></i>
+              <input type="text" name="name" id="name" lay-verify="name" placeholder="" autocomplete="off" class="layui-input layui-disabled" style="color: #0C0C0C;">*用户名不可更改
+            </div>
+          </div>
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+              <input type="text" name="tel" id="phone" lay-verify="phone" placeholder="修改手机号" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-password password-icon"></i>
+              <input type="password" id="pass" type="password" name="pass" lay-verify="pass" placeholder="修改密码" autocomplete="off" class="layui-input pnum pass">
+            </div>
+          </div>
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-location location-icon"></i>
+              <input type="text" id="province" name="province" lay-verify="province" placeholder="修改所在省" autocomplete="off" class="layui-input pnum">
+            </div>
+          </div>
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-location location-icon"></i>
+              <input type="text" id="city" name="city" lay-verify="city" placeholder="修改所在市" autocomplete="off" class="layui-input pnum">
+            </div>
+          </div>
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-location location-icon"></i>
+              <input type="text" id="county" name="county" lay-verify="county" placeholder="修改所在县" autocomplete="off" class="layui-input pnum">
+            </div>
+          </div>
+          <div class="layui-inline veri-code">
+            <div class="layui-input-inline" style="width:270px;">
+              <i class="layui-icon layui-icon-location location-icon"></i>
+              <input type="text" id="detail" name="detail" lay-verify="detail" placeholder="修改详细地址" autocomplete="off" class="layui-input pnum">
+            </div>
+          </div>
+        </div>
+        <div class="layui-form-item text-right">
+          <button style="right: 100px;width: 100px;" class="layui-btn layui-btn-primary layui-layer-close layui-layer-close1"
+                  type="button" ew-event="closeDialog">取消
+          </button>
+          <button class="layui-btn" lay-filter="changeUser" id="changeUser2" lay-submit=""  style="margin-left: 100px;width: 100px;">保存</button>
+        </div>
+      </form>
+    </div>
+  </script>
 <script type="text/javascript">
   layui.config({
     base: '/assets/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
@@ -124,7 +184,12 @@
       layer.msg('已成功退出',{icon:1,time:1500},function () {
         location.replace('/page/web/login.html');
       });
-    })
+    });
+    //用户修改密码
+    $(document).on('click','#change',function () {
+      login_on.login_changeUser();
+    });
+
 
     //模糊查询
     $(document).on('click','.search_bt',function () {
@@ -171,6 +236,7 @@
                   pri:  res.pri,
                   num:  $('.num').val(),
                   userTel:sessionStorage.getItem('tel'),
+                  userAddress:sessionStorage.getItem('userAddress'),
                   userName: sessionStorage.getItem('username')
                 },
                 success:function () {

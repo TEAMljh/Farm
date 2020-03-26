@@ -37,7 +37,7 @@ public class LoginController {
                 session.setAttribute("user", user1);
                 session.setMaxInactiveInterval(30 * 60);
 //                return LayUIResult.ok("登陆成功");
-                return new LayUIResult(0,"登陆成功",user1);
+                return new LayUIResult(0, "登陆成功", user1);
             } else {
                 return LayUIResult.error("用户名或密码错误!");
             }
@@ -50,11 +50,21 @@ public class LoginController {
     @GetMapping("login/register")
     public Object regist(User user) {
         User user1 = userService.getOne(new QueryWrapper<User>().eq("name", user.getName()));
-        if (user1 != null) {
+
+        if (user1.getName().equals(user.getName())) {
             return LayUIResult.error("该用户已存在！");
         } else {
             userService.save(user);
             return LayUIResult.ok("注册成功！");
+        }
+    }
+
+    @GetMapping("changeUser")
+    public Object changeUserInfo(User user) {
+        if (userService.updateById(user)) {
+            return LayUIResult.ok("更改成功");
+        } else {
+            return LayUIResult.error("更改失败");
         }
     }
 }

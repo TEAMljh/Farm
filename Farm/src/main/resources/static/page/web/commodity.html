@@ -119,10 +119,11 @@
       <form class="layui-form" action="" id="changeUserForm" lay-filter="changeUserForm">
         <legend>用户修改信息</legend>
         <div class="layui-form-item">
+          <input type="text" id="changeUserId" name="id" value="" style="display: none">
           <div class="layui-inline veri-code">
             <div class="layui-input-inline" style="width:270px;">
               <i class="layui-icon layui-icon-username iphone-icon"></i>
-              <input type="text" name="name" id="name" lay-verify="name" placeholder="" autocomplete="off" class="layui-input layui-disabled">
+              <input type="text" name="name" id="name" lay-verify="name" placeholder="" autocomplete="off" class="layui-input layui-disabled" style="color: #0C0C0C;">*用户名不可更改
             </div>
           </div>
           <div class="layui-inline veri-code">
@@ -223,58 +224,9 @@
 
       //用户修改密码
      $(document).on('click','#change',function () {
-      // changeUser();
+      login_on.login_changeUser();
      });
 
-     function changeUser(){
-       layer.open({
-         type: 1,
-         title: '修改信息',
-         area: '800px',
-         shade: 0.3,
-         content: $('#changeUser').html(),
-         success: function (layero, index) {  //弹出成功的回调
-           console.log('弹出了' + layero, index);
-
-           //表单验证
-           form.verify({
-             name:[/^[a-zA-Z\u4E00-\u9FA5][a-zA-Z0-9\u4E00-\u9FA5_-]{3,11}$/,'请输入正确的3-11位用户名'],
-             pass:[/^(\w){3,11}$/,'请输入正确的3-11位密码,可包括字母、数字和下划线'],
-             province:[/^[\u4e00-\u9fa5]{3,8}$/,'请输入正确地名'],
-             city:[/^[\u4e00-\u9fa5]{3,8}$/,'请输入正确地名'],
-             county:[/^[\u4e00-\u9fa5]{3,8}$/,'请输入正确地名'],
-             detail:[/^[\u4e00-\u9fa5]{9,30}$/,'请输入正确地名']
-           });
-
-           //验证
-
-           form.on('submit(changeUser)',function (data) {
-             var field = data.field;
-
-             $.ajax({
-               type: "get",
-               url: "/main/login/changeUser",
-               data: field,
-               success: function (res) {
-                 admin.btnLoading('#btnLoading', false);
-                 if (res.code == 0) {
-                   layer.msg(res.msg, {icon: 1, time: 1500}, function () {
-                     location.replace('/page/web/login.html');
-                   });
-                 }else{
-                   layer.msg(res.msg);
-                   form.render();
-                 }
-
-               }, error: function () {
-               }
-             });
-             return false;
-           });
-         }
-       })
-
-     }
 
     //左边侧栏渲染
     for(i=1;i<=3;i++){

@@ -33,7 +33,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
                     <div class="layui-input-block">
-                        <input name="name" type="text" placeholder="请输入用户名" class="layui-input"
+                        <input autocomplete="off" name="name" type="text" placeholder="请输入用户名" class="layui-input"
                                lay-verType="tips" lay-verify="required" required/>
                     </div>
                 </div>
@@ -79,6 +79,7 @@
                 success: function (res) {
                     admin.btnLoading('#btnLoading', false);
                     if (res.code == 0) {
+                        sessionStorage.setItem('userId',res.data.id);
                         layer.msg('登录成功', {icon: 1, time: 1000}, function () {
                             location.replace('../../index.html');
                         });
