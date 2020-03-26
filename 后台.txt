@@ -8,17 +8,14 @@
 农产品详细管理：/admin/product/page  分页   ✔  
                          /admin/product/del/删除    ✔
                          /admin/product/addOrUpdate 添加修改 ✔
-
                          /main/productcenter/list   所有小类 ✔
 
-资讯管理(不慌)：/admin/news/page  分页      （搜索：接字段 name）
-                /admin/news/del/删除  
-                /admin/news/addOrUpdate 添加修改 
+更改密码(post):  /admin/user/changePassword ？传入form表单数据✔
+客户更改信息：/main/changeUser ？传更改后user信息表表单✔
+购物单管理：/admin/shopcart/page✔
 
-更改密码(post):  /admin/user/changePassword ？传入form表单数据：oldPass、pass、repass
-登录和注册的接口，大小写也需要匹配判断。
-客户更改信息：/main/login/changeUser ？传更改后user信息表表单
-
-购物单管理：
+资讯管理(不慌)：/admin/news/page  分页      （搜索：接字段 name）✔
+                /admin/news/del/删除  ✔
+                /admin/news/addOrUpdate 添加修改 ✔
 
  

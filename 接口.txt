@@ -14,7 +14,9 @@
 搜索（模糊查询）：main/productdisplay/all   ok！！！
 
 购物提交数据url：/main/shopcart   ok！！！
-      删除加购数据：/main/shopping/del/" + id   ok！！！
+      删除加购数据：/main/shopping/del/"+ id   ok！！！
+      产生订单：/main/shopping/bought/ + id ok！！！
 注册提交数据（选）：/main/login/register   ok！！！
+客户更改信息：/main/changeUser ？传更改后user信息表表单
 
 

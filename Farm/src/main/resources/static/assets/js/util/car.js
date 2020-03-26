@@ -143,6 +143,7 @@ var car = {
           if($('.pieces-total').text() != '￥0.00' ){
               layer.msg("购物成功！欢迎下次再来！",{icon:1,time:4000
 
+
               },setTimeout(function () {
                   for(var i = 0;i < uls.length;i++){
                       var input = uls[i].getElementsByTagName('input')[0];
