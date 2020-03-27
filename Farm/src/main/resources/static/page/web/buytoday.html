@@ -10,7 +10,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 </head>
 <body>
-
+<div id="moveMouse" style="background-image: url('../../assets/img/Watermelon.png');background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;
+ width: 40px;height: 40px;position:absolute;z-index: 1000;"></div>
   <div class="site-nav-bg">
     <div class="site-nav w1200">
       <p class="sn-back-home">
@@ -32,6 +33,8 @@
         <h1 class="mallLogo">
           <a href="#" title="农产品">
             <img src="/assets/img/农产品小标题.png">
+            <img src="/assets/img/标题2.jpg" >
+            <img src="/assets/img/小标题3.jpg">
           </a>
         </h1>
         <div class="mallSearch">
@@ -58,10 +61,10 @@
       <div class="inner-cont0">
         <div class="inner-cont1 w1200">
           <div class="inner-cont2">
-            <a href="commodity.html">所有商品</a>
-            <a href="buytoday.html" class="active">今日团购</a>
-            <a href="information.html">农产品资讯</a>
-            <a href="about.html">关于我们</a>
+            <a href="commodity.html">所有商品<span></span></a>
+            <a href="buytoday.html" class="active">今日团购<span></span></a>
+            <a href="information.html">农产品资讯<span></span></a>
+            <a href="about.html">关于我们<span></span></a>
           </div>
         </div>
       </div>
@@ -249,8 +252,20 @@
         going(current);
         $('.nextpage').attr('disabled', 'true')
       }
-    })
+    });
 
+    //鼠标
+    $(function () {
+      var moveMouse = $('#moveMouse');
+      $(document).mousemove(function (event) {
+        event = event || window.event;
+        var x = $(window).scrollTop();
+        var left = event.clientX;
+        var top = event.clientY;
+        moveMouse.css('left', (left + 15)+ 'px');
+        moveMouse.css('top', (top + x) + 'px');
+      })
+    });
 
 });
 </script>

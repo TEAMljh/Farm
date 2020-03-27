@@ -10,7 +10,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 </head>
 <body style="background-image: url('../../assets/img/back2.jpg');background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;background-position: 0 10%">
-
+ <div id="moveMouse" style="background-image: url('../../assets/img/Watermelon.png');background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;
+ width: 40px;height: 40px;position:absolute;z-index: 1000;"></div>
   <div class="site-nav-bg">
 
     <div class="site-nav w1200">
@@ -54,10 +55,10 @@
       <div class="inner-cont0">
         <div class="inner-cont1 w1200">
           <div class="inner-cont2">
-            <a href="commodity.html"  class="active">所有商品</a>
-            <a href="buytoday.html">今日团购</a>
-            <a href="information.html">农产品资讯</a>
-            <a href="about.html">关于我们</a>
+            <a href="commodity.html"  class="active">所有商品 <span></span></a>
+            <a href="buytoday.html">今日团购 <span></span></a>
+            <a href="information.html">农产品资讯 <span></span></a>
+            <a href="about.html">关于我们 <span></span></a>
           </div>
         </div>
       </div>
@@ -73,9 +74,9 @@
         <div class="right-cont-wrap">
           <div class="right-cont">
             <div class="sort layui-clear">
-              <a class="active" href="javascript:;" event = 'volume'>销量</a>
-              <a href="javascript:;" event = 'price'>价格</a>
-              <a href="javascript:;" event = 'newprod'>新品</a>
+<!--              <a class="active" href="javascript:;" event = 'volume'>销量</a>-->
+<!--              <a href="javascript:;" event = 'price'>价格</a>-->
+<!--              <a href="javascript:;" event = 'newprod'>新品</a>-->
               <!--<a href="javascript:;" event = 'collection'>收藏</a>-->
             </div>
             <div class="prod-number">
@@ -184,6 +185,19 @@
     $('html').hide();
     $('html').fadeIn(500);
     $('#onpage').attr('display','block');
+
+    //鼠标
+    $(function () {
+      var moveMouse = $('#moveMouse');
+      $(document).mousemove(function (event) {
+        event = event || window.event;
+        var x = $(window).scrollTop();
+        var left = event.clientX;
+        var top = event.clientY;
+        moveMouse.css('left', (left + 15)+ 'px');
+        moveMouse.css('top', (top + x) + 'px');
+      })
+    });
 
     //模糊查询(点击查询或按enter键)
       $(document).on('click','.search_bt',function () {

@@ -31,10 +31,10 @@ i{font-style: normal;}
 
 
 /*header*/
-.header{height: 100px; line-height: 100px;}
+.header{height: 120px; line-height: 100px;}
 .header .mallLogo{margin-left: 38px; float: left;}
-.header .mallLogo a img{width: 215px;height:75px;}
-.header .mallSearch{float: right; width: 500px; padding-top: 30px; position: relative;}
+.header .mallLogo a img{width: 215px;height:120px;}
+.header .mallSearch{float: right; padding-top: 30px; position: relative;}
 .header .mallSearch form{height: 38px; width:400px;line-height: 38px; border-width: 1px 0 1px 1px; border: solid #459F35; position: relative;}
 .header .mallSearch #search_pro{height: 38px; line-height: 38px; width: 342px; float: left; border:none; position: relative; z-index: 2; background: none;}
 .header .mallSearch .search_bt{width: 58px; height: 38px; line-height: 38px; float: left; background: #459F35; border-radius:0
@@ -47,6 +47,13 @@ i{font-style: normal;}
 .content .inner-cont2{padding-left: 208px;}
 .content .inner-cont2 a{display: inline-block; font-size: 18px; color:#010101; padding: 0 32px; line-height: 36px; float: left;}
 .content .inner-cont2 a.active,.content .inner-cont2 a:hover{color: green;}
+.content .inner-cont2 a span{width: 0;height: 5px;display:block;margin-top: 14px;}
+.content .inner-cont2 a:hover span{
+    width: 72px;background-color: green;transition-delay: 0s;
+    transition-duration: 0.3s;
+    transition-property: all;
+    transition-timing-function: ease;
+}
 .content .category-con{position: relative; height: 400px; width: 100%;}
 .content .category-con .category-type{width: 180px; height:36px; line-height: 36px; font-size: 14px; background: #459F35; text-align: center; color: #fff; cursor: pointer; margin-top: -36px; position: absolute; z-index: 100;}
 .content .category-con .category-type h3{font-size: 14px;}
