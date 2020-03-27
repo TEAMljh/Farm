@@ -218,6 +218,7 @@
                         } else {
                             admin.req('/admin/user/changePassword', formData, function (res) {
                                 if (res.code == 0) {
+
                                     layer.msg(res.msg, {icon: 1, time: 800}, function () {
                                         admin.req('/logout', {}, function () {
                                             window.location.href = '/page/admin/login.html';

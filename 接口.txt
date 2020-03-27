@@ -1,22 +1,20 @@
-登录用户接口：main/login     ok！！！
+登录用户接口：main/login
 所有商品：
-                 左边——main/productcenter/list ？typeId   ok！！！
-                 右边——main/productdisplay/list ? {typeId} & page=1   ok！！！
-                 main/productdisplay/list ? {typeId} & pri=1 & page=1（pri=1价格升序排列(默认),pri=0价格降序排列，默认此类的第一页）
-                 main/productdisplay/list ? {typeId} & destime & page=1（destiome=1时间降序排列(默认)，默认此类的第一页）
+                 左边——main/productcenter/list
+                 右边——main/productdisplay/list
 
-今日团购（需要分页）：main/today ？page=1    ok！！！
+今日团购（需要分页）：main/today ？page=1
 
-咨询（需要分页）：main/news/list ? page=1   ok！！！
+咨询（需要分页）：main/news/list ? page=1
 
-具体商品：main/productdisplay ？{id}     ok！！！
+具体商品：main/productdisplay ？{id}
 
-搜索（模糊查询）：main/productdisplay/all   ok！！！
+搜索（模糊查询）：main/productdisplay/all
 
-购物提交数据url：/main/shopcart   ok！！！
-      删除加购数据：/main/shopping/del/"+ id   ok！！！
-      产生订单：/main/shopping/bought/ + id ok！！！
-注册提交数据（选）：/main/login/register   ok！！！
+购物提交数据url：/main/shopcart
+      删除加购数据：/main/shopping/del/
+      产生订单：/main/shopping/bought/ 
+注册提交数据（选）：/main/login/register
 客户更改信息：/main/changeUser ？传更改后user信息表表单
 
 

@@ -1,21 +1,21 @@
-用户：/admin/user/page   分页   （用户名和地区搜索，需要接  &name 或者  &detail） ✔
+用户：/admin/user/page   分页   （用户名和地区搜索，需要接  &name 或者  &detail） 
 
-农产品类型管理：/admin/productMaintain/page   分页  ✔  
-                         /admin/productMaintain/del/  删除   ✔
-                         /admin/productMaintain/addOrUpdate  添加×   修改✔   
+农产品类型管理：/admin/productMaintain/page   分页    
+                         /admin/productMaintain/del/  删除   
+                         /admin/productMaintain/addOrUpdate  添加×   修改
                         /admin/productMaintain/list   所有大类（三大类）
  
-农产品详细管理：/admin/product/page  分页   ✔  
-                         /admin/product/del/删除    ✔
-                         /admin/product/addOrUpdate 添加修改 ✔
-                         /main/productcenter/list   所有小类 ✔
+农产品详细管理：/admin/product/page  分页   
+                         /admin/product/del/删除    
+                         /admin/product/addOrUpdate 添加修改 
+                         /main/productcenter/list   所有小类 
 
-更改密码(post):  /admin/user/changePassword ？传入form表单数据✔
-客户更改信息：/main/changeUser ？传更改后user信息表表单✔
-购物单管理：/admin/shopcart/page✔
+更改密码(post):  /admin/user/changePassword ？传入form表单数据
+客户更改信息：/main/changeUser ？传更改后user信息表表单
+购物单管理：/admin/shopcart/page
 
-资讯管理(不慌)：/admin/news/page  分页      （搜索：接字段 name）✔
-                /admin/news/del/删除  ✔
-                /admin/news/addOrUpdate 添加修改 ✔
+资讯管理(不慌)：/admin/news/page  分页      （搜索：接字段 name）
+                /admin/news/del/删除  
+                /admin/news/addOrUpdate 添加修改 
 
  
