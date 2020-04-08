@@ -25,6 +25,6 @@ public class ProductCenterController {
     @GetMapping("/productcenter/list")
     public Object list(Integer typeId) {
         QueryWrapper<ProductCenterVO> queryWrapper = new QueryWrapper<>();
-        return productCenterService.listCenter(queryWrapper.eq("type_id", typeId));
+        return productCenterService.listCenter(queryWrapper.eq("type_id", typeId).eq("p.del_flag",'0'));
     }
 }
