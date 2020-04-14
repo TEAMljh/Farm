@@ -65,11 +65,11 @@ public class ProductDetailController {
     }
 
     @GetMapping("productdisplay/all")
-    public Object productdisplayAll(String name, @RequestParam(required = false, defaultValue = "1") Integer typeId, QuerySort sort, @RequestParam(required = false, defaultValue = "1") int page,
+    public Object productdisplayAll(String name, @RequestParam(required = false, defaultValue = "1") int page,
                                     @RequestParam(required = false, defaultValue = "6") int limit) {
         Page<ProductDetail> poPage = new Page<>(page, limit);
         QueryWrapper<ProductDetail> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderBy(true, false, "create_time").eq("type_id", typeId);
+//        queryWrapper.orderBy(true, false, "create_time").eq("type_id", typeId);
         LambdaQueryWrapper<ProductDetail> lambdaQueryWrapper = queryWrapper.lambda();
         // 根据名称搜索
         if (StringUtils.isNotEmpty(name)) {
