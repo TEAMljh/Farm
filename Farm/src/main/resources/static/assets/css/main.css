@@ -45,7 +45,7 @@ i{font-style: normal;}
 .content .layui-fluid{padding: 0;}
 .content .inner-cont1{height: 50px; line-height: 36px;padding-top: 10px}
 .content .inner-cont2{padding-left: 208px;}
-.content .inner-cont2 a{display: inline-block; font-size: 18px; color:#010101; padding: 0 32px; line-height: 36px; float: left;}
+.content .inner-cont2 a{display: inline-block; font-size: 18px; color:#010101; padding: 0 32px; line-height: 36px;}
 .content .inner-cont2 a.active,.content .inner-cont2 a:hover{color: green;}
 .content .inner-cont2 a span{width: 0;height: 5px;display:block;margin-top: 14px;}
 .content .inner-cont2 a:hover span{

@@ -27,7 +27,7 @@ public class Shopcart extends Base {
     private String single;
 
     @TableField("pri")
-    private Integer pri;
+    private Double pri;
 
     @TableField("num")
     private Integer num;
