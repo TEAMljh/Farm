@@ -15,7 +15,7 @@ layui.define(['jquery','element','laytpl','carousel','laypage'],function(exports
 				url    		: param.url    || '',
 				dataType 	: param.type || 'json',
 				data 		: param.data || '',
-				async       : param.async ||  '',
+				async       : param.async ||  'true',
 				success 	: function(res){
 					 // 请求成功
 	                if(0 === res.code){

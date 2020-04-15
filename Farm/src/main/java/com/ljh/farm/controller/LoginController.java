@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @Description
@@ -49,13 +50,23 @@ public class LoginController {
 
     @GetMapping("login/register")
     public Object regist(User user) {
-        User user1 = userService.getOne(new QueryWrapper<User>().eq("name", user.getName()));
-
-        if (user1.getName().equals(user.getName())) {
-            return LayUIResult.error("该用户已存在！");
-        } else {
+        List<User> userList = userService.list(new QueryWrapper<User>().eq("name", user.getName()));
+        if (userList == null) {
             userService.save(user);
             return LayUIResult.ok("注册成功！");
+        } else {
+            int n = 0;
+            for (int i = 0; i < userList.size(); i++) {
+                if (userList.get(i).getName().equals(user.getName())) {
+                    n++;
+                    return LayUIResult.error("该用户已存在");
+                }
+            }
+            if (n == 0) {
+                userService.save(user);
+                return LayUIResult.ok("注册成功");
+            }
+            return LayUIResult.error("该用户已存在！");
         }
     }
 

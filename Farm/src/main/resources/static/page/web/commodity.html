@@ -288,7 +288,7 @@
       // console.log(layui.router("#/about.html"))
       mm.request({
         url: '/main/productdisplay/list' + '?typeId='+ typeid + '&page='+ page,
-        // async: false,
+        async: true,
         success : function(res){
           listCont.innerHTML = mm.renderHtml(html,res);
           pages = res.data.pages;
