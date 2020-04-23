@@ -13,6 +13,18 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+<style>
+    .layui-form-item .layui-inline{
+        /*margin-right: 20px !important;*/
+    }
+    .addData .layui-inline{
+        margin: 5px 0 !important;
+    }
+    .addList{
+        min-height: 35px;border: 1px solid #fff0b7;background-color:#dde7f0;display: -webkit-flex;display: flex;-webkit-justify-content: space-around;justify-content: space-around;"
+    }
+
+</style>
 
 <body>
 
@@ -30,64 +42,98 @@
 <!--顶部-->
         <div class="layui-card-body table-tool-mini">
             <div class="layui-form toolbar">
-                <div class="layui-form-item">
+                <div class="layui-form-item"  style="display: -webkit-flex;display: flex;-webkit-justify-content: space-around;justify-content: space-around;">
                     <div class="layui-inline">
                         <label class="layui-form-label w-auto">开发商</label>
                         <div class="layui-input-inline mr0">
-                            <input name="name" class="layui-input" type="text" placeholder="输入名称"/>
+                            <input name="" class="layui-input" type="text" placeholder="输入名称"/>
                         </div>
+                    </div>
+
+                    <div class="layui-inline">
                         <label class="layui-form-label w-auto">项目名</label>
                         <div class="layui-input-inline mr0">
-                            <input name="name" class="layui-input" type="text" placeholder="输入名称"/>
+                            <input name="" class="layui-input" type="text" placeholder="输入名称"/>
                         </div>
+                    </div>
+
+                    <div class="layui-inline">
                         <label class="layui-form-label">缴税方式</label>
                         <div class="layui-input-inline" style="width:160px;">
-                            <select name="typeId" id="typeId"  lay-verType="tips" lay-search>
+                            <select name="" id="typeId"  lay-verType="tips" lay-search>
                                 <option value="">请选择缴税方式</option>
                             </select>
                         </div>
                     </div>
-<!--                    <div class="layui-inline" style="padding-right: 110px;">-->
-<!--                        <button class="layui-btn icon-btn" lay-filter="formSubSearch" lay-submit>-->
-<!--                            <i class="layui-icon">&#xe615;</i>搜索-->
-<!--                        </button>-->
-<!--                        <button id="btnAddUser" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>-->
-<!--                    </div>-->
                 </div>
             </div>
-            <table class="layui-table" id="tableTbBas" lay-filter="tableTbBas"></table>
         </div>
 
-        <div  class="layui-card-body table-tool-mini" style="min-height: 600px;border:1px solid red; ">
-            <div  class="layui-card-body table-tool-mini" style="min-height: 300px;border:1px solid blue; ">
-<!--插入条数据-->
-                <div class="layui-card-body table-tool-mini">
-                    <div class="layui-form toolbar">
-                        <div class="layui-form-item">
+        <div  class="layui-card-body table-tool-mini" style="min-height: 400px;max-width:1200px;border:8px solid #dde7f0;border-radius:5%;margin: 0 4%; ">
+            <form class="layui-form" action="" id="houseForm" lay-filter="houseForm">
+                <div  class="layui-card-body table-tool-mini" style="min-height: 300px;/*border:4px solid #bed6ed;border-radius:2%;*/">
+                    <div class="layui-card-body table-tool-mini addData"  style="max-height: 250px;border:1px solid purple; ">
+                        <!--插入条数据-->
+                        <div class="layui-form-item addList">
                             <div class="layui-inline">
                                 <label class="layui-form-label w-auto">阶段</label>
                                 <div class="layui-input-inline mr0">
-                                    <input name="name" class="layui-input" type="text" placeholder="输入名称"/>
+                                    <input name="" class="layui-input" type="text" placeholder="输入阶段"/>
                                 </div>
+                            </div>
+                            <div class="layui-inline">
                                 <label class="layui-form-label w-auto">房屋销售比</label>
                                 <div class="layui-input-inline mr0">
-                                    <input name="name" class="layui-input" type="text" placeholder="输入名称"/>
+                                    <input name="" class="layui-input" type="text" placeholder="输入比例"/>
                                 </div>
-                                <label class="layui-form-label"></label>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label w-auto">缴税比</label>
                                 <div class="layui-input-inline mr0">
-                                    <input name="name" class="layui-input" type="text" placeholder="输入名称"/>
+                                    <input name="" class="layui-input" type="text" placeholder="输入比例"/>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <table class="layui-table" id="tableTbBas" lay-filter="tableTbBas"></table>
+                    <!-- 添加按钮-->
+                    <div class="layui-form-item">
+                        <div class="layui-inline" style="margin: 0 45%;">
+                            <button id="btnAddLi" lay-filter="btnAddLi" lay-submit="btnAddLi" class="layui-btn" type="button" style="background-color: #fff"><i class="layui-icon layui-icon-add-circle-fine" style="font-size: 38px;color:#3E87E3;"></i></button>
+                        </div>
+                    </div>
+                    <!-- 保存或取消-->
+                    <div class="layui-form-item text-left" style="position: relative;top: 150px;">
+                        <button class="layui-btn layui-btn-normal" lay-filter="save" id="save" lay-submit="save"  style="width: 100px;margin-left: 75%" >保存</button>
+                        <button style="width: 100px;margin-left: 50px;" class="layui-btn layui-btn-primary layui-layer-close layui-layer-close1"
+                                type="button" ew-event="closeDialog">取消
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
-
+<scripr id="addData">
+        <div class="layui-inline">
+            <label class="layui-form-label w-auto">阶段</label>
+            <div class="layui-input-inline mr0">
+                <input name="" class="layui-input" type="text" placeholder="输入阶段"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label w-auto">房屋销售比</label>
+            <div class="layui-input-inline mr0">
+                <input name="" class="layui-input" type="text" placeholder="输入比例"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label w-auto">缴税比</label>
+            <div class="layui-input-inline mr0">
+                <input name="" class="layui-input" type="text" placeholder="输入比例"/>
+            </div>
+        </div>
+</scripr>
 <!-- js部分 -->
 <script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
 <script type="text/javascript" src="/assets/js/common.js?v=315"></script>
@@ -95,12 +141,37 @@
     layui.use(['layer', 'upload', 'laydate', 'upload', 'form', 'table', 'util', 'admin'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
-        // var upload = layui.upload;
         var form = layui.form;
         var table = layui.table;
-        // var util = layui.util;
         var admin = layui.admin;
 
+        //渲染下拉框
+        layer.ready(function () {
+            $.ajax({
+                url: '',
+                type: 'GET',
+                async: false,
+                dataType: 'json',
+                success: function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        $('#typeId').append("<option value=" + result[i].id + ">" + result[i].name + "</option>");
+                    }
+                    form.render();
+                }
+            })
+        });
+
+        //添加按钮点击事件
+        form.on('submit(btnAddLi)', function (data) {
+            add();
+            return false;
+        });
+
+        function add(){
+            var aa=$('#addData').html();
+                $('.addData').append('<div id="a" class="layui-form-item addList"></div>');
+                $("#a").html(aa);
+        }
     });
 </script>
 
