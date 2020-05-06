@@ -201,20 +201,19 @@
       })
     });
 
+
     //模糊查询(点击查询或按enter键)
+    var keyWord = $('#search_pro').val();
       $(document).on('click','.search_bt',function () {
-        var keyWord = $('#search_pro').val();
         login_on.login_search(keyWord);
       });
       $(document).on('keypress','#search_pro',function (e) {
-        var keyWord = $('#search_pro').val();
+        console.log(typeof keyWord);
         if(e.which == 13){
           login_on.login_search(keyWord);
           return false;   //禁止form表单里input用enter提交的自动刷新页面
         }
       });
-
-
 
 
 
@@ -224,7 +223,7 @@
       going(sessionStorage.getItem('typeid'),1);
     }else{
       console.log(sessionStorage.getItem('keyWord'));
-      login_on.login_search(sessionStorage.getItem('keyWord'));
+      going2(1);
       sessionStorage.removeItem('keyWord');
     }
 
@@ -255,7 +254,6 @@
         contentType: "json",
         success:function (res) {
           obj.append("<dl><dt class='"+ a +"'>" + res[0].typeName + "</dt></dl>");
-          // console.log(a);
           for(var i = 0 ;i < res.length ; i++){
             $("."+ a).after("<dd class='mid_class' id='"+ res[i].id +"'><a href='javascript:; '>"+res[i].name+"</a></dd>")
           }
@@ -285,7 +283,6 @@
     function going(typeid,page){
       var html = demo.innerHTML;
       var listCont = document.getElementById('list-cont');
-      // console.log(layui.router("#/about.html"))
       mm.request({
         url: '/main/productdisplay/list' + '?typeId='+ typeid + '&page='+ page,
         async: true,
@@ -308,6 +305,27 @@
       });
     }
 
+    //无条件搜索所有的商品分页
+    function going2(page){
+      var html = demo.innerHTML;
+      var listCont = document.getElementById('list-cont');
+      mm.request({
+        url: '/main/productdisplay/all?name=' + '&page='+ page,
+        async: true,
+        success : function(res){
+          listCont.innerHTML = mm.renderHtml(html,res);
+          pages = res.data.pages;
+          current = res.data.current;
+          console.log(pages);
+          if (pages != 0) {
+            $('#onpage').show();
+            $('#pro_tips').hide();
+          }
+        },
+        error: function(res){
+        }
+      });
+    }
 
 
   //分页
@@ -316,29 +334,41 @@
     if (current > 1) {
       $('.nextpage').removeAttr('disabled');
       current--;
-      going(sessionStorage.getItem('typeid'),current);
+      if(keyWord ==''){
+        going2(current);
+      }else{
+        going(sessionStorage.getItem('typeid'),current);
+      }
     } else {
       current = 1;
-      going(sessionStorage.getItem('typeid'),current);
+      if(keyWord ==''){
+        going2(current);
+      }else{
+        going(sessionStorage.getItem('typeid'),current);
+      }
       $('.prevpage').attr('disabled', 'true')
     }
   });
   $(document).on('click','.nextpage',function () {
+    console.log('pages='+ pages+';'+'页数'+current)
     if (current < pages) {
       $('.prevpage').removeAttr('disabled');
       current++;
-      going(sessionStorage.getItem('typeid'),current);
+      if(keyWord ==''){
+        going2(current);
+      }else{
+        going(sessionStorage.getItem('typeid'),current);
+      }
     } else {
       current = pages;
-      going(sessionStorage.getItem('typeid'),current);
+      if(keyWord ==''){
+        going2(current);
+      }else{
+        going(sessionStorage.getItem('typeid'),current);
+      }
       $('.nextpage').attr('disabled', 'true')
     }
   })
-
-
-
-
-
 
 
 
