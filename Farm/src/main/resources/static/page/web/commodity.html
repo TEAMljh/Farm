@@ -203,14 +203,16 @@
 
 
     //模糊查询(点击查询或按enter键)
-    var keyWord = $('#search_pro').val();
+    var keyWord = null;
       $(document).on('click','.search_bt',function () {
-        login_on.login_search(keyWord);
+        keyWord = $('#search_pro').val();
+        search(keyWord,1);
       });
       $(document).on('keypress','#search_pro',function (e) {
         console.log(typeof keyWord);
         if(e.which == 13){
-          login_on.login_search(keyWord);
+          console.log(keyWord);
+          search(keyWord,1);
           return false;   //禁止form表单里input用enter提交的自动刷新页面
         }
       });
@@ -222,9 +224,10 @@
       //默认第一类第一页显示
       going(sessionStorage.getItem('typeid'),1);
     }else{
-      console.log(sessionStorage.getItem('keyWord'));
-      going2(1);
-      sessionStorage.removeItem('keyWord');
+      // console.log(sessionStorage.getItem('keyWord'));
+      keyWord = sessionStorage.getItem('keyWord');
+      search(keyWord,1);
+      // sessionStorage.removeItem('keyWord');
     }
 
       //显示用户
@@ -266,6 +269,7 @@
       $(document).on('click',".mid_class",function(){
         sessionStorage.setItem('typeid',$(this).attr('id'));
         var page = 1;
+        keyWord  = null;
         going(sessionStorage.getItem('typeid'),page);
         console.log("点击第" + sessionStorage.getItem('typeid') + "类");
 
@@ -327,6 +331,34 @@
       });
     }
 
+    //有条件搜索
+    function search(p,page){
+      var html = demo.innerHTML;
+      var listCont = document.getElementById('list-cont');
+      // console.log(layui.router("#/about.html"))
+      mm.request({
+        url: '/main/productdisplay/all?name='+ p + "&page=" + page,
+        async: false,
+        success : function(res){
+          listCont.innerHTML = mm.renderHtml(html,res);
+          pages = res.data.pages;
+          current = res.data.current;
+          if (pages === 1  ) {
+            $('#onpage,#pro_tips').hide();
+          }else if(pages === 0){
+            $('#onpage').hide();
+            $('#pro_tips').show();
+          }else{
+            $('#onpage').show();
+            $('#pro_tips').hide();
+          }
+          console.log("我输出了");
+        },
+        error: function(){
+        }
+      })
+    }
+
 
   //分页
   $(document).on('click','.prevpage',function () {
@@ -334,44 +366,36 @@
     if (current > 1) {
       $('.nextpage').removeAttr('disabled');
       current--;
-      if(keyWord ==''){
-        going2(current);
-      }else{
-        going(sessionStorage.getItem('typeid'),current);
-      }
+      infoOn();
     } else {
       current = 1;
-      if(keyWord ==''){
-        going2(current);
-      }else{
-        going(sessionStorage.getItem('typeid'),current);
-      }
+      infoOn();
       $('.prevpage').attr('disabled', 'true')
     }
   });
   $(document).on('click','.nextpage',function () {
-    console.log('pages='+ pages+';'+'页数'+current)
+    console.log('pages='+ pages+';'+'页数'+current);
+    console.log(keyWord);
     if (current < pages) {
       $('.prevpage').removeAttr('disabled');
       current++;
-      if(keyWord ==''){
-        going2(current);
-      }else{
-        going(sessionStorage.getItem('typeid'),current);
-      }
+      infoOn();
     } else {
       current = pages;
-      if(keyWord ==''){
-        going2(current);
-      }else{
-        going(sessionStorage.getItem('typeid'),current);
-      }
+      infoOn();
       $('.nextpage').attr('disabled', 'true')
     }
-  })
+  });
 
-
-
+    function infoOn(){
+      if(keyWord == null){
+        going(sessionStorage.getItem('typeid'),current);
+      }else if(keyWord == ''){
+        going2(current);
+      }else{
+        search(keyWord,current);
+      }
+    }
 
     $(document).on('click','.sort a',function(){
       $(this).addClass('active').siblings().removeClass('active');

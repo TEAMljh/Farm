@@ -29,7 +29,7 @@ layui.define(['jquery','layer','mm', 'form'],function(exports){
         },
 
         //搜索商品
-        login_search :function (p) {
+/*        login_search :function (p) {
                 // window.location.href = '/page/web/commodity.html';
                 var html = demo.innerHTML;
                 var listCont = document.getElementById('list-cont');
@@ -50,12 +50,12 @@ layui.define(['jquery','layer','mm', 'form'],function(exports){
                             $('#onpage').show();
                             $('#pro_tips').hide();
                         }
-                        console.log("我输出了")
+                        console.log("我输出了");
                     },
                     error: function(){
                     }
                 })
-        },
+        },*/
 
         //修改密码
         login_changeUser :function () {
