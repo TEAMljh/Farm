@@ -61,7 +61,7 @@ public class FileController {
         }
         try {
             //项目class目录绝对路径
-            String path = ResourceUtils.getFile("classpath:").getParent().replace("target", "/src/main/resources/static");
+            String path = ResourceUtils.getFile("classpath:").getAbsolutePath() + "/static";
 //            String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
             System.out.println(path);
             fileName = UUID.randomUUID() + suffixName;
